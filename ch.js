@@ -1,7 +1,7 @@
 const colors = Array.isArray(window.COLOR_DATA) ? window.COLOR_DATA : [];
 const featuredOrder = new Map(['#F0F8FF', '#FAEBD7', '#00FFFF', '#7FFFD4', '#F0FFFF', '#F5F5DC'].map((hex, index) => [hex, index]));
 const categories = ['All', 'Red', 'Pink', 'Purple', 'Indigo', 'Blue', 'Cyan', 'Teal', 'Green', 'Yellow', 'Orange', 'Brown', 'Gray', 'Black', 'White'];
-const state = { query: '', category: 'All', sort: 'name', visible: 36, selected: '#3B82F6', favorites: new Set() };
+const state = { query: '', category: 'All', sort: 'source', visible: 36, selected: '#3B82F6', favorites: new Set() };
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
 
@@ -40,7 +40,7 @@ function cardTemplate(color) {
 function filteredColors() {
   const query = state.query.trim().toLowerCase();
   let list = colors.filter((color) => (!query || color.name.toLowerCase().includes(query) || color.hex.toLowerCase().includes(query)) && (state.category === 'All' || classify(color.hex) === state.category));
-  list.sort((a, b) => state.sort === 'name' ? ((featuredOrder.has(a.hex) ? featuredOrder.get(a.hex) : 999) - (featuredOrder.has(b.hex) ? featuredOrder.get(b.hex) : 999) || a.name.localeCompare(b.name)) : state.sort === 'light' ? getHsl(a.hex)[2] - getHsl(b.hex)[2] : getHsl(a.hex)[0] - getHsl(b.hex)[0]);
+  list.sort((a, b) => state.sort === 'source' ? colors.indexOf(a) - colors.indexOf(b) : state.sort === 'name' ? ((featuredOrder.has(a.hex) ? featuredOrder.get(a.hex) : 999) - (featuredOrder.has(b.hex) ? featuredOrder.get(b.hex) : 999) || a.name.localeCompare(b.name)) : state.sort === 'light' ? getHsl(a.hex)[2] - getHsl(b.hex)[2] : getHsl(a.hex)[0] - getHsl(b.hex)[0]);
   return list;
 }
 function renderFilters() { $('#filters').innerHTML = categories.map((category) => `<button class="filter-button ${category === state.category ? 'active' : ''}" data-category="${category}">${category}</button>`).join(''); }
