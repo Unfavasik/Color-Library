@@ -22,7 +22,7 @@ button { cursor: pointer; }
 .site-header { position: sticky; top: 0; z-index: 20; height: 72px; background: rgba(255,255,255,.94); border-bottom: 1px solid #eef1f5; backdrop-filter: blur(16px); }
 .header-inner { max-width: 1400px; height: 100%; margin: 0 auto; padding: 0 34px; display: flex; align-items: center; gap: 34px; }
 .brand { display: inline-flex; align-items: center; gap: 11px; min-width: 250px; font-family: Georgia, "Times New Roman", serif; font-weight: 700; font-size: 29px; letter-spacing: -1.35px; }
-.brand-mark { width: 32px; height: 32px; color: var(--brand); flex: 0 0 auto; }
+.brand-mark { width: 136px; height: 136px; object-fit: contain; flex: 0 0 auto; border-radius: 10px; }
 .primary-nav { display: flex; align-items: center; gap: 28px; height: 100%; margin-right: auto; }
 .primary-nav a { position: relative; display: inline-flex; align-items: center; height: 100%; color: #273244; font-size: 14px; font-weight: 600; white-space: nowrap; }
 .primary-nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--brand); transform: scaleX(0); transition: transform .2s ease; }
@@ -123,7 +123,7 @@ button { cursor: pointer; }
   .hero-inner { grid-template-columns: 1fr; } .picker-card { max-width: 610px; } .feature-strip { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 620px) {
-  .header-inner { padding-left: 16px; padding-right: 16px; } .brand { min-width: unset; font-size: 24px; } .brand-mark { width: 29px; } .signin-button { padding: 0 11px; } .global-search { display: none; }
+  .header-inner { padding-left: 16px; padding-right: 16px; } .brand { min-width: unset; font-size: 24px; } .signin-button { padding: 0 11px; } .global-search { display: none; }
   .hero-inner { padding: 34px 18px 32px; } .hero-copy h1 { font-size: 43px; letter-spacing: -2px; } .hero-copy .lead { font-size: 15px; } .hero-search-row { gap: 8px; } .picker-card { grid-template-columns: 1fr; padding: 14px; } .swatch-preview { min-height: 90px; } .copy-hex { grid-column: 1; }
   .feature-strip { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 14px 18px; } .feature-card { min-height: 88px; padding: 11px; } .feature-card p { font-size: 11px; }
   .catalog-inner { padding: 27px 18px 55px; } .catalog-heading { align-items: flex-start; flex-direction: column; } .sort-select { width: 100%; } .color-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; } .color-block { height: 75px; } .footer { padding: 28px 18px; }

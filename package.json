@@ -1,0 +1,17 @@
+{
+  "name": "color-library",
+  "version": "1.0.0",
+  "description": "Color Library — HTML Color Codes",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx server.ts",
+    "start": "node server.ts",
+    "build": "echo 'Static site build complete'"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.1"
+  }
+}

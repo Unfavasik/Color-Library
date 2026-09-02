@@ -1,0 +1,6 @@
+{
+  "name": "Color Library",
+  "description": "A modern color library for exploring, copying, and using HTML and CSS color codes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
