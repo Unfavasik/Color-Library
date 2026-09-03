@@ -848,6 +848,8 @@ const pagesData = {
     content: `<p>We value your feedback, feature suggestions, and bug reports. Send us a message below and we will get back to you promptly!</p><form id="contact-form" style="display: flex; flex-direction: column; gap: 14px; margin-top: 16px;"><label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #475569;">Your Name<input type="text" id="contact-name" required placeholder="e.g., Alex Smith" style="height: 42px; padding: 0 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none;" /></label><label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #475569;">Email Address<input type="email" id="contact-email" required placeholder="alex@example.com" style="height: 42px; padding: 0 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none;" /></label><label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #475569;">Message / Feedback<textarea id="contact-msg" required rows="4" placeholder="Tell us what you think or report an issue..." style="padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; font-family: inherit; resize: vertical;"></textarea></label><button type="submit" style="height: 44px; background: #3b82f6; color: #fff; font-weight: 600; border: 0; border-radius: 8px; cursor: pointer; margin-top: 4px; box-shadow: 0 4px 12px rgba(59,130,246,0.2);">Send Feedback</button></form>`
   }
 };
+pagesData['privacy'] = pagesData['privacy-policy'];
+pagesData['terms-and-conditions'] = pagesData['terms'];
 
 function openMoreMenu() {
   const overlay = $('#more-overlay');
@@ -882,6 +884,24 @@ function closeContentModal() {
   if (modalOverlay) modalOverlay.classList.remove('open');
 }
 
+function navigateHome() {
+  closeMoreMenu();
+  closeContentModal();
+  if (window.location.hash && window.location.hash !== '') {
+    try {
+      history.pushState(null, '', window.location.pathname + window.location.search);
+    } catch (_) {
+      window.location.hash = '';
+    }
+  }
+  const homeView = $('#home-view');
+  const pageView = $('#page-view');
+  if (homeView) homeView.classList.remove('hidden');
+  if (pageView) pageView.classList.remove('active');
+  document.title = 'Color Library — HTML Color Codes';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 on('#more-link', 'click', (e) => {
   e.preventDefault();
   openMoreMenu();
@@ -894,12 +914,57 @@ on('#more-overlay', 'click', (e) => {
 $$('.more-menu-item').forEach((btn) => {
   btn.addEventListener('click', () => {
     const key = btn.dataset.page;
-    if (key === 'privacy' || key === 'terms' || key === 'about') {
-      window.location.hash = key === 'privacy' ? 'privacy-policy' : key;
+    closeMoreMenu();
+    if (key === 'privacy' || key === 'privacy-policy') {
+      window.location.hash = 'privacy-policy';
+      handleRoute();
+    } else if (key === 'terms') {
+      window.location.hash = 'terms';
+      handleRoute();
+    } else if (key === 'about') {
+      window.location.hash = 'about';
+      handleRoute();
+    } else if (key === 'developer') {
+      window.location.hash = 'developer';
+      handleRoute();
+    } else if (key === 'contact') {
+      window.location.hash = 'contact';
+      handleRoute();
     } else {
       openContentModal(key);
     }
   });
+});
+
+$$('.footer-links a, .footer-dev-link').forEach((link) => {
+  link.addEventListener('click', (e) => {
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      const targetHash = href.substring(1);
+      if (['privacy-policy', 'terms', 'about', 'developer'].includes(targetHash)) {
+        e.preventDefault();
+        closeMoreMenu();
+        closeContentModal();
+        window.location.hash = targetHash;
+        handleRoute();
+      }
+    }
+  });
+});
+
+document.addEventListener('click', (e) => {
+  const backBtn = e.target.closest('.page-back-btn');
+  if (backBtn) {
+    e.preventDefault();
+    navigateHome();
+    return;
+  }
+  const brandLink = e.target.closest('.brand');
+  if (brandLink && window.location.hash) {
+    e.preventDefault();
+    navigateHome();
+    return;
+  }
 });
 
 on('#content-modal-close', 'click', closeContentModal);
@@ -929,7 +994,9 @@ function getActiveRoute() {
   if (hash === '#tools' || path === '/tools') return 'tools';
   if (hash === '#privacy-policy' || hash === '#privacy' || path === '/privacy-policy' || path === '/privacy') return 'privacy-policy';
   if (hash === '#terms' || hash === '#terms-and-conditions' || path === '/terms' || path === '/terms-and-conditions') return 'terms';
-  if (hash === '#about' || path === '/about') return 'about';
+  if (hash === '#about' || hash === '#about-us' || path === '/about' || path === '/about-us') return 'about';
+  if (hash === '#developer' || path === '/developer') return 'developer';
+  if (hash === '#contact' || path === '/contact') return 'contact';
   return 'home';
 }
 
@@ -1003,6 +1070,17 @@ function handleRoute() {
   }
 
   if (route === 'privacy-policy' || route === 'terms' || route === 'about') {
+    closeMoreMenu();
+    closeContentModal();
+    if (palettesOverlay && palettesOverlay.classList.contains('active')) {
+      palettesOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    if (colorMixOverlay && colorMixOverlay.classList.contains('active')) {
+      colorMixOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
     if (homeView) homeView.classList.add('hidden');
     if (pageView) pageView.classList.add('active');
     
@@ -1013,20 +1091,41 @@ function handleRoute() {
     
     if (page && pageContent) {
       pageContent.innerHTML = `
-        <a href="#home" class="page-back-btn">
+        <button type="button" class="page-back-btn" id="page-back-btn" aria-label="Back to Home">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
           Back to Home
-        </a>
+        </button>
         <h1>${page.title}</h1>
-        ${route === 'privacy-policy' ? `<div class="page-date">Last updated: September 2, 2026</div>` : ''}
+        ${(route === 'privacy-policy' || route === 'terms') ? `<div class="page-date">Last updated: September 2, 2026</div>` : ''}
         ${page.content}
+        <div class="page-bottom-nav">
+          <button type="button" class="page-back-btn" aria-label="Back to Home">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            Back to Home
+          </button>
+        </div>
       `;
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else if (route === 'developer') {
+    closeMoreMenu();
+    if (homeView) homeView.classList.remove('hidden');
+    if (pageView) pageView.classList.remove('active');
+    openContentModal('developer');
+  } else if (route === 'contact') {
+    closeMoreMenu();
+    if (homeView) homeView.classList.remove('hidden');
+    if (pageView) pageView.classList.remove('active');
+    openContentModal('contact');
   } else {
     document.title = 'Color Library — HTML Color Codes';
     if (homeView) homeView.classList.remove('hidden');
     if (pageView) pageView.classList.remove('active');
+    closeMoreMenu();
+    closeContentModal();
+    if (window.location.hash === '#home' || window.location.hash === '#top' || !window.location.hash) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 }
 

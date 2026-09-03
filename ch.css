@@ -442,6 +442,7 @@ button { cursor: pointer; }
   color: #334155;
   font-weight: 600;
   font-size: 14px;
+  font-family: inherit;
   text-decoration: none;
   margin-bottom: 24px;
   cursor: pointer;
@@ -450,6 +451,16 @@ button { cursor: pointer; }
 .page-back-btn:hover {
   background: #e2e8f0;
   color: #0f172a;
+}
+.page-bottom-nav {
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-start;
+}
+.page-bottom-nav .page-back-btn {
+  margin-bottom: 0;
 }
 .page-content h1 {
   font-size: 30px;
