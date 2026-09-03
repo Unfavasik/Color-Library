@@ -10,9 +10,14 @@ const publicDir = path.join(process.cwd(), "public");
 
 if (fs.existsSync(publicDir)) {
   app.use(express.static(publicDir));
+  app.use("/public", express.static(publicDir));
 }
 if (fs.existsSync(distDir)) {
   app.use(express.static(distDir));
+  const distPublic = path.join(distDir, "public");
+  if (fs.existsSync(distPublic)) {
+    app.use("/public", express.static(distPublic));
+  }
 }
 app.use(express.static(path.join(process.cwd())));
 

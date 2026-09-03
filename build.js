@@ -25,7 +25,6 @@ const coreFiles = [
   'favicon.svg',
   'favicon.png',
   'og-image.webp',
-  'og-image.png',
   'vercel.json',
   'ads.txt'
 ];
@@ -38,17 +37,24 @@ for (const file of coreFiles) {
   }
 }
 
-// 3. Copy everything from public/ directly to dist/
+// 3. Copy everything from public/ directly to dist/ and also to dist/public/
 if (fs.existsSync(PUBLIC_DIR)) {
+  const distPublicDir = path.join(DIST_DIR, 'public');
+  if (!fs.existsSync(distPublicDir)) {
+    fs.mkdirSync(distPublicDir, { recursive: true });
+  }
   const publicEntries = fs.readdirSync(PUBLIC_DIR);
   for (const entry of publicEntries) {
     const src = path.join(PUBLIC_DIR, entry);
     const dest = path.join(DIST_DIR, entry);
+    const destInPublic = path.join(distPublicDir, entry);
     const stat = fs.statSync(src);
     if (stat.isFile()) {
       fs.copyFileSync(src, dest);
+      fs.copyFileSync(src, destInPublic);
     } else if (stat.isDirectory()) {
       fs.cpSync(src, dest, { recursive: true });
+      fs.cpSync(src, destInPublic, { recursive: true });
     }
   }
 }

@@ -2729,4 +2729,85 @@ button { cursor: pointer; }
   }
 }
 
+/* ==========================================================================
+   Google AdSense Responsive Display Ad Slot Styles
+   ========================================================================== */
+.ad-slot-section {
+  width: 100%;
+  max-width: 1400px;
+  margin: 16px auto 20px;
+  padding: 0 68px;
+  box-sizing: border-box;
+  clear: both;
+}
+
+.ad-slot-container {
+  display: block;
+  position: relative;
+  text-align: center;
+  background: #fbfcfe;
+  border: 1px solid #edf2f7;
+  border-radius: 12px;
+  padding: 10px 14px 14px;
+  box-sizing: border-box;
+  min-height: 0;
+  transition: opacity 0.25s ease;
+}
+
+.ad-slot-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
+.ad-slot-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #94a3b8;
+  line-height: 1;
+  user-select: none;
+}
+
+/* AdSense Slot container responsive sizing */
+.ad-slot-container ins.adsbygoogle {
+  display: block;
+  margin: 0 auto;
+  min-height: 90px;
+  width: 100%;
+}
+
+/* If AdSense marks the ad as unfilled or AdBlock hides it, prevent empty broken boxes */
+.ad-slot-section:has(ins.adsbygoogle[data-ad-status="unfilled"]) {
+  display: none !important;
+}
+
+ins.adsbygoogle[data-ad-status="unfilled"] {
+  display: none !important;
+}
+
+@media (max-width: 1100px) {
+  .ad-slot-section {
+    padding: 0 40px;
+    margin: 14px auto 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ad-slot-section {
+    padding: 0 18px;
+    margin: 10px auto 14px;
+  }
+  .ad-slot-container {
+    padding: 8px 10px 10px;
+    border-radius: 10px;
+  }
+  .ad-slot-container ins.adsbygoogle {
+    min-height: 50px;
+  }
+}
+
+
 
