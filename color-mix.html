@@ -69,14 +69,6 @@
   -->
 
   <!-- Google AdSense -->
-  <script>
-    window.addEventListener('error', function(e) {
-      if (e && (e.message || '').indexOf('adsbygoogle') !== -1) {
-        if (e.preventDefault) e.preventDefault();
-        return true;
-      }
-    });
-  </script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8084415154795131"
      crossorigin="anonymous"></script>
 
@@ -179,51 +171,7 @@
                data-ad-format="auto"
                data-full-width-responsive="true"></ins>
           <script>
-            (function() {
-              function initAd() {
-                var ins = document.querySelector('#ad-hero-slot ins.adsbygoogle');
-                if (!ins || ins.getAttribute('data-adsbygoogle-status')) return;
-                if (ins.offsetWidth > 0) {
-                  try {
-                    (window.adsbygoogle = window.adsbygoogle || []).push({});
-                  } catch (e) {}
-                  return;
-                }
-                if (typeof ResizeObserver !== 'undefined') {
-                  var ro = new ResizeObserver(function(entries) {
-                    for (var i = 0; i < entries.length; i++) {
-                      if (entries[i].contentRect && entries[i].contentRect.width > 0) {
-                        ro.disconnect();
-                        try {
-                          if (!ins.getAttribute('data-adsbygoogle-status')) {
-                            (window.adsbygoogle = window.adsbygoogle || []).push({});
-                          }
-                        } catch (err) {}
-                        break;
-                      }
-                    }
-                  });
-                  ro.observe(ins);
-                } else {
-                  var poll = setInterval(function() {
-                    if (ins.offsetWidth > 0) {
-                      clearInterval(poll);
-                      try {
-                        if (!ins.getAttribute('data-adsbygoogle-status')) {
-                          (window.adsbygoogle = window.adsbygoogle || []).push({});
-                        }
-                      } catch (err) {}
-                    }
-                  }, 200);
-                  setTimeout(function() { clearInterval(poll); }, 6000);
-                }
-              }
-              if (document.readyState === 'complete') {
-                setTimeout(initAd, 60);
-              } else {
-                window.addEventListener('load', initAd);
-              }
-            })();
+            (adsbygoogle = window.adsbygoogle || []).push({});
           </script>
         </div>
       </section>
@@ -402,6 +350,7 @@
           <!-- 3. PRIMARY ACTION: GENERATE MIX -->
           <div class="mix-generate-row">
             <button type="button" class="mix-primary-generate-btn smoky-button" id="mix-generate-btn" aria-label="Generate Mix">
+              <canvas class="smoky-button__canvas" id="mix-generate-canvas" aria-hidden="true"></canvas>
               <span class="smoky-button__copy">
                 <span class="mix-dice-icon">🎲</span>
                 <span class="smoky-button__label">Generate Mix</span>

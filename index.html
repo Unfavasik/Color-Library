@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Color Mix — Color Library</title>
-  <meta name="description" content="Create, blend, and discover beautiful random color combinations, custom palettes, and harmonious tones with Color Library Color Mix." />
+  <title>Color Library — Free HTML Color Codes, Palettes &amp; Color Tools</title>
+  <meta name="description" content="Color Library is a free color-code resource for designers and developers to explore, search, and copy HTML, HEX, RGB, and HSL color codes, curated palettes, and custom color mixes." />
   <meta name="theme-color" content="#2563eb" />
-  <link rel="canonical" href="https://color-library.pages.dev/color-mix">
+  <link rel="canonical" href="https://color-library.pages.dev/">
 
   <!-- Favicons & App Manifest -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -16,9 +16,9 @@
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://color-library.pages.dev/color-mix" />
-  <meta property="og:title" content="Color Mix — Color Library" />
-  <meta property="og:description" content="Create, blend, and discover beautiful random color combinations, custom palettes, and harmonious tones with Color Library Color Mix." />
+  <meta property="og:url" content="https://color-library.pages.dev/" />
+  <meta property="og:title" content="Color Library — Free HTML Color Codes, Palettes &amp; Color Tools" />
+  <meta property="og:description" content="Color Library is a free color-code resource for designers and developers to explore, search, and copy HTML, HEX, RGB, and HSL color codes, curated palettes, and custom color mixes." />
   <meta property="og:image" content="https://color-library.pages.dev/public/og-image.webp" />
   <meta property="og:image:secure_url" content="https://color-library.pages.dev/public/og-image.webp" />
   <meta property="og:image:type" content="image/webp" />
@@ -28,9 +28,9 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content="https://color-library.pages.dev/color-mix" />
-  <meta name="twitter:title" content="Color Mix — Color Library" />
-  <meta name="twitter:description" content="Create, blend, and discover beautiful random color combinations, custom palettes, and harmonious tones with Color Library Color Mix." />
+  <meta name="twitter:url" content="https://color-library.pages.dev/" />
+  <meta name="twitter:title" content="Color Library — Free HTML Color Codes, Palettes &amp; Color Tools" />
+  <meta name="twitter:description" content="Color Library is a free color-code resource for designers and developers to explore, search, and copy HTML, HEX, RGB, and HSL color codes, curated palettes, and custom color mixes." />
   <meta name="twitter:image" content="https://color-library.pages.dev/public/og-image.webp" />
   <meta name="twitter:image:alt" content="Color Library - Free HTML Color Codes &amp; Tools" />
 
@@ -69,14 +69,6 @@
   -->
 
   <!-- Google AdSense -->
-  <script>
-    window.addEventListener('error', function(e) {
-      if (e && (e.message || '').indexOf('adsbygoogle') !== -1) {
-        if (e.preventDefault) e.preventDefault();
-        return true;
-      }
-    });
-  </script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8084415154795131"
      crossorigin="anonymous"></script>
 
@@ -179,51 +171,7 @@
                data-ad-format="auto"
                data-full-width-responsive="true"></ins>
           <script>
-            (function() {
-              function initAd() {
-                var ins = document.querySelector('#ad-hero-slot ins.adsbygoogle');
-                if (!ins || ins.getAttribute('data-adsbygoogle-status')) return;
-                if (ins.offsetWidth > 0) {
-                  try {
-                    (window.adsbygoogle = window.adsbygoogle || []).push({});
-                  } catch (e) {}
-                  return;
-                }
-                if (typeof ResizeObserver !== 'undefined') {
-                  var ro = new ResizeObserver(function(entries) {
-                    for (var i = 0; i < entries.length; i++) {
-                      if (entries[i].contentRect && entries[i].contentRect.width > 0) {
-                        ro.disconnect();
-                        try {
-                          if (!ins.getAttribute('data-adsbygoogle-status')) {
-                            (window.adsbygoogle = window.adsbygoogle || []).push({});
-                          }
-                        } catch (err) {}
-                        break;
-                      }
-                    }
-                  });
-                  ro.observe(ins);
-                } else {
-                  var poll = setInterval(function() {
-                    if (ins.offsetWidth > 0) {
-                      clearInterval(poll);
-                      try {
-                        if (!ins.getAttribute('data-adsbygoogle-status')) {
-                          (window.adsbygoogle = window.adsbygoogle || []).push({});
-                        }
-                      } catch (err) {}
-                    }
-                  }, 200);
-                  setTimeout(function() { clearInterval(poll); }, 6000);
-                }
-              }
-              if (document.readyState === 'complete') {
-                setTimeout(initAd, 60);
-              } else {
-                window.addEventListener('load', initAd);
-              }
-            })();
+            (adsbygoogle = window.adsbygoogle || []).push({});
           </script>
         </div>
       </section>
@@ -342,7 +290,7 @@
   </div>
 
   <!-- Dedicated Color Mix Responsive Full Page Interface -->
-  <div class="color-mix-overlay active" id="color-mix-overlay" role="dialog" aria-modal="true" aria-labelledby="color-mix-title">
+  <div class="color-mix-overlay" id="color-mix-overlay" role="dialog" aria-modal="true" aria-labelledby="color-mix-title">
     <div class="color-mix-card" id="color-mix-card">
       <div class="color-mix-header">
         <div class="color-mix-header-left">
@@ -402,6 +350,7 @@
           <!-- 3. PRIMARY ACTION: GENERATE MIX -->
           <div class="mix-generate-row">
             <button type="button" class="mix-primary-generate-btn smoky-button" id="mix-generate-btn" aria-label="Generate Mix">
+              <canvas class="smoky-button__canvas" id="mix-generate-canvas" aria-hidden="true"></canvas>
               <span class="smoky-button__copy">
                 <span class="mix-dice-icon">🎲</span>
                 <span class="smoky-button__label">Generate Mix</span>

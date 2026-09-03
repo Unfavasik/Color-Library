@@ -1341,6 +1341,7 @@ function openColorMix() {
     overlay.scrollTop = 0;
     updateSavedMixesCountBadge();
     renderMixSlots();
+    initSmokyGenerateButton();
   }
 }
 
@@ -1436,6 +1437,11 @@ function renderMixSlots() {
     });
   });
 
+  if (smokyRendererInstance && colorMixState.selectedColors) {
+    const c1 = colorMixState.selectedColors[0]?.hex;
+    const c2 = colorMixState.selectedColors[1]?.hex || colorMixState.selectedColors[0]?.hex;
+    smokyRendererInstance.updateColors(c1, c2);
+  }
 }
 
 function selectRandomBaseColors() {
@@ -1514,10 +1520,8 @@ function generateColorMix(isShuffle = false) {
   }
 
   let finalHue = (Math.atan2(sinSum, cosSum) * 180 / Math.PI + 360) % 360;
-  // Hue jitter: small nudge on the first Generate Mix, but a much bigger swing on
-  // "Generate Again" so repeated shuffles actually explore different color families
-  // instead of landing back in the same narrow hue range every time.
-  const hueJitterRange = isShuffle ? 150 : 50;
+  // Always apply Hue jitter: non-shuffle ±12°, shuffle ±20°
+  const hueJitterRange = isShuffle ? 40 : 24;
   const hueJitter = (Math.random() - 0.5) * hueJitterRange;
   finalHue = (finalHue + hueJitter + 360) % 360;
 
@@ -1527,45 +1531,29 @@ function generateColorMix(isShuffle = false) {
   if (finalSat < 38) {
     finalSat = 38 + Math.random() * 24;
   } else {
-    finalSat = Math.max(38, Math.min(92, Math.round(finalSat + (Math.random() - 0.5) * (isShuffle ? 16 : 6))));
+    finalSat = Math.max(38, Math.min(92, Math.round(finalSat + (Math.random() - 0.5) * 6)));
   }
 
   // Lightness calibration for clear visual appeal
   let finalLight = totalLight * 0.9;
-  // Lightness jitter: wider swing on shuffle for the same reason as the hue jitter above
-  const lightJitterRange = isShuffle ? 36 : 16;
+  // Always apply Lightness jitter: non-shuffle ±8, shuffle ±14
+  const lightJitterRange = isShuffle ? 28 : 16;
   finalLight += (Math.random() - 0.5) * lightJitterRange;
   finalLight = Math.max(25, Math.min(78, Math.round(finalLight)));
 
   let finalRgb = hslToRgbValues(finalHue, finalSat, finalLight);
   let finalHex = rgbToHexCode(finalRgb[0], finalRgb[1], finalRgb[2]);
 
-  // Safety-net check: if new finalHex is too close (not just identical) to the previous
-  // mix, force a real hue jump so "Generate Again" never feels like a no-op
+  // Safety-net check: if new finalHex matches previous mix, forcibly shift lightness by ±10 to guarantee distinct output
   const previousMix = colorMixState.currentMix || colorMixState.history[colorMixState.historyIndex];
-  if (previousMix && previousMix.hsl) {
-    const hueDelta = Math.min(Math.abs(finalHue - previousMix.hsl[0]), 360 - Math.abs(finalHue - previousMix.hsl[0]));
-    const lightDelta = Math.abs(finalLight - previousMix.hsl[2]);
-    if (hueDelta < 18 && lightDelta < 10) {
-      const shiftDirection = Math.random() > 0.5 ? 1 : -1;
-      finalHue = (finalHue + shiftDirection * (60 + Math.random() * 60) + 360) % 360;
-      finalRgb = hslToRgbValues(finalHue, finalSat, finalLight);
-      finalHex = rgbToHexCode(finalRgb[0], finalRgb[1], finalRgb[2]);
-    }
+  if (previousMix && previousMix.hex && finalHex.toUpperCase() === previousMix.hex.toUpperCase()) {
+    const shiftDirection = finalLight > 60 ? -1 : (finalLight < 40 ? 1 : (Math.random() > 0.5 ? 1 : -1));
+    finalLight = Math.max(20, Math.min(82, Math.round(finalLight + shiftDirection * 10)));
+    finalRgb = hslToRgbValues(finalHue, finalSat, finalLight);
+    finalHex = rgbToHexCode(finalRgb[0], finalRgb[1], finalRgb[2]);
   }
 
   const finalName = findClosestColorName(finalHex);
-
-  // Build the big preview gradient FROM the actual generated result color
-  // (a light shade -> the exact result -> a dark shade), so the large stage
-  // visibly changes on every Generate/Generate Again — not just the tiny dot.
-  const lightStopL = Math.max(0, Math.min(96, finalLight + 20));
-  const darkStopL = Math.max(4, Math.min(100, finalLight - 24));
-  const lightStopRgb = hslToRgbValues(finalHue, finalSat, lightStopL);
-  const darkStopRgb = hslToRgbValues(finalHue, finalSat, darkStopL);
-  const lightStopHex = rgbToHexCode(lightStopRgb[0], lightStopRgb[1], lightStopRgb[2]);
-  const darkStopHex = rgbToHexCode(darkStopRgb[0], darkStopRgb[1], darkStopRgb[2]);
-  const resultGradientCss = `linear-gradient(135deg, ${lightStopHex} 0%, ${finalHex} 55%, ${darkStopHex} 100%)`;
 
   const newMix = {
     id: 'mix_' + Date.now(),
@@ -1576,8 +1564,7 @@ function generateColorMix(isShuffle = false) {
     hsl: [Math.round(finalHue), Math.round(finalSat), Math.round(finalLight)],
     hslStr: `${Math.round(finalHue)}°, ${Math.round(finalSat)}%, ${Math.round(finalLight)}%`,
     inputHexFlow,
-    gradientCss: resultGradientCss,
-    inputGradientCss: gradientCss,
+    gradientCss,
     baseColors: baseColors.map((c) => ({ name: c.name, hex: c.hex }))
   };
 
@@ -2017,6 +2004,245 @@ function renderMixSavedList() {
   });
 }
 
+/* Smoky Button WebGL Shader Animation for Generate Mix Button */
+const SMOKE_VERTEX_SHADER = `
+  attribute vec2 aPosition;
+  void main() {
+    gl_Position = vec4(aPosition, 0.0, 1.0);
+  }
+`;
+
+const SMOKE_FRAGMENT_SHADER = `
+  precision mediump float;
+  uniform vec2 uResolution;
+  uniform float uTime;
+  uniform float uSpeed;
+  uniform vec3 uPrimary;
+  uniform vec3 uSecondary;
+  uniform vec3 uShadow;
+
+  float random(vec2 position) {
+    return fract(sin(dot(position, vec2(12.9898, 78.233))) * 43758.5453);
+  }
+
+  float noise(vec2 position) {
+    vec2 cell = floor(position);
+    vec2 offset = fract(position);
+    float a = random(cell);
+    float b = random(cell + vec2(1.0, 0.0));
+    float c = random(cell + vec2(0.0, 1.0));
+    float d = random(cell + vec2(1.0, 1.0));
+    vec2 blend = offset * offset * (3.0 - 2.0 * offset);
+    return mix(a, b, blend.x)
+      + (c - a) * blend.y * (1.0 - blend.x)
+      + (d - b) * blend.x * blend.y;
+  }
+
+  float fbm(vec2 position) {
+    float value = 0.0;
+    float amplitude = 0.5;
+    mat2 rotation = mat2(0.8776, 0.4794, -0.4794, 0.8776);
+    for (int i = 0; i < 6; i++) {
+      value += amplitude * noise(position);
+      position = rotation * position * 2.04 + vec2(13.7, 9.2);
+      amplitude *= 0.5;
+    }
+    return value;
+  }
+
+  void main() {
+    vec2 uv = gl_FragCoord.xy / uResolution.xy;
+    vec2 position = (gl_FragCoord.xy - 0.5 * uResolution.xy) / uResolution.y;
+    float time = uTime * uSpeed * 0.58;
+
+    vec2 silkPosition = position;
+    silkPosition.y += 0.20 * sin(position.x * 1.55 - time * 1.8)
+      + 0.11 * sin(position.x * 3.2 + time * 1.35);
+    silkPosition.x += 0.06 * sin(position.y * 4.2 - time * 1.1);
+
+    vec2 warp = vec2(
+      fbm(silkPosition * 1.15 + vec2(time * 0.28, -time * 0.17)),
+      fbm(silkPosition * 1.05 + vec2(4.8, 1.3) - vec2(time * 0.18, time * 0.22))
+    );
+    vec2 current = silkPosition + (warp - 0.5) * 0.82;
+    float body = fbm(current * 1.35 + vec2(-time * 0.24, time * 0.14));
+    float detail = fbm(current * 2.7 + vec2(time * 0.31, -time * 0.27));
+    float primaryPlume = fbm(current * 1.20 + vec2(-time * 0.38, time * 0.18));
+    float secondaryPlume = fbm(
+      current * 1.10 + vec2(time * 0.26, -time * 0.32) + vec2(7.2, 3.6)
+    );
+    float shadowPlume = fbm(
+      current * 1.45 + vec2(-time * 0.18, time * 0.42) + vec2(2.4, 8.1)
+    );
+    float bottomPlume = fbm(
+      vec2(current.x * 0.92 - time * 0.34, current.y * 0.76 + time * 0.16)
+        + vec2(6.4, 2.3)
+    );
+
+    float sharedFlow = current.y * 6.8 + current.x * 1.35 + (warp.x - warp.y) * 5.2;
+    float crossFlow = current.y * 5.4 - current.x * 2.1 + (warp.x + warp.y) * 3.5;
+    float primaryRibbon = 0.5 + 0.5 * sin(sharedFlow - time * 2.75);
+    float secondaryRibbon = 0.5 + 0.5 * sin(crossFlow + time * 2.35 + 2.1);
+    float shadowRibbon = 0.5 + 0.5 * sin(
+      sharedFlow * 0.78 - crossFlow * 0.22 - time * 3.25 + 4.2
+    );
+    primaryRibbon = smoothstep(0.08, 0.92, primaryRibbon);
+    secondaryRibbon = smoothstep(0.08, 0.92, secondaryRibbon);
+    shadowRibbon = smoothstep(0.12, 0.88, shadowRibbon);
+
+    float primaryWeight = smoothstep(0.27, 0.76, primaryPlume + 0.24 * body)
+      * (0.20 + 1.08 * primaryRibbon);
+    float secondaryWeight = smoothstep(0.26, 0.74, secondaryPlume + 0.22 * body)
+      * (0.22 + 1.04 * secondaryRibbon + 0.12 * detail);
+    float shadowWeight = 0.16 + smoothstep(0.32, 0.80, shadowPlume + 0.14 * body)
+      * (0.22 + 0.86 * shadowRibbon);
+    float totalWeight = max(primaryWeight + secondaryWeight + shadowWeight, 0.001);
+    vec3 color = (
+      uPrimary * primaryWeight
+      + uSecondary * secondaryWeight
+      + uShadow * shadowWeight
+    ) / totalWeight;
+
+    float depth = smoothstep(0.15, 0.88, body * 0.78 + detail * 0.30);
+    color *= 0.65 + depth * 0.62;
+    float shadowVein = smoothstep(
+      0.46,
+      0.80,
+      shadowPlume + 0.10 * body + 0.16 * shadowRibbon
+    );
+    color = mix(color, uShadow, shadowVein * (0.12 + 0.42 * shadowRibbon));
+
+    float sheenWave = 0.5 + 0.5 * sin(sharedFlow * 1.22 - time * 3.2 + detail * 2.0);
+    float sheen = pow(sheenWave, 6.0);
+    color += mix(uSecondary, uPrimary, primaryRibbon) * sheen * (0.10 + 0.16 * depth);
+
+    float bottomRidge = 0.26 + 0.24 * bottomPlume
+      + 0.08 * sin(current.x * 2.35 - time * 2.6 + warp.x * 3.0);
+    float bottomEnvelope = 1.0 - smoothstep(bottomRidge, bottomRidge + 0.24, uv.y);
+    float bottomCloud = smoothstep(0.18, 0.72, bottomPlume + 0.22 * detail);
+    float bottomMask = bottomEnvelope * (0.48 + 0.52 * bottomCloud);
+    float bottomFlow = 0.5 + 0.5 * sin(current.x * 2.1 - time * 2.4 + warp.y * 4.0);
+    vec3 bottomColor = mix(uPrimary, uSecondary, smoothstep(0.12, 0.88, bottomFlow));
+    float bottomShadow = smoothstep(0.48, 0.78, shadowPlume + 0.18 * bottomPlume);
+    bottomColor = mix(bottomColor, uShadow, bottomShadow * 0.72);
+    float bottomSheen = pow(0.5 + 0.5 * sin(bottomFlow * 5.0 + time * 2.2), 5.0);
+    bottomColor += mix(uSecondary, uPrimary, bottomFlow) * bottomSheen * 0.12;
+    color = mix(color, bottomColor, bottomMask * 0.72);
+
+    float feather = uv.x
+      + 0.12 * (body - 0.5)
+      + 0.08 * (bottomPlume - 0.5)
+      + 0.04 * sin(current.y * 3.0 - time * 1.4);
+    float alpha = smoothstep(0.24, 0.72, feather);
+
+    gl_FragColor = vec4(clamp(color, 0.0, 1.0), alpha);
+  }
+`;
+
+let smokyRendererInstance = null;
+
+function initSmokyGenerateButton() {
+  const canvas = $('#mix-generate-canvas');
+  if (!canvas || smokyRendererInstance) return;
+
+  try {
+    const gl = canvas.getContext('webgl', {
+      alpha: true,
+      antialias: false,
+      premultipliedAlpha: true
+    });
+    if (!gl) return;
+
+    function compileShader(type, source) {
+      const shader = gl.createShader(type);
+      gl.shaderSource(shader, source);
+      gl.compileShader(shader);
+      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        const err = gl.getShaderInfoLog(shader);
+        gl.deleteShader(shader);
+        throw new Error(err);
+      }
+      return shader;
+    }
+
+    const vs = compileShader(gl.VERTEX_SHADER, SMOKE_VERTEX_SHADER);
+    const fs = compileShader(gl.FRAGMENT_SHADER, SMOKE_FRAGMENT_SHADER);
+    const prog = gl.createProgram();
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
+    gl.linkProgram(prog);
+    gl.deleteShader(vs);
+    gl.deleteShader(fs);
+
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+
+    const posLoc = gl.getAttribLocation(prog, 'aPosition');
+    const resLoc = gl.getUniformLocation(prog, 'uResolution');
+    const timeLoc = gl.getUniformLocation(prog, 'uTime');
+    const speedLoc = gl.getUniformLocation(prog, 'uSpeed');
+    const primaryLoc = gl.getUniformLocation(prog, 'uPrimary');
+    const secondaryLoc = gl.getUniformLocation(prog, 'uSecondary');
+    const shadowLoc = gl.getUniformLocation(prog, 'uShadow');
+
+    function parseColorToNormalizedRgb(hex, fallback) {
+      const v = (hex || '').replace('#', '').trim();
+      const norm = v.length === 3 ? v.split('').map(c => c + c).join('') : v;
+      const num = parseInt(norm, 16);
+      if (norm.length !== 6 || isNaN(num)) return fallback;
+      return [((num >> 16) & 255) / 255, ((num >> 8) & 255) / 255, (num & 255) / 255];
+    }
+
+    let currentColors = {
+      primary: parseColorToNormalizedRgb('#7c3aed', [0.48, 0.22, 0.93]),
+      secondary: parseColorToNormalizedRgb('#6366f1', [0.38, 0.40, 0.94]),
+      shadow: parseColorToNormalizedRgb('#090d16', [0.03, 0.05, 0.08])
+    };
+
+    function resize() {
+      const pr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.max(1, Math.round(canvas.clientWidth * pr));
+      canvas.height = Math.max(1, Math.round(canvas.clientHeight * pr));
+    }
+
+    let animId = 0;
+    const start = performance.now();
+
+    function renderFrame(now) {
+      if (!document.body.contains(canvas)) return;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.useProgram(prog);
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.enableVertexAttribArray(posLoc);
+      gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+      gl.uniform2f(resLoc, canvas.width, canvas.height);
+      gl.uniform1f(timeLoc, (now - start) / 1000);
+      gl.uniform1f(speedLoc, 1.25);
+      gl.uniform3f(primaryLoc, ...currentColors.primary);
+      gl.uniform3f(secondaryLoc, ...currentColors.secondary);
+      gl.uniform3f(shadowLoc, ...currentColors.shadow);
+
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      animId = requestAnimationFrame(renderFrame);
+    }
+
+    const observer = new ResizeObserver(resize);
+    observer.observe(canvas.parentElement || canvas);
+    resize();
+    animId = requestAnimationFrame(renderFrame);
+
+    smokyRendererInstance = {
+      updateColors: (hex1, hex2) => {
+        if (hex1) currentColors.primary = parseColorToNormalizedRgb(hex1, currentColors.primary);
+        if (hex2) currentColors.secondary = parseColorToNormalizedRgb(hex2, currentColors.secondary);
+      }
+    };
+  } catch (e) {
+    console.warn('Smoky WebGL button fallback active:', e);
+  }
+}
 
 /* Event listeners initialization for Color Mix */
 function initColorMix() {
@@ -2165,6 +2391,7 @@ function initColorMix() {
   // Initial render of slots and badge
   updateMixCount(colorMixState.count);
   updateSavedMixesCountBadge();
+  initSmokyGenerateButton();
 }
 
 if (document.readyState === 'loading') {
