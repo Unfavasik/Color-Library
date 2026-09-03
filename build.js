@@ -24,6 +24,7 @@ const coreFiles = [
   'favicon.ico',
   'favicon.svg',
   'favicon.png',
+  'og-image.webp',
   'og-image.png'
 ];
 
@@ -63,7 +64,7 @@ const requiredFiles = [
   'favicon.ico',
   'favicon.svg',
   'favicon.png',
-  'og-image.png'
+  'og-image.webp'
 ];
 
 console.log('\n📄 Production Output Files (dist/):');
