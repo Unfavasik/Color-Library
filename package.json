@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "tsx server.ts",
     "start": "node server.ts",
-    "build": "echo 'Static site build complete'"
+    "build": "node build.js",
+    "preview": "node server.ts",
+    "lint": "node -c server.ts build.js"
   },
   "dependencies": {
     "express": "^4.19.2"
