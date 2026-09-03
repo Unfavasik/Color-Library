@@ -1657,6 +1657,23 @@ function renderCurrentMixResult() {
 
   // 6. Favorite button state
   updateSingleMixFavState(mix.hex);
+
+  // 7. Dynamic random color/gradient on Generate Again button
+  const genAgainBtn = $('#mix-generate-again-btn');
+  if (genAgainBtn) {
+    const vibrantGradients = [
+      'linear-gradient(135deg, #8b5cf6, #ec4899)',
+      'linear-gradient(135deg, #3b82f6, #06b6d4)',
+      'linear-gradient(135deg, #f59e0b, #ef4444)',
+      'linear-gradient(135deg, #10b981, #3b82f6)',
+      'linear-gradient(135deg, #ec4899, #f97316)',
+      'linear-gradient(135deg, #6366f1, #a855f7)',
+      'linear-gradient(135deg, #14b8a6, #84cc16)',
+      'linear-gradient(135deg, #d946ef, #0284c7)'
+    ];
+    const pickedGrad = vibrantGradients[Math.floor(Math.random() * vibrantGradients.length)];
+    genAgainBtn.style.background = pickedGrad;
+  }
 }
 
 function updateSingleMixFavState(hex) {
