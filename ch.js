@@ -829,27 +829,28 @@ render(); updatePicker('#3B82F6');
 const pagesData = {
   'privacy-policy': {
     title: 'Privacy Policy',
-    content: `<h2>1. Introduction</h2><p>Welcome to Color Library. We are committed to protecting your privacy and ensuring you have a secure, transparent experience while exploring color palettes, CSS gradients, and HTML color codes.</p><h2>2. Information We Collect</h2><p>Color Library does not require user registration or account creation. We do not collect personally identifiable information (PII) such as your name, email address, or phone number.</p><h2>3. How We Use Information</h2><p>Since we do not collect personal information, no user data is shared, sold, or rented to third parties. Any interactions remain strictly confidential and client-side.</p><h2>4. Cookies and Local Storage</h2><p>We use browser local storage solely to save your favorite color selections and UI preferences locally on your device. This data never leaves your browser and can be cleared at any time through your browser settings.</p><h2>5. Analytics and Third-Party Services</h2><p>We do not utilize intrusive tracking cookies or external analytics platforms that monitor your personal browsing habits.</p><h2>6. Data Security</h2><p>Because your saved favorites and preferences are stored exclusively on your local device, no user data is transmitted or stored on external database servers.</p><h2>7. Children's Privacy</h2><p>Color Library is safe for users of all ages. We do not knowingly collect any data from children under the age of 13.</p><h2>8. Your Rights</h2><p>You retain full control over your local data. You may clear your browser storage at any time to remove all saved favorites and preferences instantly.</p><h2>9. Changes to This Privacy Policy</h2><p>We may update this Privacy Policy from time to time to reflect improvements in our platform. Any modifications will be posted directly on this page.</p><h2>10. Contact Us</h2><p>If you have any questions or concerns regarding our privacy practices, please feel free to reach out via our Contact / Feedback form available in the More menu.</p>`
+    content: `<h2>1. Introduction</h2><p>Welcome to Color Library. We are committed to protecting your privacy and ensuring you have a secure, transparent experience while exploring color palettes, CSS gradients, and HTML color codes.</p><h2>2. Information We Collect</h2><p>Color Library does not require user registration or account creation. We do not collect personally identifiable information (PII) such as your name, email address, or phone number.</p><h2>3. How We Use Information</h2><p>Since we do not collect personal information, no user data is shared, sold, or rented to third parties. Any interactions remain strictly confidential and client-side.</p><h2>4. Cookies and Local Storage</h2><p>We use browser local storage solely to save your favorite color selections and UI preferences locally on your device. This data never leaves your browser and can be cleared at any time through your browser settings.</p><h2>5. Analytics and Third-Party Services</h2><p>We do not utilize intrusive tracking cookies or external analytics platforms that monitor your personal browsing habits.</p><h2>6. Data Security</h2><p>Because your saved favorites and preferences are stored exclusively on your local device, no user data is transmitted or stored on external database servers.</p><h2>7. Children's Privacy</h2><p>Color Library is safe for users of all ages. We do not knowingly collect any data from children under the age of 13.</p><h2>8. Your Rights</h2><p>You retain full control over your local data. You may clear your browser storage at any time to remove all saved favorites and preferences instantly.</p><h2>9. Changes to This Privacy Policy</h2><p>We may update this Privacy Policy from time to time to reflect improvements in our platform. Any modifications will be posted directly on this page.</p><h2>10. Contact Us</h2><p>If you have any questions or concerns regarding our privacy practices, please feel free to reach out via our <a href="/contact">Contact / Feedback</a> form.</p>`
   },
-  'terms': {
-    title: 'Terms & Conditions',
-    content: `<h2>1. Acceptance of Terms</h2><p>By accessing and using Color Library, you agree to comply with and be bound by these Terms and Conditions. If you do not agree with any part of these terms, please discontinue use of the website.</p><h2>2. Use of the Website</h2><p>Color Library is provided as a complimentary resource platform for discovering, exploring, copying, and utilizing HTML and CSS color codes, palettes, and gradients for personal and commercial projects.</p><h2>3. Color Information</h2><p>All color values, HEX codes, RGB values, and HSL data are provided for general design reference and inspiration. Display calibration and hardware variations may affect how colors appear on your screen.</p><h2>4. Accuracy Disclaimer</h2><p>While we strive to ensure the utmost accuracy of all color values and metadata, Color Library makes no guarantees regarding the absolute precision or suitability of color codes for specific production or printing requirements.</p><h2>5. Intellectual Property</h2><p>All interface layouts, branding, graphics, typography pairings, and curated color data collections are protected by applicable intellectual property laws. Unauthorized reproduction or scraping is prohibited.</p><h2>6. Acceptable Use</h2><p>Users agree not to misuse the platform, attempt unauthorized access to website infrastructure, or disrupt the normal operation of the service.</p><h2>7. External Links</h2><p>The website may contain references or links to external websites and resources. Color Library assumes no responsibility or liability for the content or practices of third-party sites.</p><h2>8. Limitation of Liability</h2><p>Color Library is provided on an "as is" and "as available" basis without warranties of any kind, either express or implied. We shall not be held liable for any direct or indirect damages arising from the use of this website.</p><h2>9. Changes to Terms</h2><p>We reserve the right to modify or replace these Terms and Conditions at any time without prior notice. Continued use of the website following any changes constitutes acceptance of those changes.</p><h2>10. Contact</h2><p>If you have any questions concerning these terms, please contact us through the feedback option in the application menu.</p>`
+  'terms-of-service': {
+    title: 'Terms of Service',
+    content: `<h2>1. Acceptance of Terms</h2><p>By accessing and using Color Library, you agree to comply with and be bound by these Terms of Service. If you do not agree with any part of these terms, please discontinue use of the website.</p><h2>2. Use of the Website</h2><p>Color Library is provided as a complimentary resource platform for discovering, exploring, copying, and utilizing HTML and CSS color codes, palettes, and gradients for personal and commercial projects.</p><h2>3. Color Information</h2><p>All color values, HEX codes, RGB values, and HSL data are provided for general design reference and inspiration. Display calibration and hardware variations may affect how colors appear on your screen.</p><h2>4. Accuracy Disclaimer</h2><p>While we strive to ensure the utmost accuracy of all color values and metadata, Color Library makes no guarantees regarding the absolute precision or suitability of color codes for specific production or printing requirements.</p><h2>5. Intellectual Property</h2><p>All interface layouts, branding, graphics, typography pairings, and curated color data collections are protected by applicable intellectual property laws. Unauthorized reproduction or scraping is prohibited.</p><h2>6. Acceptable Use</h2><p>Users agree not to misuse the platform, attempt unauthorized access to website infrastructure, or disrupt the normal operation of the service.</p><h2>7. External Links</h2><p>The website may contain references or links to external websites and resources. Color Library assumes no responsibility or liability for the content or practices of third-party sites.</p><h2>8. Limitation of Liability</h2><p>Color Library is provided on an "as is" and "as available" basis without warranties of any kind, either express or implied. We shall not be held liable for any direct or indirect damages arising from the use of this website.</p><h2>9. Changes to Terms</h2><p>We reserve the right to modify or replace these Terms of Service at any time without prior notice. Continued use of the website following any changes constitutes acceptance of those changes.</p><h2>10. Contact</h2><p>If you have any questions concerning these terms, please contact us through our <a href="/contact">Contact / Feedback</a> form.</p>`
   },
   'about': {
     title: 'About Color Library',
     content: `<p>Color Library is a simple web-based resource for discovering, exploring, copying, and using HTML and CSS colors. Designed with speed and minimalism in mind, it empowers creators to find the perfect shade instantly.</p><h2>Key Features &amp; Tools</h2><ul><li><strong>HTML Color Codes:</strong> Comprehensive directory of over 140+ standard color names and HEX values.</li><li><strong>HEX Values:</strong> Instant hex code generation for web styling and CSS rules.</li><li><strong>RGB Values:</strong> Accurate Red, Green, Blue decimal color conversions.</li><li><strong>HSL Values:</strong> Hue, Saturation, and Lightness representation for precise tonal adjustments.</li><li><strong>Color Picker:</strong> Interactive stage with hue slider and real-time swatch preview.</li><li><strong>Color Converter:</strong> Seamless translation between multiple color formats.</li><li><strong>Color Palettes:</strong> Handcrafted color schemes for modern web interfaces.</li><li><strong>Gradients:</strong> Stunning CSS gradient combinations ready to copy and paste.</li><li><strong>Search and Copy Tools:</strong> Lightning-fast filtering and one-click clipboard copying.</li></ul><h2>Our Philosophy</h2><p>We believe color selection should be frictionless, elegant, and lightning-fast. Color Library eliminates clutter so you can focus purely on crafting beautiful digital experiences.</p>`
   },
-  developer: {
+  'developer': {
     title: 'Developer Details',
     content: `<div style="text-align: center; padding: 10px 0 20px;"><div style="width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; font-size: 28px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; box-shadow: 0 8px 20px rgba(59,130,246,0.25);">DA</div><h3 style="margin: 0 0 4px; font-size: 20px; color: #0f172a;">Dev Asik</h3><p style="margin: 0; color: #64748b; font-size: 14px; font-weight: 600;">Web Developer &amp; Creator</p></div><h4>Project Information</h4><p><strong>Project Name:</strong> Color Library</p><p><strong>Description:</strong> A high-performance, modern color exploration and utility tool built for developers and designers.</p><h4>Technology Stack</h4><ul><li>HTML5 / Semantic Markup</li><li>Modern CSS3 (Tailwind-aligned utility design &amp; custom styling)</li><li>Vanilla JavaScript (ES6+ with reactive state management)</li><li>React / Full-stack Cloud Run environment</li></ul><h4>Connect &amp; Contributions</h4><p>Created with precision and craftsmanship. Maintained under the Color Library workspace.</p>`
   },
-  contact: {
-    title: 'Contact / Feedback',
-    content: `<p>We value your feedback, feature suggestions, and bug reports. Send us a message below and we will get back to you promptly!</p><form id="contact-form" style="display: flex; flex-direction: column; gap: 14px; margin-top: 16px;"><label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #475569;">Your Name<input type="text" id="contact-name" required placeholder="e.g., Alex Smith" style="height: 42px; padding: 0 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none;" /></label><label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #475569;">Email Address<input type="email" id="contact-email" required placeholder="alex@example.com" style="height: 42px; padding: 0 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none;" /></label><label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #475569;">Message / Feedback<textarea id="contact-msg" required rows="4" placeholder="Tell us what you think or report an issue..." style="padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; font-family: inherit; resize: vertical;"></textarea></label><button type="submit" style="height: 44px; background: #3b82f6; color: #fff; font-weight: 600; border: 0; border-radius: 8px; cursor: pointer; margin-top: 4px; box-shadow: 0 4px 12px rgba(59,130,246,0.2);">Send Feedback</button></form>`
+  'contact': {
+    title: 'Contact & Feedback',
+    content: `<p>We value your feedback, feature suggestions, and bug reports. Send us a message below and we will get back to you promptly!</p><form id="contact-form" style="display: flex; flex-direction: column; gap: 14px; margin-top: 16px; max-width: 600px;"><label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #475569;">Your Name<input type="text" id="contact-name" required placeholder="e.g., Alex Smith" style="height: 44px; padding: 0 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; background: #fff;" /></label><label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #475569;">Email Address<input type="email" id="contact-email" required placeholder="alex@example.com" style="height: 44px; padding: 0 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; background: #fff;" /></label><label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #475569;">Message / Feedback<textarea id="contact-msg" required rows="5" placeholder="Tell us what you think or report an issue..." style="padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; font-family: inherit; resize: vertical; background: #fff;"></textarea></label><button type="submit" style="height: 46px; background: #2563eb; color: #fff; font-weight: 600; font-size: 15px; border: 0; border-radius: 8px; cursor: pointer; margin-top: 6px; box-shadow: 0 4px 12px rgba(37,99,235,0.2);">Send Feedback</button></form>`
   }
 };
 pagesData['privacy'] = pagesData['privacy-policy'];
-pagesData['terms-and-conditions'] = pagesData['terms'];
+pagesData['terms'] = pagesData['terms-of-service'];
+pagesData['terms-and-conditions'] = pagesData['terms-of-service'];
 
 function openMoreMenu() {
   const overlay = $('#more-overlay');
@@ -887,19 +888,26 @@ function closeContentModal() {
 function navigateHome() {
   closeMoreMenu();
   closeContentModal();
-  if (window.location.hash && window.location.hash !== '') {
+  const colorMixOverlay = $('#color-mix-overlay');
+  if (colorMixOverlay && colorMixOverlay.classList.contains('active')) {
+    colorMixOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') {
+    try {
+      history.pushState(null, '', '/');
+    } catch (_) {
+      window.location.href = '/';
+      return;
+    }
+  } else if (window.location.hash) {
     try {
       history.pushState(null, '', window.location.pathname + window.location.search);
     } catch (_) {
       window.location.hash = '';
     }
   }
-  const homeView = $('#home-view');
-  const pageView = $('#page-view');
-  if (homeView) homeView.classList.remove('hidden');
-  if (pageView) pageView.classList.remove('active');
-  document.title = 'Color Library — HTML Color Codes';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  handleRoute();
 }
 
 on('#more-link', 'click', (e) => {
@@ -911,27 +919,23 @@ on('#more-overlay', 'click', (e) => {
   if (e.target === $('#more-overlay')) closeMoreMenu();
 });
 
-$$('.more-menu-item').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const key = btn.dataset.page;
-    closeMoreMenu();
-    if (key === 'privacy' || key === 'privacy-policy') {
-      window.location.hash = 'privacy-policy';
+$$('.more-menu-item').forEach((item) => {
+  item.addEventListener('click', (e) => {
+    const pageKey = item.dataset.page;
+    if (pageKey === 'developer') {
+      e.preventDefault();
+      closeMoreMenu();
+      openContentModal('developer');
+      return;
+    }
+    const href = item.getAttribute('href');
+    if (href && href.startsWith('/')) {
+      e.preventDefault();
+      closeMoreMenu();
+      if (window.location.pathname !== href) {
+        history.pushState(null, '', href);
+      }
       handleRoute();
-    } else if (key === 'terms') {
-      window.location.hash = 'terms';
-      handleRoute();
-    } else if (key === 'about') {
-      window.location.hash = 'about';
-      handleRoute();
-    } else if (key === 'developer') {
-      window.location.hash = 'developer';
-      handleRoute();
-    } else if (key === 'contact') {
-      window.location.hash = 'contact';
-      handleRoute();
-    } else {
-      openContentModal(key);
     }
   });
 });
@@ -939,15 +943,21 @@ $$('.more-menu-item').forEach((btn) => {
 $$('.footer-links a, .footer-dev-link').forEach((link) => {
   link.addEventListener('click', (e) => {
     const href = link.getAttribute('href');
-    if (href && href.startsWith('#')) {
-      const targetHash = href.substring(1);
-      if (['privacy-policy', 'terms', 'about', 'developer'].includes(targetHash)) {
-        e.preventDefault();
-        closeMoreMenu();
-        closeContentModal();
-        window.location.hash = targetHash;
-        handleRoute();
+    if (href === '#developer') {
+      e.preventDefault();
+      closeMoreMenu();
+      closeContentModal();
+      openContentModal('developer');
+      return;
+    }
+    if (href && href.startsWith('/')) {
+      e.preventDefault();
+      closeMoreMenu();
+      closeContentModal();
+      if (window.location.pathname !== href) {
+        history.pushState(null, '', href);
       }
+      handleRoute();
     }
   });
 });
@@ -960,10 +970,25 @@ document.addEventListener('click', (e) => {
     return;
   }
   const brandLink = e.target.closest('.brand');
-  if (brandLink && window.location.hash) {
-    e.preventDefault();
-    navigateHome();
-    return;
+  if (brandLink) {
+    if (window.location.pathname !== '/' || window.location.hash) {
+      e.preventDefault();
+      navigateHome();
+      return;
+    }
+  }
+  const cleanLink = e.target.closest('a[href^="/"]');
+  if (cleanLink && !cleanLink.getAttribute('target') && !cleanLink.getAttribute('download')) {
+    const href = cleanLink.getAttribute('href');
+    if (['/', '/privacy-policy', '/terms-of-service', '/contact', '/about', '/color-mix'].includes(href)) {
+      e.preventDefault();
+      closeMoreMenu();
+      closeContentModal();
+      if (window.location.pathname !== href) {
+        history.pushState(null, '', href);
+      }
+      handleRoute();
+    }
   }
 });
 
@@ -984,19 +1009,49 @@ document.addEventListener('keydown', (e) => {
 
 function getActiveRoute() {
   const path = (window.location.pathname || '').replace(/\/+$/, '').toLowerCase();
-  const hash = (window.location.hash || '').toLowerCase();
+  const rawHash = (window.location.hash || '').toLowerCase().replace(/^#\/?/, '');
+  const decodedHash = decodeURIComponent(rawHash).trim();
 
+  // If someone accessed legacy hash or URL with space / capital letters
+  if (path === '/privacy-policy' || path === '/privacy' || path === '/privacy-policy.html' || decodedHash === 'privacy-policy' || decodedHash === 'privacy policy' || decodedHash === 'privacy') {
+    if (window.location.hash || path !== '/privacy-policy') {
+      try { history.replaceState(null, '', '/privacy-policy'); } catch (_) {}
+    }
+    return 'privacy-policy';
+  }
+  if (path === '/terms-of-service' || path === '/terms' || path === '/terms-and-conditions' || path === '/terms-of-service.html' || decodedHash === 'terms-of-service' || decodedHash === 'terms' || decodedHash === 'terms-and-conditions' || decodedHash === 'terms & conditions') {
+    if (window.location.hash || path !== '/terms-of-service') {
+      try { history.replaceState(null, '', '/terms-of-service'); } catch (_) {}
+    }
+    return 'terms-of-service';
+  }
+  if (path === '/contact' || path === '/contact-us' || path === '/contact.html' || decodedHash === 'contact' || decodedHash === 'contact-us') {
+    if (window.location.hash || path !== '/contact') {
+      try { history.replaceState(null, '', '/contact'); } catch (_) {}
+    }
+    return 'contact';
+  }
+  if (path === '/about' || path === '/about-us' || path === '/about.html' || decodedHash === 'about' || decodedHash === 'about-us') {
+    if (window.location.hash || path !== '/about') {
+      try { history.replaceState(null, '', '/about'); } catch (_) {}
+    }
+    return 'about';
+  }
+  if (path === '/color-mix' || path === '/color-mix.html' || path === '/colormix' || decodedHash === 'color-mix' || decodedHash === 'color mix' || decodedHash === 'colormix') {
+    if (window.location.hash || path !== '/color-mix') {
+      try { history.replaceState(null, '', '/color-mix'); } catch (_) {}
+    }
+    return 'color-mix';
+  }
+
+  const hash = (window.location.hash || '').toLowerCase();
   if (hash === '#color-mix' || path === '/color-mix') return 'color-mix';
   if (hash === '#palettes' || hash === '#palette' || path === '/palettes' || path === '/palette') return 'palettes';
   if (hash === '#recently-viewed' || hash === '#recent' || path === '/recently-viewed' || path === '/recent') return 'recently-viewed';
   if (hash === '#saved' || hash === '#favorites' || path === '/favorites' || path === '/saved') return 'favorites';
   if (hash === '#colors' || hash === '#color-chart' || path === '/color-chart' || path === '/colors') return 'color-chart';
   if (hash === '#tools' || path === '/tools') return 'tools';
-  if (hash === '#privacy-policy' || hash === '#privacy' || path === '/privacy-policy' || path === '/privacy') return 'privacy-policy';
-  if (hash === '#terms' || hash === '#terms-and-conditions' || path === '/terms' || path === '/terms-and-conditions') return 'terms';
-  if (hash === '#about' || hash === '#about-us' || path === '/about' || path === '/about-us') return 'about';
   if (hash === '#developer' || path === '/developer') return 'developer';
-  if (hash === '#contact' || path === '/contact') return 'contact';
   return 'home';
 }
 
@@ -1069,7 +1124,7 @@ function handleRoute() {
     return;
   }
 
-  if (route === 'privacy-policy' || route === 'terms' || route === 'about') {
+  if (route === 'privacy-policy' || route === 'terms-of-service' || route === 'about' || route === 'contact') {
     closeMoreMenu();
     closeContentModal();
     if (palettesOverlay && palettesOverlay.classList.contains('active')) {
@@ -1084,27 +1139,38 @@ function handleRoute() {
     if (homeView) homeView.classList.add('hidden');
     if (pageView) pageView.classList.add('active');
     
-    const page = pagesData[route] || pagesData['about'];
+    const page = pagesData[route] || pagesData['privacy-policy'];
     if (page) {
       document.title = `${page.title} — Color Library`;
     }
     
     if (page && pageContent) {
       pageContent.innerHTML = `
-        <button type="button" class="page-back-btn" id="page-back-btn" aria-label="Back to Home">
+        <a href="/" class="page-back-btn" id="page-back-btn" aria-label="Back to Home">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
           Back to Home
-        </button>
+        </a>
         <h1>${page.title}</h1>
-        ${(route === 'privacy-policy' || route === 'terms') ? `<div class="page-date">Last updated: September 2, 2026</div>` : ''}
+        ${(route === 'privacy-policy' || route === 'terms-of-service') ? `<div class="page-date">Last updated: September 2, 2026</div>` : ''}
         ${page.content}
         <div class="page-bottom-nav">
-          <button type="button" class="page-back-btn" aria-label="Back to Home">
+          <a href="/" class="page-back-btn" aria-label="Back to Home">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             Back to Home
-          </button>
+          </a>
         </div>
       `;
+
+      if (route === 'contact') {
+        const contactForm = $('#contact-form');
+        if (contactForm) {
+          contactForm.onsubmit = (e) => {
+            e.preventDefault();
+            contactForm.reset();
+            showToast('Thank you for your feedback!');
+          };
+        }
+      }
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } else if (route === 'developer') {
@@ -1112,11 +1178,6 @@ function handleRoute() {
     if (homeView) homeView.classList.remove('hidden');
     if (pageView) pageView.classList.remove('active');
     openContentModal('developer');
-  } else if (route === 'contact') {
-    closeMoreMenu();
-    if (homeView) homeView.classList.remove('hidden');
-    if (pageView) pageView.classList.remove('active');
-    openContentModal('contact');
   } else {
     document.title = 'Color Library — HTML Color Codes';
     if (homeView) homeView.classList.remove('hidden');
@@ -1280,7 +1341,6 @@ function openColorMix() {
     overlay.scrollTop = 0;
     updateSavedMixesCountBadge();
     renderMixSlots();
-    initSmokyGenerateButton();
   }
 }
 
@@ -1289,8 +1349,18 @@ function closeColorMix() {
   if (overlay && overlay.classList.contains('active')) {
     overlay.classList.remove('active');
     document.body.style.overflow = '';
-    if (window.location.hash === '#color-mix') {
-      history.replaceState(null, '', '#home');
+    if (window.location.pathname === '/color-mix') {
+      try {
+        history.pushState(null, '', '/');
+      } catch (_) {
+        window.location.href = '/';
+        return;
+      }
+      handleRoute();
+    } else if (window.location.hash === '#color-mix') {
+      try {
+        history.replaceState(null, '', window.location.pathname);
+      } catch (_) {}
       handleRoute();
     }
   }
@@ -1366,11 +1436,6 @@ function renderMixSlots() {
     });
   });
 
-  if (smokyRendererInstance && colorMixState.selectedColors) {
-    const c1 = colorMixState.selectedColors[0]?.hex;
-    const c2 = colorMixState.selectedColors[1]?.hex || colorMixState.selectedColors[0]?.hex;
-    smokyRendererInstance.updateColors(c1, c2);
-  }
 }
 
 function selectRandomBaseColors() {
@@ -1449,8 +1514,10 @@ function generateColorMix(isShuffle = false) {
   }
 
   let finalHue = (Math.atan2(sinSum, cosSum) * 180 / Math.PI + 360) % 360;
-  // Always apply Hue jitter: non-shuffle ±12°, shuffle ±20°
-  const hueJitterRange = isShuffle ? 40 : 24;
+  // Hue jitter: small nudge on the first Generate Mix, but a much bigger swing on
+  // "Generate Again" so repeated shuffles actually explore different color families
+  // instead of landing back in the same narrow hue range every time.
+  const hueJitterRange = isShuffle ? 150 : 50;
   const hueJitter = (Math.random() - 0.5) * hueJitterRange;
   finalHue = (finalHue + hueJitter + 360) % 360;
 
@@ -1460,29 +1527,45 @@ function generateColorMix(isShuffle = false) {
   if (finalSat < 38) {
     finalSat = 38 + Math.random() * 24;
   } else {
-    finalSat = Math.max(38, Math.min(92, Math.round(finalSat + (Math.random() - 0.5) * 6)));
+    finalSat = Math.max(38, Math.min(92, Math.round(finalSat + (Math.random() - 0.5) * (isShuffle ? 16 : 6))));
   }
 
   // Lightness calibration for clear visual appeal
   let finalLight = totalLight * 0.9;
-  // Always apply Lightness jitter: non-shuffle ±8, shuffle ±14
-  const lightJitterRange = isShuffle ? 28 : 16;
+  // Lightness jitter: wider swing on shuffle for the same reason as the hue jitter above
+  const lightJitterRange = isShuffle ? 36 : 16;
   finalLight += (Math.random() - 0.5) * lightJitterRange;
   finalLight = Math.max(25, Math.min(78, Math.round(finalLight)));
 
   let finalRgb = hslToRgbValues(finalHue, finalSat, finalLight);
   let finalHex = rgbToHexCode(finalRgb[0], finalRgb[1], finalRgb[2]);
 
-  // Safety-net check: if new finalHex matches previous mix, forcibly shift lightness by ±10 to guarantee distinct output
+  // Safety-net check: if new finalHex is too close (not just identical) to the previous
+  // mix, force a real hue jump so "Generate Again" never feels like a no-op
   const previousMix = colorMixState.currentMix || colorMixState.history[colorMixState.historyIndex];
-  if (previousMix && previousMix.hex && finalHex.toUpperCase() === previousMix.hex.toUpperCase()) {
-    const shiftDirection = finalLight > 60 ? -1 : (finalLight < 40 ? 1 : (Math.random() > 0.5 ? 1 : -1));
-    finalLight = Math.max(20, Math.min(82, Math.round(finalLight + shiftDirection * 10)));
-    finalRgb = hslToRgbValues(finalHue, finalSat, finalLight);
-    finalHex = rgbToHexCode(finalRgb[0], finalRgb[1], finalRgb[2]);
+  if (previousMix && previousMix.hsl) {
+    const hueDelta = Math.min(Math.abs(finalHue - previousMix.hsl[0]), 360 - Math.abs(finalHue - previousMix.hsl[0]));
+    const lightDelta = Math.abs(finalLight - previousMix.hsl[2]);
+    if (hueDelta < 18 && lightDelta < 10) {
+      const shiftDirection = Math.random() > 0.5 ? 1 : -1;
+      finalHue = (finalHue + shiftDirection * (60 + Math.random() * 60) + 360) % 360;
+      finalRgb = hslToRgbValues(finalHue, finalSat, finalLight);
+      finalHex = rgbToHexCode(finalRgb[0], finalRgb[1], finalRgb[2]);
+    }
   }
 
   const finalName = findClosestColorName(finalHex);
+
+  // Build the big preview gradient FROM the actual generated result color
+  // (a light shade -> the exact result -> a dark shade), so the large stage
+  // visibly changes on every Generate/Generate Again — not just the tiny dot.
+  const lightStopL = Math.max(0, Math.min(96, finalLight + 20));
+  const darkStopL = Math.max(4, Math.min(100, finalLight - 24));
+  const lightStopRgb = hslToRgbValues(finalHue, finalSat, lightStopL);
+  const darkStopRgb = hslToRgbValues(finalHue, finalSat, darkStopL);
+  const lightStopHex = rgbToHexCode(lightStopRgb[0], lightStopRgb[1], lightStopRgb[2]);
+  const darkStopHex = rgbToHexCode(darkStopRgb[0], darkStopRgb[1], darkStopRgb[2]);
+  const resultGradientCss = `linear-gradient(135deg, ${lightStopHex} 0%, ${finalHex} 55%, ${darkStopHex} 100%)`;
 
   const newMix = {
     id: 'mix_' + Date.now(),
@@ -1493,7 +1576,8 @@ function generateColorMix(isShuffle = false) {
     hsl: [Math.round(finalHue), Math.round(finalSat), Math.round(finalLight)],
     hslStr: `${Math.round(finalHue)}°, ${Math.round(finalSat)}%, ${Math.round(finalLight)}%`,
     inputHexFlow,
-    gradientCss,
+    gradientCss: resultGradientCss,
+    inputGradientCss: gradientCss,
     baseColors: baseColors.map((c) => ({ name: c.name, hex: c.hex }))
   };
 
@@ -1933,245 +2017,6 @@ function renderMixSavedList() {
   });
 }
 
-/* Smoky Button WebGL Shader Animation for Generate Mix Button */
-const SMOKE_VERTEX_SHADER = `
-  attribute vec2 aPosition;
-  void main() {
-    gl_Position = vec4(aPosition, 0.0, 1.0);
-  }
-`;
-
-const SMOKE_FRAGMENT_SHADER = `
-  precision mediump float;
-  uniform vec2 uResolution;
-  uniform float uTime;
-  uniform float uSpeed;
-  uniform vec3 uPrimary;
-  uniform vec3 uSecondary;
-  uniform vec3 uShadow;
-
-  float random(vec2 position) {
-    return fract(sin(dot(position, vec2(12.9898, 78.233))) * 43758.5453);
-  }
-
-  float noise(vec2 position) {
-    vec2 cell = floor(position);
-    vec2 offset = fract(position);
-    float a = random(cell);
-    float b = random(cell + vec2(1.0, 0.0));
-    float c = random(cell + vec2(0.0, 1.0));
-    float d = random(cell + vec2(1.0, 1.0));
-    vec2 blend = offset * offset * (3.0 - 2.0 * offset);
-    return mix(a, b, blend.x)
-      + (c - a) * blend.y * (1.0 - blend.x)
-      + (d - b) * blend.x * blend.y;
-  }
-
-  float fbm(vec2 position) {
-    float value = 0.0;
-    float amplitude = 0.5;
-    mat2 rotation = mat2(0.8776, 0.4794, -0.4794, 0.8776);
-    for (int i = 0; i < 6; i++) {
-      value += amplitude * noise(position);
-      position = rotation * position * 2.04 + vec2(13.7, 9.2);
-      amplitude *= 0.5;
-    }
-    return value;
-  }
-
-  void main() {
-    vec2 uv = gl_FragCoord.xy / uResolution.xy;
-    vec2 position = (gl_FragCoord.xy - 0.5 * uResolution.xy) / uResolution.y;
-    float time = uTime * uSpeed * 0.58;
-
-    vec2 silkPosition = position;
-    silkPosition.y += 0.20 * sin(position.x * 1.55 - time * 1.8)
-      + 0.11 * sin(position.x * 3.2 + time * 1.35);
-    silkPosition.x += 0.06 * sin(position.y * 4.2 - time * 1.1);
-
-    vec2 warp = vec2(
-      fbm(silkPosition * 1.15 + vec2(time * 0.28, -time * 0.17)),
-      fbm(silkPosition * 1.05 + vec2(4.8, 1.3) - vec2(time * 0.18, time * 0.22))
-    );
-    vec2 current = silkPosition + (warp - 0.5) * 0.82;
-    float body = fbm(current * 1.35 + vec2(-time * 0.24, time * 0.14));
-    float detail = fbm(current * 2.7 + vec2(time * 0.31, -time * 0.27));
-    float primaryPlume = fbm(current * 1.20 + vec2(-time * 0.38, time * 0.18));
-    float secondaryPlume = fbm(
-      current * 1.10 + vec2(time * 0.26, -time * 0.32) + vec2(7.2, 3.6)
-    );
-    float shadowPlume = fbm(
-      current * 1.45 + vec2(-time * 0.18, time * 0.42) + vec2(2.4, 8.1)
-    );
-    float bottomPlume = fbm(
-      vec2(current.x * 0.92 - time * 0.34, current.y * 0.76 + time * 0.16)
-        + vec2(6.4, 2.3)
-    );
-
-    float sharedFlow = current.y * 6.8 + current.x * 1.35 + (warp.x - warp.y) * 5.2;
-    float crossFlow = current.y * 5.4 - current.x * 2.1 + (warp.x + warp.y) * 3.5;
-    float primaryRibbon = 0.5 + 0.5 * sin(sharedFlow - time * 2.75);
-    float secondaryRibbon = 0.5 + 0.5 * sin(crossFlow + time * 2.35 + 2.1);
-    float shadowRibbon = 0.5 + 0.5 * sin(
-      sharedFlow * 0.78 - crossFlow * 0.22 - time * 3.25 + 4.2
-    );
-    primaryRibbon = smoothstep(0.08, 0.92, primaryRibbon);
-    secondaryRibbon = smoothstep(0.08, 0.92, secondaryRibbon);
-    shadowRibbon = smoothstep(0.12, 0.88, shadowRibbon);
-
-    float primaryWeight = smoothstep(0.27, 0.76, primaryPlume + 0.24 * body)
-      * (0.20 + 1.08 * primaryRibbon);
-    float secondaryWeight = smoothstep(0.26, 0.74, secondaryPlume + 0.22 * body)
-      * (0.22 + 1.04 * secondaryRibbon + 0.12 * detail);
-    float shadowWeight = 0.16 + smoothstep(0.32, 0.80, shadowPlume + 0.14 * body)
-      * (0.22 + 0.86 * shadowRibbon);
-    float totalWeight = max(primaryWeight + secondaryWeight + shadowWeight, 0.001);
-    vec3 color = (
-      uPrimary * primaryWeight
-      + uSecondary * secondaryWeight
-      + uShadow * shadowWeight
-    ) / totalWeight;
-
-    float depth = smoothstep(0.15, 0.88, body * 0.78 + detail * 0.30);
-    color *= 0.65 + depth * 0.62;
-    float shadowVein = smoothstep(
-      0.46,
-      0.80,
-      shadowPlume + 0.10 * body + 0.16 * shadowRibbon
-    );
-    color = mix(color, uShadow, shadowVein * (0.12 + 0.42 * shadowRibbon));
-
-    float sheenWave = 0.5 + 0.5 * sin(sharedFlow * 1.22 - time * 3.2 + detail * 2.0);
-    float sheen = pow(sheenWave, 6.0);
-    color += mix(uSecondary, uPrimary, primaryRibbon) * sheen * (0.10 + 0.16 * depth);
-
-    float bottomRidge = 0.26 + 0.24 * bottomPlume
-      + 0.08 * sin(current.x * 2.35 - time * 2.6 + warp.x * 3.0);
-    float bottomEnvelope = 1.0 - smoothstep(bottomRidge, bottomRidge + 0.24, uv.y);
-    float bottomCloud = smoothstep(0.18, 0.72, bottomPlume + 0.22 * detail);
-    float bottomMask = bottomEnvelope * (0.48 + 0.52 * bottomCloud);
-    float bottomFlow = 0.5 + 0.5 * sin(current.x * 2.1 - time * 2.4 + warp.y * 4.0);
-    vec3 bottomColor = mix(uPrimary, uSecondary, smoothstep(0.12, 0.88, bottomFlow));
-    float bottomShadow = smoothstep(0.48, 0.78, shadowPlume + 0.18 * bottomPlume);
-    bottomColor = mix(bottomColor, uShadow, bottomShadow * 0.72);
-    float bottomSheen = pow(0.5 + 0.5 * sin(bottomFlow * 5.0 + time * 2.2), 5.0);
-    bottomColor += mix(uSecondary, uPrimary, bottomFlow) * bottomSheen * 0.12;
-    color = mix(color, bottomColor, bottomMask * 0.72);
-
-    float feather = uv.x
-      + 0.12 * (body - 0.5)
-      + 0.08 * (bottomPlume - 0.5)
-      + 0.04 * sin(current.y * 3.0 - time * 1.4);
-    float alpha = smoothstep(0.24, 0.72, feather);
-
-    gl_FragColor = vec4(clamp(color, 0.0, 1.0), alpha);
-  }
-`;
-
-let smokyRendererInstance = null;
-
-function initSmokyGenerateButton() {
-  const canvas = $('#mix-generate-canvas');
-  if (!canvas || smokyRendererInstance) return;
-
-  try {
-    const gl = canvas.getContext('webgl', {
-      alpha: true,
-      antialias: false,
-      premultipliedAlpha: true
-    });
-    if (!gl) return;
-
-    function compileShader(type, source) {
-      const shader = gl.createShader(type);
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        const err = gl.getShaderInfoLog(shader);
-        gl.deleteShader(shader);
-        throw new Error(err);
-      }
-      return shader;
-    }
-
-    const vs = compileShader(gl.VERTEX_SHADER, SMOKE_VERTEX_SHADER);
-    const fs = compileShader(gl.FRAGMENT_SHADER, SMOKE_FRAGMENT_SHADER);
-    const prog = gl.createProgram();
-    gl.attachShader(prog, vs);
-    gl.attachShader(prog, fs);
-    gl.linkProgram(prog);
-    gl.deleteShader(vs);
-    gl.deleteShader(fs);
-
-    const buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-
-    const posLoc = gl.getAttribLocation(prog, 'aPosition');
-    const resLoc = gl.getUniformLocation(prog, 'uResolution');
-    const timeLoc = gl.getUniformLocation(prog, 'uTime');
-    const speedLoc = gl.getUniformLocation(prog, 'uSpeed');
-    const primaryLoc = gl.getUniformLocation(prog, 'uPrimary');
-    const secondaryLoc = gl.getUniformLocation(prog, 'uSecondary');
-    const shadowLoc = gl.getUniformLocation(prog, 'uShadow');
-
-    function parseColorToNormalizedRgb(hex, fallback) {
-      const v = (hex || '').replace('#', '').trim();
-      const norm = v.length === 3 ? v.split('').map(c => c + c).join('') : v;
-      const num = parseInt(norm, 16);
-      if (norm.length !== 6 || isNaN(num)) return fallback;
-      return [((num >> 16) & 255) / 255, ((num >> 8) & 255) / 255, (num & 255) / 255];
-    }
-
-    let currentColors = {
-      primary: parseColorToNormalizedRgb('#7c3aed', [0.48, 0.22, 0.93]),
-      secondary: parseColorToNormalizedRgb('#6366f1', [0.38, 0.40, 0.94]),
-      shadow: parseColorToNormalizedRgb('#090d16', [0.03, 0.05, 0.08])
-    };
-
-    function resize() {
-      const pr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.max(1, Math.round(canvas.clientWidth * pr));
-      canvas.height = Math.max(1, Math.round(canvas.clientHeight * pr));
-    }
-
-    let animId = 0;
-    const start = performance.now();
-
-    function renderFrame(now) {
-      if (!document.body.contains(canvas)) return;
-      gl.viewport(0, 0, canvas.width, canvas.height);
-      gl.useProgram(prog);
-      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-      gl.enableVertexAttribArray(posLoc);
-      gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
-
-      gl.uniform2f(resLoc, canvas.width, canvas.height);
-      gl.uniform1f(timeLoc, (now - start) / 1000);
-      gl.uniform1f(speedLoc, 1.25);
-      gl.uniform3f(primaryLoc, ...currentColors.primary);
-      gl.uniform3f(secondaryLoc, ...currentColors.secondary);
-      gl.uniform3f(shadowLoc, ...currentColors.shadow);
-
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
-      animId = requestAnimationFrame(renderFrame);
-    }
-
-    const observer = new ResizeObserver(resize);
-    observer.observe(canvas.parentElement || canvas);
-    resize();
-    animId = requestAnimationFrame(renderFrame);
-
-    smokyRendererInstance = {
-      updateColors: (hex1, hex2) => {
-        if (hex1) currentColors.primary = parseColorToNormalizedRgb(hex1, currentColors.primary);
-        if (hex2) currentColors.secondary = parseColorToNormalizedRgb(hex2, currentColors.secondary);
-      }
-    };
-  } catch (e) {
-    console.warn('Smoky WebGL button fallback active:', e);
-  }
-}
 
 /* Event listeners initialization for Color Mix */
 function initColorMix() {
@@ -2180,17 +2025,29 @@ function initColorMix() {
   if (featureCard) {
     featureCard.addEventListener('click', (e) => {
       e.preventDefault();
-      window.location.hash = '#color-mix';
-      openColorMix();
+      if (window.location.pathname !== '/color-mix') {
+        history.pushState(null, '', '/color-mix');
+      }
+      handleRoute();
     });
   }
 
   // Back & Close buttons
   const backBtn = $('#color-mix-back-btn');
-  if (backBtn) backBtn.addEventListener('click', closeColorMix);
+  if (backBtn) {
+    backBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeColorMix();
+    });
+  }
 
   const closeBtn = $('#color-mix-close-btn');
-  if (closeBtn) closeBtn.addEventListener('click', closeColorMix);
+  if (closeBtn) {
+    closeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeColorMix();
+    });
+  }
 
   // Counter +/- buttons
   const decBtn = $('#mix-dec-btn');
@@ -2308,7 +2165,6 @@ function initColorMix() {
   // Initial render of slots and badge
   updateMixCount(colorMixState.count);
   updateSavedMixesCountBadge();
-  initSmokyGenerateButton();
 }
 
 if (document.readyState === 'loading') {

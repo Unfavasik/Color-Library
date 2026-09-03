@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Color Library — Free HTML Color Codes, Palettes &amp; Color Tools</title>
-  <meta name="description" content="Color Library is a free color-code resource for designers and developers to explore, search, and copy HTML, HEX, RGB, and HSL color codes, curated palettes, and custom color mixes." />
+  <title>Color Mix — Color Library</title>
+  <meta name="description" content="Create, blend, and discover beautiful random color combinations, custom palettes, and harmonious tones with Color Library Color Mix." />
   <meta name="theme-color" content="#2563eb" />
-  <link rel="canonical" href="https://color-library.pages.dev/">
+  <link rel="canonical" href="https://color-library.pages.dev/color-mix">
 
   <!-- Favicons & App Manifest -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -16,9 +16,9 @@
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://color-library.pages.dev/" />
-  <meta property="og:title" content="Color Library — Free HTML Color Codes, Palettes &amp; Color Tools" />
-  <meta property="og:description" content="Color Library is a free color-code resource for designers and developers to explore, search, and copy HTML, HEX, RGB, and HSL color codes, curated palettes, and custom color mixes." />
+  <meta property="og:url" content="https://color-library.pages.dev/color-mix" />
+  <meta property="og:title" content="Color Mix — Color Library" />
+  <meta property="og:description" content="Create, blend, and discover beautiful random color combinations, custom palettes, and harmonious tones with Color Library Color Mix." />
   <meta property="og:image" content="https://color-library.pages.dev/public/og-image.webp" />
   <meta property="og:image:secure_url" content="https://color-library.pages.dev/public/og-image.webp" />
   <meta property="og:image:type" content="image/webp" />
@@ -28,9 +28,9 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content="https://color-library.pages.dev/" />
-  <meta name="twitter:title" content="Color Library — Free HTML Color Codes, Palettes &amp; Color Tools" />
-  <meta name="twitter:description" content="Color Library is a free color-code resource for designers and developers to explore, search, and copy HTML, HEX, RGB, and HSL color codes, curated palettes, and custom color mixes." />
+  <meta name="twitter:url" content="https://color-library.pages.dev/color-mix" />
+  <meta name="twitter:title" content="Color Mix — Color Library" />
+  <meta name="twitter:description" content="Create, blend, and discover beautiful random color combinations, custom palettes, and harmonious tones with Color Library Color Mix." />
   <meta name="twitter:image" content="https://color-library.pages.dev/public/og-image.webp" />
   <meta name="twitter:image:alt" content="Color Library - Free HTML Color Codes &amp; Tools" />
 
@@ -69,6 +69,14 @@
   -->
 
   <!-- Google AdSense -->
+  <script>
+    window.addEventListener('error', function(e) {
+      if (e && (e.message || '').indexOf('adsbygoogle') !== -1) {
+        if (e.preventDefault) e.preventDefault();
+        return true;
+      }
+    });
+  </script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8084415154795131"
      crossorigin="anonymous"></script>
 
@@ -78,11 +86,11 @@
   <div class="app-shell">
     <header class="site-header">
       <div class="header-inner">
-        <a class="brand" href="#top" aria-label="Color Library home">
+        <a class="brand" href="/" aria-label="Color Library home">
           <img src="color-library.png" alt="Color Library" class="brand-mark" />
         </a>
         <nav class="primary-nav" aria-label="Primary navigation">
-          <a class="active" href="#top">Home</a>
+          <a class="active" href="/">Home</a>
           <a href="#colors">Colors <svg class="nav-chevron" viewBox="0 0 16 16" fill="none"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <a href="#recently-viewed" id="nav-recent">Recent</a>
           <a href="#tools">Tools <svg class="nav-chevron" viewBox="0 0 16 16" fill="none"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -151,7 +159,7 @@
       <section class="feature-strip" aria-label="Color tools">
         <a class="feature-card" href="#tools"><span class="feature-icon" style="--feature-color:#2d7ae9;--feature-bg:#eaf3ff"><svg viewBox="0 0 24 24" fill="none"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m4.5 7.5 7.5 4 7.5-4M12 12v9" stroke="currentColor" stroke-width="1.8"/></svg></span><span><h3>Color Picker</h3><p>Pick any color &amp; get all codes instantly</p></span><span class="feature-arrow">›</span></a>
         <a class="feature-card" href="#tools"><span class="feature-icon" style="--feature-color:#1caf4b;--feature-bg:#e9faef"><svg viewBox="0 0 24 24" fill="none"><path d="M4 8h15M15 4l4 4-4 4M20 16H5m4-4-4 4 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><h3>Converter</h3><p>Convert between HEX, RGB, HSL &amp; more</p></span><span class="feature-arrow">›</span></a>
-        <a class="feature-card" href="#color-mix" id="feature-color-mix"><span class="feature-icon" style="--feature-color:#8b5cf6;--feature-bg:#f5f3ff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/></svg></span><span><h3>Color Mix</h3><p>Create beautiful random color combinations</p></span><span class="feature-arrow">›</span></a>
+        <a class="feature-card" href="/color-mix" id="feature-color-mix"><span class="feature-icon" style="--feature-color:#8b5cf6;--feature-bg:#f5f3ff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/></svg></span><span><h3>Color Mix</h3><p>Create beautiful random color combinations</p></span><span class="feature-arrow">›</span></a>
         <a class="feature-card" href="#palettes" id="feature-palettes"><span class="feature-icon" style="--feature-color:#9850de;--feature-bg:#f3eafe"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M4 10h16M4 15h16M10 4v16M15 4v16" stroke="currentColor" stroke-width="1.5"/></svg></span><span><h3>Color Palette</h3><p>Discover beautiful color palettes</p></span><span class="feature-arrow">›</span></a>
         <a class="feature-card" href="#gradients"><span class="feature-icon" style="--feature-color:#f59b09;--feature-bg:#fff5df"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3c3.7 5.1 7 8.6 7 12a7 7 0 1 1-14 0c0-3.4 3.3-6.9 7-12Z" stroke="currentColor" stroke-width="1.8"/><path d="M9 17.5c.7.8 1.6 1.2 2.7 1.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><span><h3>Gradients</h3><p>Explore stunning CSS gradients</p></span><span class="feature-arrow">›</span></a>
         <a class="feature-card" href="#colors"><span class="feature-icon" style="--feature-color:#e42275;--feature-bg:#fdeaf3"><svg viewBox="0 0 24 24" fill="none"><path d="M12 4a8 8 0 0 0-8 8c0 2 1.2 3 3 3h1.2c.9 0 1.5.7 1.5 1.5S10.4 19 12 19a8 8 0 0 0 0-15Z" stroke="currentColor" stroke-width="1.8"/><circle cx="8" cy="11" r="1" fill="currentColor"/><circle cx="12" cy="8" r="1" fill="currentColor"/><circle cx="16" cy="9" r="1" fill="currentColor"/></svg></span><span><h3>Color Chart</h3><p>Browse all HTML color codes</p></span><span class="feature-arrow">›</span></a>
@@ -171,7 +179,51 @@
                data-ad-format="auto"
                data-full-width-responsive="true"></ins>
           <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
+            (function() {
+              function initAd() {
+                var ins = document.querySelector('#ad-hero-slot ins.adsbygoogle');
+                if (!ins || ins.getAttribute('data-adsbygoogle-status')) return;
+                if (ins.offsetWidth > 0) {
+                  try {
+                    (window.adsbygoogle = window.adsbygoogle || []).push({});
+                  } catch (e) {}
+                  return;
+                }
+                if (typeof ResizeObserver !== 'undefined') {
+                  var ro = new ResizeObserver(function(entries) {
+                    for (var i = 0; i < entries.length; i++) {
+                      if (entries[i].contentRect && entries[i].contentRect.width > 0) {
+                        ro.disconnect();
+                        try {
+                          if (!ins.getAttribute('data-adsbygoogle-status')) {
+                            (window.adsbygoogle = window.adsbygoogle || []).push({});
+                          }
+                        } catch (err) {}
+                        break;
+                      }
+                    }
+                  });
+                  ro.observe(ins);
+                } else {
+                  var poll = setInterval(function() {
+                    if (ins.offsetWidth > 0) {
+                      clearInterval(poll);
+                      try {
+                        if (!ins.getAttribute('data-adsbygoogle-status')) {
+                          (window.adsbygoogle = window.adsbygoogle || []).push({});
+                        }
+                      } catch (err) {}
+                    }
+                  }, 200);
+                  setTimeout(function() { clearInterval(poll); }, 6000);
+                }
+              }
+              if (document.readyState === 'complete') {
+                setTimeout(initAd, 60);
+              } else {
+                window.addEventListener('load', initAd);
+              }
+            })();
           </script>
         </div>
       </section>
@@ -225,11 +277,13 @@
         <div class="footer-copyright">© 2026 <span class="footer-brand-name">Color Library</span>. All rights reserved.</div>
         <div class="footer-developer">Designed &amp; Developed by <a href="#developer" class="footer-dev-link">Dev Asik</a></div>
         <div class="footer-links">
-          <a href="#privacy-policy">Privacy Policy</a>
+          <a href="/privacy-policy">Privacy Policy</a>
           <span class="footer-dot">·</span>
-          <a href="#terms">Terms &amp; Conditions</a>
+          <a href="/terms-of-service">Terms of Service</a>
           <span class="footer-dot">·</span>
-          <a href="#about">About</a>
+          <a href="/contact">Contact</a>
+          <span class="footer-dot">·</span>
+          <a href="/about">About</a>
         </div>
       </div>
     </footer>
@@ -245,31 +299,31 @@
         </button>
       </div>
       <div class="more-menu-list">
-        <button class="more-menu-item" data-page="privacy">
+        <a class="more-menu-item" href="/privacy-policy">
           <span class="more-item-icon">🔒</span>
           <span class="more-item-label">Privacy Policy</span>
           <svg class="more-item-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </button>
-        <button class="more-menu-item" data-page="terms">
+        </a>
+        <a class="more-menu-item" href="/terms-of-service">
           <span class="more-item-icon">📄</span>
-          <span class="more-item-label">Terms &amp; Conditions</span>
+          <span class="more-item-label">Terms of Service</span>
           <svg class="more-item-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </button>
+        </a>
         <button class="more-menu-item" data-page="developer">
           <span class="more-item-icon">👨‍💻</span>
           <span class="more-item-label">Developer Details</span>
           <svg class="more-item-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </button>
-        <button class="more-menu-item" data-page="about">
+        <a class="more-menu-item" href="/about">
           <span class="more-item-icon">ℹ️</span>
           <span class="more-item-label">About Color Library</span>
           <svg class="more-item-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </button>
-        <button class="more-menu-item" data-page="contact">
+        </a>
+        <a class="more-menu-item" href="/contact">
           <span class="more-item-icon">📩</span>
           <span class="more-item-label">Contact / Feedback</span>
           <svg class="more-item-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </button>
+        </a>
       </div>
     </div>
   </div>
@@ -288,14 +342,14 @@
   </div>
 
   <!-- Dedicated Color Mix Responsive Full Page Interface -->
-  <div class="color-mix-overlay" id="color-mix-overlay" role="dialog" aria-modal="true" aria-labelledby="color-mix-title">
+  <div class="color-mix-overlay active" id="color-mix-overlay" role="dialog" aria-modal="true" aria-labelledby="color-mix-title">
     <div class="color-mix-card" id="color-mix-card">
       <div class="color-mix-header">
         <div class="color-mix-header-left">
-          <button type="button" class="color-mix-back-btn" id="color-mix-back-btn" aria-label="Back to Home" title="Back to Home">
+          <a href="/" class="color-mix-back-btn" id="color-mix-back-btn" aria-label="Back to Home" title="Back to Home">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
             <span>Back</span>
-          </button>
+          </a>
           <div class="color-mix-header-text">
             <div class="color-mix-badge">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/></svg>
@@ -348,7 +402,6 @@
           <!-- 3. PRIMARY ACTION: GENERATE MIX -->
           <div class="mix-generate-row">
             <button type="button" class="mix-primary-generate-btn smoky-button" id="mix-generate-btn" aria-label="Generate Mix">
-              <canvas class="smoky-button__canvas" id="mix-generate-canvas" aria-hidden="true"></canvas>
               <span class="smoky-button__copy">
                 <span class="mix-dice-icon">🎲</span>
                 <span class="smoky-button__label">Generate Mix</span>

@@ -17,6 +17,11 @@ fs.mkdirSync(DIST_DIR, { recursive: true });
 const coreFiles = [
   'index.html',
   'htmcolor.html',
+  'privacy-policy.html',
+  'terms-of-service.html',
+  'contact.html',
+  'about.html',
+  'color-mix.html',
   'ch.css',
   'ch.js',
   'ch.woff2',
@@ -34,6 +39,16 @@ for (const file of coreFiles) {
   const dest = path.join(DIST_DIR, file);
   if (fs.existsSync(src)) {
     fs.copyFileSync(src, dest);
+  }
+}
+
+// 2b. Copy dedicated route directories
+const routeDirs = ['privacy-policy', 'terms-of-service', 'contact', 'about', 'color-mix'];
+for (const dir of routeDirs) {
+  const src = path.join(ROOT_DIR, dir);
+  const dest = path.join(DIST_DIR, dir);
+  if (fs.existsSync(src)) {
+    fs.cpSync(src, dest, { recursive: true });
   }
 }
 
