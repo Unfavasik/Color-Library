@@ -26,7 +26,8 @@ const coreFiles = [
   'favicon.png',
   'og-image.webp',
   'og-image.png',
-  'vercel.json'
+  'vercel.json',
+  'ads.txt'
 ];
 
 for (const file of coreFiles) {
@@ -65,7 +66,8 @@ const requiredFiles = [
   'favicon.ico',
   'favicon.svg',
   'favicon.png',
-  'og-image.webp'
+  'og-image.webp',
+  'ads.txt'
 ];
 
 console.log('\n📄 Production Output Files (dist/):');
