@@ -1461,8 +1461,7 @@ function selectRandomBaseColors() {
   }
 
   renderMixSlots();
-  generateColorMix();
-  showToast(`Selected ${count} random base colors`);
+  generateColorMix(true);
 }
 
 function generateColorMix(isShuffle = false) {
@@ -1882,6 +1881,9 @@ function renderMixPickerGrid() {
       if (colorMixState.activeSlotIndex !== null) {
         colorMixState.selectedColors[colorMixState.activeSlotIndex] = { name, hex };
         renderMixSlots();
+        if (colorMixState.currentMix) {
+          generateColorMix(false);
+        }
         closeMixPicker();
         showToast(`Selected ${name}`);
       }
@@ -2298,17 +2300,16 @@ function initColorMix() {
   if (decBtn) decBtn.addEventListener('click', () => updateMixCount(colorMixState.count - 1));
   if (incBtn) incBtn.addEventListener('click', () => updateMixCount(colorMixState.count + 1));
 
-  // Random base colors button
+  // Random button (primary action): picks random colors and generates mix
   const randomBaseBtn = $('#mix-random-base-btn');
   if (randomBaseBtn) randomBaseBtn.addEventListener('click', selectRandomBaseColors);
 
-  // Generate Mix button: creates EXACTLY ONE final mixed color
+  // Fallback triggers for generateBtn & generateAgainBtn if present
   const generateBtn = $('#mix-generate-btn');
-  if (generateBtn) generateBtn.addEventListener('click', () => generateColorMix(false));
+  if (generateBtn) generateBtn.addEventListener('click', selectRandomBaseColors);
 
-  // Generate Again / shuffle button
   const generateAgainBtn = $('#mix-generate-again-btn');
-  if (generateAgainBtn) generateAgainBtn.addEventListener('click', () => generateColorMix(true));
+  if (generateAgainBtn) generateAgainBtn.addEventListener('click', selectRandomBaseColors);
 
   // Copy HEX button
   const copyHexBtn = $('#mix-copy-hex-btn');
