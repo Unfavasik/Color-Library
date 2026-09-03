@@ -2218,4 +2218,16 @@ if (document.readyState === 'loading') {
   initColorMix();
 }
 
+// Google Ads conversion helper (safe fallback when gtag is loaded)
+function trackAdConversion(conversionLabel, conversionValue = 0) {
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', 'conversion', {
+      send_to: conversionLabel,
+      value: conversionValue,
+      currency: 'USD'
+    });
+  }
+}
+window.trackAdConversion = trackAdConversion;
+
 

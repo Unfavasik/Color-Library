@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# Replace https://YOUR-DOMAIN.com with your custom domain once connected in Cloudflare Pages
-Sitemap: https://YOUR-DOMAIN.com/sitemap.xml
+Sitemap: https://color-library.pages.dev/sitemap.xml
