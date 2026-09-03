@@ -3,6 +3,7 @@ const featuredOrder = new Map(['#F0F8FF', '#FAEBD7', '#00FFFF', '#7FFFD4', '#F0F
 const categories = ['All', 'Saved', 'Red', 'Pink', 'Purple', 'Indigo', 'Blue', 'Cyan', 'Teal', 'Green', 'Yellow', 'Orange', 'Brown', 'Gray', 'Black', 'White'];
 
 const FAVORITES_STORAGE_KEY = 'colorLibraryFavorites';
+const RECENTLY_VIEWED_STORAGE_KEY = 'colorLibraryRecentlyViewed';
 
 function loadFavorites() {
   try {
@@ -26,7 +27,36 @@ function saveFavorites() {
   }
 }
 
-const state = { query: '', category: 'All', sort: 'source', selected: '#3B82F6', favorites: loadFavorites() };
+function loadRecentlyViewed() {
+  try {
+    const raw = localStorage.getItem(RECENTLY_VIEWED_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) {
+      return parsed.filter((item) => item && typeof item === 'object' && (item.hex || Array.isArray(item.colors))).slice(0, 5);
+    }
+  } catch (err) {
+    console.warn('Error reading recently viewed from localStorage:', err);
+  }
+  return [];
+}
+
+function saveRecentlyViewed(items) {
+  try {
+    localStorage.setItem(RECENTLY_VIEWED_STORAGE_KEY, JSON.stringify((items || []).slice(0, 5)));
+  } catch (err) {
+    console.warn('Error saving recently viewed to localStorage:', err);
+  }
+}
+
+const state = {
+  query: '',
+  category: 'All',
+  sort: 'source',
+  selected: '#3B82F6',
+  favorites: loadFavorites(),
+  recentlyViewed: loadRecentlyViewed()
+};
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
 
@@ -248,7 +278,239 @@ function renderGrid() {
   });
 }
 
-function render() { renderFilters(); renderGrid(); }
+const CURATED_PALETTES = [
+  { name: 'Sunset Horizon', tag: 'Warm & Vibrant', colors: ['#FF4E50', '#FC913A', '#F9D423', '#EDE574', '#E1F5C4'] },
+  { name: 'Nordic Frost', tag: 'Cool Minimalist', colors: ['#2E3440', '#3B4252', '#434C5E', '#88C0D0', '#ECEFF4'] },
+  { name: 'Oceanic Depths', tag: 'Deep Blues', colors: ['#03045E', '#023E8A', '#0077B6', '#0096C7', '#48CAE4'] },
+  { name: 'Forest Moss', tag: 'Earthy Nature', colors: ['#2D3A27', '#4E6E58', '#8EA89D', '#D1DBCB', '#F1F5F0'] },
+  { name: 'Neon Cyberpunk', tag: 'High Contrast', colors: ['#0D0221', '#0F084B', '#26408B', '#A6CFD5', '#C2E7D9'] },
+  { name: 'Pastel Dreamscape', tag: 'Soft Pastel', colors: ['#FFB5E8', '#B28DFF', '#85E3FF', '#BFFCC6', '#FFC9DE'] },
+  { name: 'Terracotta Warmth', tag: 'Warm Earthy', colors: ['#9A3B3B', '#C08261', '#E2C799', '#F2ECBE', '#FAFAFA'] },
+  { name: 'Midnight Jewel', tag: 'Jewel Tones', colors: ['#2E0249', '#570A57', '#A91079', '#F806CC', '#F7D060'] }
+];
+
+function addRecentlyViewed(item) {
+  if (!item) return;
+  const isPalette = item.type === 'palette' || (Array.isArray(item.colors) && item.colors.length > 1);
+  const type = isPalette ? 'palette' : 'color';
+
+  let entry;
+  if (type === 'color') {
+    const rawHex = String(item.hex || '').trim();
+    const normalizedHex = '#' + rawHex.replace('#', '').toUpperCase();
+    if (!/^#[0-9A-F]{6}$/i.test(normalizedHex)) return;
+    const match = colors.find((c) => c.hex.toUpperCase() === normalizedHex);
+    const name = item.name || (match ? match.name : (normalizedHex === '#3B82F6' ? 'Cornflower Blue' : 'Custom Color'));
+    entry = {
+      type: 'color',
+      hex: normalizedHex,
+      name,
+      timestamp: Date.now()
+    };
+  } else {
+    const colorsList = (item.colors || [])
+      .map((c) => '#' + String(c).replace('#', '').trim().toUpperCase())
+      .filter((c) => /^#[0-9A-F]{6}$/i.test(c));
+    if (!colorsList.length) return;
+    const title = item.title || item.name || `${colorsList.length}-Color Palette`;
+    entry = {
+      type: 'palette',
+      title,
+      colors: colorsList,
+      hex: colorsList[0],
+      timestamp: Date.now()
+    };
+  }
+
+  // Deduplicate against existing items in state
+  const current = (state.recentlyViewed || []).filter((existing) => {
+    if (!existing) return false;
+    if (existing.type !== entry.type) return true;
+    if (entry.type === 'color') {
+      return (existing.hex || '').toUpperCase() !== entry.hex.toUpperCase();
+    } else {
+      const exStr = (existing.colors || []).join(',').toUpperCase();
+      const newStr = entry.colors.join(',').toUpperCase();
+      return exStr !== newStr;
+    }
+  });
+
+  state.recentlyViewed = [entry, ...current].slice(0, 5);
+  saveRecentlyViewed(state.recentlyViewed);
+  renderRecentlyViewed();
+}
+
+function removeRecentlyViewed(index) {
+  if (!Array.isArray(state.recentlyViewed) || index < 0 || index >= state.recentlyViewed.length) return;
+  const removed = state.recentlyViewed.splice(index, 1);
+  saveRecentlyViewed(state.recentlyViewed);
+  renderRecentlyViewed();
+  if (removed && removed[0]) {
+    const label = removed[0].name || removed[0].title || removed[0].hex || 'Item';
+    showToast(`Removed "${label}" from recent history`);
+  }
+}
+
+function clearRecentlyViewed() {
+  state.recentlyViewed = [];
+  saveRecentlyViewed([]);
+  renderRecentlyViewed();
+  showToast('Recently viewed history cleared');
+}
+
+function renderRecentlyViewed() {
+  const grid = $('#recently-viewed-grid');
+  const countPill = $('#recently-viewed-count');
+  const clearBtn = $('#recently-viewed-clear-btn');
+  if (!grid) return;
+
+  const list = state.recentlyViewed || [];
+  if (countPill) countPill.textContent = list.length;
+  if (clearBtn) clearBtn.style.display = list.length > 0 ? 'inline-flex' : 'none';
+
+  if (!list.length) {
+    grid.innerHTML = `
+      <div class="recent-empty-card">
+        <div class="recent-empty-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </div>
+        <h4 class="recent-empty-title">No recently viewed colors or palettes yet</h4>
+        <p class="recent-empty-desc">Explore colors in the chart, pick custom shades, or discover curated palettes to see your last 5 viewed items here.</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = list.map((item, index) => {
+    if (item.type === 'color') {
+      const displayName = escapeHtml(item.name || item.hex);
+      return `
+        <div class="recent-card" data-recent-type="color" data-recent-index="${index}" data-hex="${item.hex}" data-name="${displayName}" role="button" tabindex="0" title="Click to inspect ${displayName}">
+          <div class="recent-swatch-area">
+            <div class="recent-single-swatch" style="background: ${item.hex};"></div>
+            <span class="recent-type-badge">Color</span>
+            <button type="button" class="recent-delete-btn" data-delete-recent="${index}" aria-label="Remove ${displayName} from recent history" title="Remove">✕</button>
+          </div>
+          <div class="recent-body">
+            <div class="recent-name" title="${displayName}">${displayName}</div>
+            <div class="recent-meta-row">
+              <span class="recent-hex-badge">${item.hex}</span>
+              <button type="button" class="recent-action-btn" data-copy-recent="${item.hex}" title="Copy HEX">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+                Copy
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      const paletteColors = item.colors || [item.hex];
+      const displayTitle = escapeHtml(item.title || `${paletteColors.length}-Color Palette`);
+      const slicesHtml = paletteColors.map((c) => `<div class="recent-palette-slice" style="background: ${c};" title="${c}"></div>`).join('');
+      const dotsHtml = paletteColors.slice(0, 5).map((c) => `<span class="recent-dot" style="background: ${c};" title="${c}"></span>`).join('');
+      const copyPayload = paletteColors.join(', ');
+      return `
+        <div class="recent-card" data-recent-type="palette" data-recent-index="${index}" data-colors="${paletteColors.join(',')}" data-title="${displayTitle}" role="button" tabindex="0" title="Click to view palette ${displayTitle}">
+          <div class="recent-swatch-area">
+            <div class="recent-palette-bar">${slicesHtml}</div>
+            <span class="recent-type-badge">Palette</span>
+            <button type="button" class="recent-delete-btn" data-delete-recent="${index}" aria-label="Remove ${displayTitle} from recent history" title="Remove">✕</button>
+          </div>
+          <div class="recent-body">
+            <div class="recent-name" title="${displayTitle}">${displayTitle}</div>
+            <div class="recent-meta-row">
+              <div class="recent-dots-group">${dotsHtml}</div>
+              <button type="button" class="recent-action-btn" data-copy-palette="${copyPayload}" title="Copy palette HEX codes">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M4 10h16M4 15h16M10 4v16M15 4v16"/></svg>
+                Copy
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  }).join('');
+}
+
+function openCuratedPalettes() {
+  const overlay = $('#palettes-overlay');
+  if (overlay) {
+    renderCuratedPalettes();
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeCuratedPalettes() {
+  const overlay = $('#palettes-overlay');
+  if (overlay && overlay.classList.contains('active')) {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+    if (window.location.hash === '#palettes') {
+      history.replaceState(null, '', '#home');
+      handleRoute();
+    }
+  }
+}
+
+function renderCuratedPalettes() {
+  const grid = $('#curated-palettes-grid');
+  if (!grid) return;
+
+  grid.innerHTML = CURATED_PALETTES.map((palette, idx) => {
+    const stripHtml = palette.colors.map((c) => `<div class="palette-item-strip-slice" style="background: ${c};" title="HEX: ${c} (Click to inspect)" data-single-color="${c}"></div>`).join('');
+    const pillsHtml = palette.colors.map((c) => `
+      <button type="button" class="palette-item-color-pill" data-single-color="${c}" title="Load ${c} into picker">
+        <span class="palette-item-color-pill-dot" style="background: ${c};"></span>
+        ${c}
+      </button>
+    `).join('');
+
+    return `
+      <div class="palette-item-card" data-palette-index="${idx}">
+        <div class="palette-item-strip">${stripHtml}</div>
+        <div class="palette-item-details">
+          <div class="palette-item-title-row">
+            <span class="palette-item-name">${escapeHtml(palette.name)}</span>
+            <span class="palette-item-tag">${escapeHtml(palette.tag)}</span>
+          </div>
+          <div class="palette-item-colors-row">${pillsHtml}</div>
+          <div class="palette-item-actions">
+            <button type="button" class="palette-item-btn" data-copy-curated="${palette.colors.join(', ')}">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+              Copy
+            </button>
+            <button type="button" class="palette-item-btn primary" data-mix-curated="${idx}">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/></svg>
+              Mix This
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function openColorMixWithColors(hexList) {
+  if (!Array.isArray(hexList) || !hexList.length) return;
+  const count = Math.max(2, Math.min(5, hexList.length));
+  colorMixState.count = count;
+  colorMixState.selectedColors = [];
+  for (let i = 0; i < count; i++) {
+    const hex = hexList[i] || '#3B82F6';
+    const match = colors.find((c) => c.hex.toUpperCase() === hex.toUpperCase());
+    const name = match ? match.name : findClosestColorName(hex);
+    colorMixState.selectedColors[i] = { name, hex };
+  }
+  updateMixCount(count);
+  generateColorMix();
+  openColorMix();
+}
+
+function render() { renderFilters(); renderGrid(); renderRecentlyViewed(); }
 function setQuery(value) { state.query = value; $('#hero-search').value = value; $('#global-search').value = value; renderGrid(); }
 function updatePicker(hex) {
   const rgb = hexToRgb(hex); if (!rgb) return;
@@ -295,17 +557,30 @@ on('#saved-banner-wrap', 'click', (event) => {
   }
 });
 on('#color-grid', 'click', (event) => {
+  const card = event.target.closest('.color-card');
   const favBtn = event.target.closest('[data-fav]');
   if (favBtn) {
     event.stopPropagation();
     toggleFavorite(favBtn.dataset.fav, favBtn.dataset.name);
+    addRecentlyViewed({ type: 'color', hex: favBtn.dataset.fav, name: favBtn.dataset.name });
     return;
   }
   const button = event.target.closest('[data-copy]');
   if (button) {
     event.stopPropagation();
     copyText(button.dataset.copy).then(() => showToast(`${button.dataset.copy} copied`));
+    const parentCard = button.closest('.color-card');
+    const colorName = parentCard ? parentCard.querySelector('.color-name')?.textContent : '';
+    addRecentlyViewed({ type: 'color', hex: button.dataset.copy, name: colorName });
     return;
+  }
+  if (card && card.dataset.hex) {
+    updatePicker(card.dataset.hex);
+    addRecentlyViewed({ type: 'color', hex: card.dataset.hex, name: card.dataset.name });
+    const pickerEl = $('#picker');
+    if (pickerEl && window.innerWidth < 768) {
+      pickerEl.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 });
 on('#sort-select', 'change', (event) => { state.sort = event.target.value; renderGrid(); });
@@ -323,7 +598,14 @@ if (savedFeatureBtn) {
   });
 }
 on('#view-all', 'click', () => { setQuery(''); const target = $('#colors'); if (target) target.scrollIntoView({ behavior: 'smooth' }); });
-on('#random-color', 'click', () => { const color = colors[Math.floor(Math.random() * colors.length)]; if (color) { updatePicker(color.hex); showToast(`${color.name} selected`); } });
+on('#random-color', 'click', () => {
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  if (color) {
+    updatePicker(color.hex);
+    addRecentlyViewed({ type: 'color', hex: color.hex, name: color.name });
+    showToast(`${color.name} selected`);
+  }
+});
 on('#copy-selected', 'click', () => {
   copyText(state.selected).then(() => {
     const wrapper = $('#copy-selected');
@@ -335,18 +617,168 @@ on('#copy-selected', 'click', () => {
       wrapper.classList.remove('copied');
       if (progressBar) progressBar.style.width = '0%';
     }, 1800);
+    const colorName = $('#selected-name')?.textContent || '';
+    addRecentlyViewed({ type: 'color', hex: state.selected, name: colorName });
   });
 });
-$$('[data-copy-target]').forEach((button) => button.addEventListener('click', () => { const input = document.getElementById(button.dataset.copyTarget); if (input) copyText(input.value).then(() => showToast(`${input.value} copied`)); }));
-on('#hex-value', 'change', (event) => updatePicker(event.target.value));
+$$('[data-copy-target]').forEach((button) => button.addEventListener('click', () => {
+  const input = document.getElementById(button.dataset.copyTarget);
+  if (input) {
+    copyText(input.value).then(() => showToast(`${input.value} copied`));
+    if (button.dataset.copyTarget === 'hex-value') {
+      const colorName = $('#selected-name')?.textContent || '';
+      addRecentlyViewed({ type: 'color', hex: input.value, name: colorName });
+    }
+  }
+}));
+on('#hex-value', 'change', (event) => {
+  updatePicker(event.target.value);
+  addRecentlyViewed({ type: 'color', hex: event.target.value });
+});
 on('#hue-slider', 'input', (event) => { const hue = event.target.value; updatePicker('#' + hslToHex(Number(hue), 91, 60)); });
+on('#hue-slider', 'change', () => {
+  const colorName = $('#selected-name')?.textContent || '';
+  addRecentlyViewed({ type: 'color', hex: state.selected, name: colorName });
+});
 on('#favorite-toggle', 'click', () => {
   const match = colors.find((c) => c.hex.toUpperCase() === state.selected.toUpperCase());
   const colorName = match ? match.name : state.selected;
   toggleFavorite(state.selected, colorName);
+  addRecentlyViewed({ type: 'color', hex: state.selected, name: colorName });
 });
 on('#theme-toggle', 'click', () => showToast('Light mode is active in this preview'));
 document.addEventListener('keydown', (event) => { if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); const gs = $('#global-search'); if (gs) gs.focus(); } });
+
+// Recently Viewed event listeners
+on('#recently-viewed-clear-btn', 'click', () => {
+  clearRecentlyViewed();
+});
+
+on('#recently-viewed-grid', 'click', (e) => {
+  const deleteBtn = e.target.closest('[data-delete-recent]');
+  if (deleteBtn) {
+    e.stopPropagation();
+    const idx = parseInt(deleteBtn.dataset.deleteRecent, 10);
+    removeRecentlyViewed(idx);
+    return;
+  }
+
+  const copyRecentBtn = e.target.closest('[data-copy-recent]');
+  if (copyRecentBtn) {
+    e.stopPropagation();
+    const hex = copyRecentBtn.dataset.copyRecent;
+    copyText(hex).then(() => showToast(`${hex} copied to clipboard`));
+    return;
+  }
+
+  const copyPaletteBtn = e.target.closest('[data-copy-palette]');
+  if (copyPaletteBtn) {
+    e.stopPropagation();
+    const paletteStr = copyPaletteBtn.dataset.copyPalette;
+    copyText(paletteStr).then(() => showToast(`Palette copied to clipboard`));
+    return;
+  }
+
+  const card = e.target.closest('.recent-card');
+  if (!card) return;
+
+  const type = card.dataset.recentType;
+  if (type === 'color') {
+    const hex = card.dataset.hex;
+    if (hex) {
+      updatePicker(hex);
+      const name = card.dataset.name || hex;
+      showToast(`${name} loaded into picker`);
+      const picker = $('#picker');
+      if (picker) picker.scrollIntoView({ behavior: 'smooth' });
+    }
+  } else if (type === 'palette') {
+    const rawColors = card.dataset.colors;
+    if (rawColors) {
+      const colorList = rawColors.split(',').map((c) => c.trim()).filter(Boolean);
+      openColorMixWithColors(colorList);
+    }
+  }
+});
+
+on('#recently-viewed-grid', 'keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    const card = e.target.closest('.recent-card');
+    if (card) {
+      e.preventDefault();
+      card.click();
+    }
+  }
+});
+
+// Curated Palettes Feature Card & Modal listeners
+on('#feature-palettes', 'click', (e) => {
+  e.preventDefault();
+  openCuratedPalettes();
+});
+
+on('#palettes-close-btn', 'click', () => {
+  closeCuratedPalettes();
+});
+
+on('#palettes-overlay', 'click', (e) => {
+  if (e.target === $('#palettes-overlay')) {
+    closeCuratedPalettes();
+  }
+});
+
+on('#curated-palettes-grid', 'click', (e) => {
+  const singleColorBtn = e.target.closest('[data-single-color]');
+  if (singleColorBtn) {
+    e.stopPropagation();
+    const hex = singleColorBtn.dataset.singleColor;
+    updatePicker(hex);
+    const match = colors.find((c) => c.hex.toUpperCase() === hex.toUpperCase());
+    const name = match ? match.name : findClosestColorName(hex);
+    addRecentlyViewed({ type: 'color', hex, name });
+    showToast(`${name} (${hex}) loaded into picker`);
+    closeCuratedPalettes();
+    const picker = $('#picker');
+    if (picker) picker.scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+
+  const copyCuratedBtn = e.target.closest('[data-copy-curated]');
+  if (copyCuratedBtn) {
+    e.stopPropagation();
+    const str = copyCuratedBtn.dataset.copyCurated;
+    const card = copyCuratedBtn.closest('.palette-item-card');
+    const idx = parseInt(card?.dataset?.paletteIndex || '0', 10);
+    const pal = CURATED_PALETTES[idx];
+    if (pal) {
+      addRecentlyViewed({ type: 'palette', title: pal.name, colors: pal.colors });
+    }
+    copyText(str).then(() => showToast(`Palette copied to clipboard`));
+    return;
+  }
+
+  const mixCuratedBtn = e.target.closest('[data-mix-curated]');
+  if (mixCuratedBtn) {
+    e.stopPropagation();
+    const idx = parseInt(mixCuratedBtn.dataset.mixCurated, 10);
+    const pal = CURATED_PALETTES[idx];
+    if (pal) {
+      addRecentlyViewed({ type: 'palette', title: pal.name, colors: pal.colors });
+      closeCuratedPalettes();
+      openColorMixWithColors(pal.colors);
+    }
+    return;
+  }
+});
+
+// Recent Nav Anchor Smooth Scroll
+on('#nav-recent', 'click', (e) => {
+  e.preventDefault();
+  const target = $('#recently-viewed');
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth' });
+  }
+});
 
 let isDraggingColorStage = false;
 const colorStage = $('#color-stage');
@@ -384,6 +816,8 @@ if (colorStage) {
       try {
         colorStage.releasePointerCapture(e.pointerId);
       } catch (err) {}
+      const colorName = $('#selected-name')?.textContent || '';
+      addRecentlyViewed({ type: 'color', hex: state.selected, name: colorName });
     }
   };
   colorStage.addEventListener('pointerup', endPointer);
@@ -488,6 +922,8 @@ function getActiveRoute() {
   const hash = (window.location.hash || '').toLowerCase();
 
   if (hash === '#color-mix' || path === '/color-mix') return 'color-mix';
+  if (hash === '#palettes' || hash === '#palette' || path === '/palettes' || path === '/palette') return 'palettes';
+  if (hash === '#recently-viewed' || hash === '#recent' || path === '/recently-viewed' || path === '/recent') return 'recently-viewed';
   if (hash === '#saved' || hash === '#favorites' || path === '/favorites' || path === '/saved') return 'favorites';
   if (hash === '#colors' || hash === '#color-chart' || path === '/color-chart' || path === '/colors') return 'color-chart';
   if (hash === '#tools' || path === '/tools') return 'tools';
@@ -504,6 +940,27 @@ function handleRoute() {
   const pageContent = $('#page-content-body');
 
   const colorMixOverlay = $('#color-mix-overlay');
+  const palettesOverlay = $('#palettes-overlay');
+
+  if (route === 'palettes') {
+    if (homeView) homeView.classList.remove('hidden');
+    if (pageView) pageView.classList.remove('active');
+    document.title = 'Color Palettes — Color Library';
+    openCuratedPalettes();
+    return;
+  } else if (palettesOverlay && palettesOverlay.classList.contains('active')) {
+    palettesOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  if (route === 'recently-viewed') {
+    if (homeView) homeView.classList.remove('hidden');
+    if (pageView) pageView.classList.remove('active');
+    document.title = 'Recently Viewed — Color Library';
+    const target = $('#recently-viewed');
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
 
   if (route === 'color-mix') {
     if (homeView) homeView.classList.remove('hidden');
@@ -945,6 +1402,12 @@ function generateColorMix(isShuffle = false) {
   colorMixState.history.push(newMix);
   colorMixState.historyIndex = colorMixState.history.length - 1;
   colorMixState.currentMix = newMix;
+
+  addRecentlyViewed({
+    type: 'palette',
+    title: `${newMix.name} Mix`,
+    colors: baseColors.map((c) => c.hex)
+  });
 
   renderCurrentMixResult();
 }

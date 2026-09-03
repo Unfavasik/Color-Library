@@ -41,6 +41,7 @@
         <nav class="primary-nav" aria-label="Primary navigation">
           <a class="active" href="#top">Home</a>
           <a href="#colors">Colors <svg class="nav-chevron" viewBox="0 0 16 16" fill="none"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="#recently-viewed" id="nav-recent">Recent</a>
           <a href="#tools">Tools <svg class="nav-chevron" viewBox="0 0 16 16" fill="none"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <a href="#more" id="more-link">More <svg class="nav-chevron" viewBox="0 0 16 16" fill="none"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </nav>
@@ -108,10 +109,39 @@
         <a class="feature-card" href="#tools"><span class="feature-icon" style="--feature-color:#2d7ae9;--feature-bg:#eaf3ff"><svg viewBox="0 0 24 24" fill="none"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m4.5 7.5 7.5 4 7.5-4M12 12v9" stroke="currentColor" stroke-width="1.8"/></svg></span><span><h3>Color Picker</h3><p>Pick any color &amp; get all codes instantly</p></span><span class="feature-arrow">›</span></a>
         <a class="feature-card" href="#tools"><span class="feature-icon" style="--feature-color:#1caf4b;--feature-bg:#e9faef"><svg viewBox="0 0 24 24" fill="none"><path d="M4 8h15M15 4l4 4-4 4M20 16H5m4-4-4 4 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><h3>Converter</h3><p>Convert between HEX, RGB, HSL &amp; more</p></span><span class="feature-arrow">›</span></a>
         <a class="feature-card" href="#color-mix" id="feature-color-mix"><span class="feature-icon" style="--feature-color:#8b5cf6;--feature-bg:#f5f3ff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/></svg></span><span><h3>Color Mix</h3><p>Create beautiful random color combinations</p></span><span class="feature-arrow">›</span></a>
-        <a class="feature-card" href="#palettes"><span class="feature-icon" style="--feature-color:#9850de;--feature-bg:#f3eafe"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M4 10h16M4 15h16M10 4v16M15 4v16" stroke="currentColor" stroke-width="1.5"/></svg></span><span><h3>Color Palette</h3><p>Discover beautiful color palettes</p></span><span class="feature-arrow">›</span></a>
+        <a class="feature-card" href="#palettes" id="feature-palettes"><span class="feature-icon" style="--feature-color:#9850de;--feature-bg:#f3eafe"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M4 10h16M4 15h16M10 4v16M15 4v16" stroke="currentColor" stroke-width="1.5"/></svg></span><span><h3>Color Palette</h3><p>Discover beautiful color palettes</p></span><span class="feature-arrow">›</span></a>
         <a class="feature-card" href="#gradients"><span class="feature-icon" style="--feature-color:#f59b09;--feature-bg:#fff5df"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3c3.7 5.1 7 8.6 7 12a7 7 0 1 1-14 0c0-3.4 3.3-6.9 7-12Z" stroke="currentColor" stroke-width="1.8"/><path d="M9 17.5c.7.8 1.6 1.2 2.7 1.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><span><h3>Gradients</h3><p>Explore stunning CSS gradients</p></span><span class="feature-arrow">›</span></a>
         <a class="feature-card" href="#colors"><span class="feature-icon" style="--feature-color:#e42275;--feature-bg:#fdeaf3"><svg viewBox="0 0 24 24" fill="none"><path d="M12 4a8 8 0 0 0-8 8c0 2 1.2 3 3 3h1.2c.9 0 1.5.7 1.5 1.5S10.4 19 12 19a8 8 0 0 0 0-15Z" stroke="currentColor" stroke-width="1.8"/><circle cx="8" cy="11" r="1" fill="currentColor"/><circle cx="12" cy="8" r="1" fill="currentColor"/><circle cx="16" cy="9" r="1" fill="currentColor"/></svg></span><span><h3>Color Chart</h3><p>Browse all HTML color codes</p></span><span class="feature-arrow">›</span></a>
         <a class="feature-card" href="#saved"><span class="feature-icon" style="--feature-color:#1ea69b;--feature-bg:#e7f8f6"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4h12v16l-6-3-6 3V4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span><span><h3>Saved Colors</h3><p>Save and organize your favorite colors</p></span><span class="feature-arrow">›</span></a>
+      </section>
+
+      <!-- Recently Viewed Section -->
+      <section class="recently-viewed" id="recently-viewed" aria-label="Recently Viewed Colors and Palettes">
+        <div class="recently-viewed-inner">
+          <div class="recently-viewed-header">
+            <div class="recently-viewed-title-group">
+              <span class="recently-viewed-icon-badge" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </span>
+              <div>
+                <h2 class="recently-viewed-title">Recently Viewed <span class="recently-viewed-count-pill" id="recently-viewed-count">0</span></h2>
+                <p class="recently-viewed-subtitle">Last 5 colors or palettes explored</p>
+              </div>
+            </div>
+            <div class="recently-viewed-actions">
+              <button type="button" class="recently-viewed-clear-btn" id="recently-viewed-clear-btn" aria-label="Clear recently viewed history" title="Clear recently viewed">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                </svg>
+                <span>Clear History</span>
+              </button>
+            </div>
+          </div>
+          <div class="recently-viewed-grid" id="recently-viewed-grid"></div>
+        </div>
       </section>
 
       <section class="catalog" id="colors">
@@ -407,6 +437,26 @@
         </button>
       </div>
       <div class="mix-saved-list" id="mix-saved-list"></div>
+    </div>
+  </div>
+
+  <!-- Curated Color Palettes Modal -->
+  <div class="palettes-overlay" id="palettes-overlay" role="dialog" aria-modal="true" aria-labelledby="palettes-modal-title">
+    <div class="palettes-card">
+      <div class="palettes-header">
+        <div class="palettes-header-title-wrap">
+          <div class="palettes-badge">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M4 15h16M10 4v16M15 4v16"/></svg>
+            <span>Curated Palettes</span>
+          </div>
+          <h3 id="palettes-modal-title">Discover Color Palettes</h3>
+          <p class="palettes-sub">Explore designer-curated color combinations. Click to copy codes, explore or mix.</p>
+        </div>
+        <button type="button" class="mix-picker-close" id="palettes-close-btn" aria-label="Close palettes">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="palettes-grid" id="curated-palettes-grid"></div>
     </div>
   </div>
 

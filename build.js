@@ -5,7 +5,7 @@ const ROOT_DIR = process.cwd();
 const DIST_DIR = path.join(ROOT_DIR, 'dist');
 const PUBLIC_DIR = path.join(ROOT_DIR, 'public');
 
-console.log('📦 Building Color Library for production (Cloudflare Pages)...');
+console.log('📦 Building Color Library for production (Vercel & static hosting)...');
 
 // 1. Clean and re-create dist/ directory
 if (fs.existsSync(DIST_DIR)) {
@@ -25,7 +25,8 @@ const coreFiles = [
   'favicon.svg',
   'favicon.png',
   'og-image.webp',
-  'og-image.png'
+  'og-image.png',
+  'vercel.json'
 ];
 
 for (const file of coreFiles) {
@@ -88,4 +89,4 @@ if (missing) {
   process.exit(1);
 }
 
-console.log('\n✨ Build complete! Output directory: dist/\nReady for Cloudflare Pages deployment.');
+console.log('\n✨ Build complete! Output directory: dist/\nReady for Vercel deployment (and static hosting).');
