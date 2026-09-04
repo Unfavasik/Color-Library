@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Color Mix — Color Library</title>
+  <meta name="description" content="Create, blend, and discover beautiful random color combinations, custom palettes, and harmonious tones with Color Library Color Mix." />
+  <meta name="theme-color" content="#2563eb" />
+  <link rel="canonical" href="https://color-library.pages.dev/color-mix">
+
+  <!-- Favicons & App Manifest -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://color-library.pages.dev/color-mix" />
+  <meta property="og:title" content="Color Mix — Color Library" />
+  <meta property="og:description" content="Create, blend, and discover beautiful random color combinations, custom palettes, and harmonious tones with Color Library Color Mix." />
+  <meta property="og:image" content="https://color-library.pages.dev/public/og-image.webp" />
+  <meta property="og:image:secure_url" content="https://color-library.pages.dev/public/og-image.webp" />
+  <meta property="og:image:type" content="image/webp" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Color Library - Free HTML Color Codes &amp; Tools" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://color-library.pages.dev/color-mix" />
+  <meta name="twitter:title" content="Color Mix — Color Library" />
+  <meta name="twitter:description" content="Create, blend, and discover beautiful random color combinations, custom palettes, and harmonious tones with Color Library Color Mix." />
+  <meta name="twitter:image" content="https://color-library.pages.dev/public/og-image.webp" />
+  <meta name="twitter:image:alt" content="Color Library - Free HTML Color Codes &amp; Tools" />
+
+  <!-- Structured Data (JSON-LD) for Search Engines -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Color Library",
+    "url": "https://color-library.pages.dev/",
+    "description": "Color Library is a free color-code resource for designers and developers to explore, search, and copy HTML, HEX, RGB, and HSL color codes, curated palettes, and custom color mixes.",
+    "applicationCategory": "DesignApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <!--
+    Google Ads / Google tag (gtag.js) Integration:
+    To activate Google Ads conversion tracking without affecting the UI:
+    1. Replace 'AW-CONVERSION_ID' with your actual Google Ads measurement ID.
+    2. Uncomment the snippet below.
+    3. Call window.trackAdConversion('AW-CONVERSION_ID/LABEL') on key actions if needed.
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-CONVERSION_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-CONVERSION_ID');
+    </script>
+  -->
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8084415154795131"
+     crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="ch.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="Color Library home">
+          <img src="color-library.png" alt="Color Library" class="brand-mark" />
+        </a>
+        <nav class="primary-nav" aria-label="Primary navigation">
+          <a class="active" href="/">Home</a>
+          <a href="#colors">Colors <svg class="nav-chevron" viewBox="0 0 16 16" fill="none"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="#recently-viewed" id="nav-recent">Recent</a>
+          <a href="#tools">Tools <svg class="nav-chevron" viewBox="0 0 16 16" fill="none"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="#more" id="more-link">More <svg class="nav-chevron" viewBox="0 0 16 16" fill="none"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </nav>
+        <div class="header-actions">
+          <label class="global-search" aria-label="Search colors">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <input id="global-search" type="search" placeholder="Search colors, codes, names..." autocomplete="off" />
+            <kbd>Ctrl K</kbd>
+          </label>
+
+        </div>
+      </div>
+    </header>
+
+    <div id="home-view">
+      <main id="top">
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow">Explore. Copy. Use.</p>
+            <h1>All the <span class="gradient-text">Colors</span> &amp; Codes<br />You Need</h1>
+            <p class="lead">Find HTML color codes, HEX, RGB, HSL values, color names and beautiful palettes for your next project.</p>
+            <div class="hero-search-row">
+              <label class="hero-search">
+                <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <input id="hero-search" type="search" placeholder="Search color by name or hex code..." autocomplete="off" />
+              </label>
+              <button class="eyedropper" id="random-color" type="button" aria-label="Pick a random color" title="Pick a random color">
+                <svg viewBox="0 0 24 24" fill="none"><path d="m14.5 5.5 4 4M5 19l3.3-.8L18.9 7.6a2.8 2.8 0 0 0-4-4L4.3 15.2 5 19Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 12 8.4 8.4" stroke="currentColor" stroke-width="1.8"/></svg>
+              </button>
+            </div>
+            <div class="popular"><span class="popular-label">Popular:</span><button class="popular-pill" data-popular="Blue">Blue</button><button class="popular-pill green" data-popular="Green">Green</button><button class="popular-pill red" data-popular="Red">Red</button><button class="popular-pill purple" data-popular="Purple">Purple</button><button class="view-all" id="view-all">View all →</button></div>
+          </div>
+
+          <div class="picker-card" id="tools">
+            <div class="picker-left">
+              <div class="color-stage" id="color-stage" aria-label="Color picker preview"></div>
+              <input class="hue-slider" id="hue-slider" type="range" min="0" max="360" value="217" aria-label="Hue" />
+              <div class="value-stack">
+                <label class="value-row"><span>HEX</span><input id="hex-value" value="#3B82F6" /><button class="copy-mini" data-copy-target="hex-value" aria-label="Copy HEX"><svg viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.7"/></svg></button></label>
+                <label class="value-row"><span>RGB</span><input id="rgb-value" value="59, 130, 246" readonly /><button class="copy-mini" data-copy-target="rgb-value" aria-label="Copy RGB"><svg viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.7"/></svg></button></label>
+                <label class="value-row"><span>HSL</span><input id="hsl-value" value="217, 91%, 60%" readonly /><button class="copy-mini" data-copy-target="hsl-value" aria-label="Copy HSL"><svg viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.7"/></svg></button></label>
+              </div>
+            </div>
+            <div class="picker-right">
+              <div class="swatch-preview" id="swatch-preview"><span id="selected-name">Cornflower Blue</span><button class="favorite-button" id="favorite-toggle" aria-label="Save color"><svg viewBox="0 0 24 24" fill="none"><path d="M20.8 8.7c0 5.2-8.8 10-8.8 10s-8.8-4.8-8.8-10A4.7 4.7 0 0 1 12 6.2a4.7 4.7 0 0 1 8.8 2.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></button></div>
+              <div class="copy-hex-wrapper" id="copy-selected" role="button" aria-label="Copy Hex" title="Copy Hex">
+                <div class="copy-progress-bar" id="copy-progress-bar"></div>
+                <div class="copy-content-original" id="copy-content-original">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><rect x="8" y="8" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.7"/></svg>
+                  <span class="copy-text-label">Copy Hex</span>
+                </div>
+                <div class="copy-content-confirmation" id="copy-content-confirmation">
+                  <div class="copy-check-circle">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="feature-strip" aria-label="Color tools">
+        <a class="feature-card" href="#tools"><span class="feature-icon" style="--feature-color:#2d7ae9;--feature-bg:#eaf3ff"><svg viewBox="0 0 24 24" fill="none"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m4.5 7.5 7.5 4 7.5-4M12 12v9" stroke="currentColor" stroke-width="1.8"/></svg></span><span><h3>Color Picker</h3><p>Pick any color &amp; get all codes instantly</p></span><span class="feature-arrow">›</span></a>
+        <a class="feature-card" href="#tools"><span class="feature-icon" style="--feature-color:#1caf4b;--feature-bg:#e9faef"><svg viewBox="0 0 24 24" fill="none"><path d="M4 8h15M15 4l4 4-4 4M20 16H5m4-4-4 4 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><h3>Converter</h3><p>Convert between HEX, RGB, HSL &amp; more</p></span><span class="feature-arrow">›</span></a>
+        <a class="feature-card" href="/color-mix" id="feature-color-mix"><span class="feature-icon" style="--feature-color:#8b5cf6;--feature-bg:#f5f3ff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/></svg></span><span><h3>Color Mix</h3><p>Create beautiful random color combinations</p></span><span class="feature-arrow">›</span></a>
+        <a class="feature-card" href="#palettes" id="feature-palettes"><span class="feature-icon" style="--feature-color:#9850de;--feature-bg:#f3eafe"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M4 10h16M4 15h16M10 4v16M15 4v16" stroke="currentColor" stroke-width="1.5"/></svg></span><span><h3>Color Palette</h3><p>Discover beautiful color palettes</p></span><span class="feature-arrow">›</span></a>
+        <a class="feature-card" href="#gradients"><span class="feature-icon" style="--feature-color:#f59b09;--feature-bg:#fff5df"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3c3.7 5.1 7 8.6 7 12a7 7 0 1 1-14 0c0-3.4 3.3-6.9 7-12Z" stroke="currentColor" stroke-width="1.8"/><path d="M9 17.5c.7.8 1.6 1.2 2.7 1.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><span><h3>Gradients</h3><p>Explore stunning CSS gradients</p></span><span class="feature-arrow">›</span></a>
+        <a class="feature-card" href="#colors"><span class="feature-icon" style="--feature-color:#e42275;--feature-bg:#fdeaf3"><svg viewBox="0 0 24 24" fill="none"><path d="M12 4a8 8 0 0 0-8 8c0 2 1.2 3 3 3h1.2c.9 0 1.5.7 1.5 1.5S10.4 19 12 19a8 8 0 0 0 0-15Z" stroke="currentColor" stroke-width="1.8"/><circle cx="8" cy="11" r="1" fill="currentColor"/><circle cx="12" cy="8" r="1" fill="currentColor"/><circle cx="16" cy="9" r="1" fill="currentColor"/></svg></span><span><h3>Color Chart</h3><p>Browse all HTML color codes</p></span><span class="feature-arrow">›</span></a>
+        <a class="feature-card" href="#saved"><span class="feature-icon" style="--feature-color:#1ea69b;--feature-bg:#e7f8f6"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4h12v16l-6-3-6 3V4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span><span><h3>Saved Colors</h3><p>Save and organize your favorite colors</p></span><span class="feature-arrow">›</span></a>
+      </section>
+
+      <!-- Google AdSense Responsive Display Ad Slot -->
+      <section class="ad-slot-section" id="ad-hero-slot" aria-label="Sponsored Advertisement">
+        <div class="ad-slot-container">
+          <div class="ad-slot-header">
+            <span class="ad-slot-label">Advertisement</span>
+          </div>
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-8084415154795131"
+               data-ad-slot="YOUR_AD_SLOT_ID"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+      </section>
+
+      <!-- Recently Viewed Section -->
+      <section class="recently-viewed" id="recently-viewed" aria-label="Recently Viewed Colors and Palettes">
+        <div class="recently-viewed-inner">
+          <div class="recently-viewed-header">
+            <div class="recently-viewed-title-group">
+              <span class="recently-viewed-icon-badge" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </span>
+              <div>
+                <h2 class="recently-viewed-title">Recently Viewed <span class="recently-viewed-count-pill" id="recently-viewed-count">0</span></h2>
+                <p class="recently-viewed-subtitle">Last 5 colors or palettes explored</p>
+              </div>
+            </div>
+            <div class="recently-viewed-actions">
+              <button type="button" class="recently-viewed-clear-btn" id="recently-viewed-clear-btn" aria-label="Clear recently viewed history" title="Clear recently viewed">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                </svg>
+                <span>Clear History</span>
+              </button>
+            </div>
+          </div>
+          <div class="recently-viewed-grid" id="recently-viewed-grid"></div>
+        </div>
+      </section>
+
+      <section class="catalog" id="colors">
+        <div class="catalog-inner">
+          <div class="catalog-heading"><h2>HTML Color Codes <span class="count-badge" id="count-badge">140 Colors</span></h2><select class="sort-select" id="sort-select" aria-label="Sort colors"><option value="source">Source order</option><option value="name">Sort by: Name</option><option value="light">Sort by: Lightness</option><option value="hue">Sort by: Hue</option></select></div>
+          <div class="filters" id="filters" aria-label="Color categories"></div>
+          <div class="saved-banner-wrap" id="saved-banner-wrap"></div>
+          <div class="color-grid" id="color-grid"></div>
+        </div>
+      </section>
+    </main>
+    </div>
+
+    <div class="page-view" id="page-view">
+      <div class="page-content" id="page-content-body"></div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-content-wrapper">
+        <div class="footer-copyright">© 2026 <span class="footer-brand-name">Color Library</span>. All rights reserved.</div>
+        <div class="footer-developer">Designed &amp; Developed by <a href="#developer" class="footer-dev-link">Dev Asik</a></div>
+        <div class="footer-links">
+          <a href="/privacy-policy">Privacy Policy</a>
+          <span class="footer-dot">·</span>
+          <a href="/terms-of-service">Terms of Service</a>
+          <span class="footer-dot">·</span>
+          <a href="/contact">Contact</a>
+          <span class="footer-dot">·</span>
+          <a href="/about">About</a>
+        </div>
+      </div>
+    </footer>
+    <div class="toast" id="toast" role="status" aria-live="polite">Copied to clipboard</div>
+  </div>
+
+  <div class="more-overlay" id="more-overlay" role="dialog" aria-modal="true" aria-label="More menu">
+    <div class="more-sheet">
+      <div class="more-sheet-header">
+        <h3>More</h3>
+        <button class="more-close-btn" id="more-close-btn" aria-label="Close menu">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="more-menu-list">
+        <a class="more-menu-item" href="/privacy-policy">
+          <span class="more-item-icon">🔒</span>
+          <span class="more-item-label">Privacy Policy</span>
+          <svg class="more-item-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+        <a class="more-menu-item" href="/terms-of-service">
+          <span class="more-item-icon">📄</span>
+          <span class="more-item-label">Terms of Service</span>
+          <svg class="more-item-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+        <button class="more-menu-item" data-page="developer">
+          <span class="more-item-icon">👨‍💻</span>
+          <span class="more-item-label">Developer Details</span>
+          <svg class="more-item-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+        <a class="more-menu-item" href="/about">
+          <span class="more-item-icon">ℹ️</span>
+          <span class="more-item-label">About Color Library</span>
+          <svg class="more-item-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+        <a class="more-menu-item" href="/contact">
+          <span class="more-item-icon">📩</span>
+          <span class="more-item-label">Contact / Feedback</span>
+          <svg class="more-item-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-modal-overlay" id="content-modal-overlay" role="dialog" aria-modal="true">
+    <div class="content-modal-card">
+      <div class="content-modal-header">
+        <h3 id="content-modal-title">Title</h3>
+        <button class="content-modal-close" id="content-modal-close" aria-label="Close modal">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="content-modal-body" id="content-modal-body">
+      </div>
+    </div>
+  </div>
+
+  <!-- Dedicated Color Mix Responsive Full Page Interface -->
+  <div class="color-mix-overlay active" id="color-mix-overlay" role="dialog" aria-modal="true" aria-labelledby="color-mix-title">
+    <div class="color-mix-card" id="color-mix-card">
+      <div class="color-mix-header">
+        <div class="color-mix-header-left">
+          <a href="/" class="color-mix-back-btn" id="color-mix-back-btn" aria-label="Back to Home" title="Back to Home">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            <span>Back</span>
+          </a>
+          <div class="color-mix-header-text">
+            <div class="color-mix-badge">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/></svg>
+              Color Mix
+            </div>
+            <h2 id="color-mix-title">Color Mix</h2>
+            <p class="color-mix-subtitle">Create beautiful random color combinations</p>
+          </div>
+        </div>
+        <div class="color-mix-header-actions">
+          <button type="button" class="color-mix-saved-trigger" id="color-mix-saved-trigger" aria-label="View saved palettes" title="View saved palettes">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            <span>Saved (<strong id="color-mix-saved-count">0</strong>)</span>
+          </button>
+          <button type="button" class="color-mix-close" id="color-mix-close-btn" aria-label="Close Color Mix" title="Close (Esc)">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="color-mix-content">
+        <!-- Left Side: Color selection and controls -->
+        <section class="color-mix-sidebar" aria-label="Color mix controls">
+          <!-- 1. NUMBER OF COLORS -->
+          <div class="mix-panel-block">
+            <div class="mix-block-row">
+              <span class="mix-label">Colors</span>
+              <div class="mix-counter-ctrl" role="group" aria-label="Number of colors">
+                <button type="button" class="mix-counter-btn" id="mix-dec-btn" aria-label="Decrease colors">−</button>
+                <span class="mix-counter-value" id="mix-count-text">3 Colors</span>
+                <button type="button" class="mix-counter-btn" id="mix-inc-btn" aria-label="Increase colors">+</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. COLOR SELECTION SLOTS -->
+          <div class="mix-panel-block">
+            <div class="mix-slots-top">
+              <span class="mix-label">Selected Colors</span>
+            </div>
+            <div class="mix-slots-container" id="mix-slots-container" aria-label="Selected color slots">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- 3. PRIMARY ACTION: RANDOM -->
+          <div class="mix-generate-row">
+            <button type="button" class="mix-primary-generate-btn smoky-button" id="mix-random-base-btn" aria-label="Random">
+              <canvas class="smoky-button__canvas" id="mix-generate-canvas" aria-hidden="true"></canvas>
+              <span class="smoky-button__copy">
+                <span class="mix-dice-icon">🎲</span>
+                <span class="smoky-button__label">Random</span>
+              </span>
+            </button>
+          </div>
+        </section>
+
+          <!-- Right Side: Generated Single Color Mix Preview -->
+          <section class="color-mix-main" aria-label="Generated Color Mix Preview">
+            <!-- 16. EMPTY STATE -->
+            <div class="mix-empty-state" id="mix-empty-state">
+              <div class="mix-empty-icon" aria-hidden="true">🎨</div>
+              <h3>Build Your Color Mix</h3>
+              <p>Choose 2–5 colors to create<br />your own random color combination.</p>
+            </div>
+
+            <!-- EXACTLY ONE LARGE RESULT AREA / CARD -->
+            <div class="mix-result-container" id="mix-result-container" style="display: none;">
+              <div class="mix-single-result-card" id="mix-single-result-card">
+                <!-- Large Smooth Gradient Preview Area -->
+                <div class="mix-gradient-stage" id="mix-gradient-stage">
+                  <!-- Top: Clean HEX Flow (e.g. #4b6cb7 → #182848) -->
+                  <div class="mix-stage-top">
+                    <div class="mix-stage-hex-flow" id="mix-stage-hex-flow">#4B6CB7 → #182848</div>
+                    <div class="mix-stage-counter" id="mix-stage-counter">1 / 1</div>
+                  </div>
+
+                  <!-- Navigation Arrows to cycle through generated single-color results -->
+                  <button type="button" class="mix-nav-arrow mix-nav-prev" id="mix-nav-prev" aria-label="Previous generated color" title="Previous generated color">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                  </button>
+                  <button type="button" class="mix-nav-arrow mix-nav-next" id="mix-nav-next" aria-label="Next generated color" title="Next generated color">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  </button>
+
+                  <!-- Center: Generated Color Name & Single Result Pill -->
+                  <div class="mix-stage-center">
+                    <div class="mix-stage-badge">Mixed Color Result</div>
+                    <h2 class="mix-stage-color-name" id="mix-stage-color-name">Sapphire Mist</h2>
+                    <div class="mix-stage-hex-pill" id="mix-stage-hex-pill">
+                      <span class="mix-stage-dot" id="mix-stage-dot"></span>
+                      <span class="mix-stage-hex-val" id="mix-stage-hex-val">#304A80</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Under the Result: HEX, RGB, HSL Specs -->
+                <div class="mix-result-details">
+                  <div class="mix-specs-grid">
+                    <div class="mix-spec-box">
+                      <span class="mix-spec-title">HEX</span>
+                      <div class="mix-spec-val-row">
+                        <span class="mix-spec-code" id="mix-val-hex">#304A80</span>
+                        <button type="button" class="mix-spec-copy-btn" id="mix-copy-spec-hex" aria-label="Copy HEX value" title="Copy HEX">
+                          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="mix-spec-box">
+                      <span class="mix-spec-title">RGB</span>
+                      <div class="mix-spec-val-row">
+                        <span class="mix-spec-code" id="mix-val-rgb">48, 74, 128</span>
+                        <button type="button" class="mix-spec-copy-btn" id="mix-copy-spec-rgb" aria-label="Copy RGB value" title="Copy RGB">
+                          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="mix-spec-box">
+                      <span class="mix-spec-title">HSL</span>
+                      <div class="mix-spec-val-row">
+                        <span class="mix-spec-code" id="mix-val-hsl">220°, 45%, 35%</span>
+                        <button type="button" class="mix-spec-copy-btn" id="mix-copy-spec-hsl" aria-label="Copy HSL value" title="Copy HSL">
+                          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Actions: Copy HEX, Generate Again, Favorite -->
+                  <div class="mix-result-actions">
+                    <button type="button" class="mix-btn-copy-hex" id="mix-copy-hex-btn" aria-label="Copy HEX">
+                      <!-- Progress background -->
+                      <div class="mix-copy-progress" id="mix-copy-progress" aria-hidden="true"></div>
+                      <!-- Original content -->
+                      <div class="mix-copy-original" id="mix-copy-original">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        <span>Copy HEX</span>
+                      </div>
+                      <!-- Confirmation content -->
+                      <div class="mix-copy-confirm" id="mix-copy-confirm" aria-hidden="true">
+                        <div class="mix-copy-check-circle">
+                          <svg class="mix-copy-check-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path class="mix-copy-check-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                        </div>
+                        <span class="mix-copy-confirm-text">Code Copied!</span>
+                      </div>
+                    </button>
+                    <button type="button" class="mix-btn-fav-single" id="mix-fav-single-btn" aria-label="Add to favorites" title="Add to favorites">
+                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- Color Selector Modal for Choosing Slot Color -->
+  <div class="mix-picker-overlay" id="mix-picker-overlay" role="dialog" aria-modal="true" aria-labelledby="mix-picker-modal-title">
+    <div class="mix-picker-card">
+      <div class="mix-picker-header">
+        <div>
+          <h3 id="mix-picker-modal-title">Select Color</h3>
+          <p class="mix-picker-sub">Choose from the existing Color Library</p>
+        </div>
+        <button type="button" class="mix-picker-close" id="mix-picker-close-btn" aria-label="Close color selector">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="mix-picker-search-wrap">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <input type="search" id="mix-picker-search" placeholder="Search by color name or HEX (e.g. Blue, #3B82F6)..." autocomplete="off" />
+      </div>
+      <div class="mix-picker-categories" id="mix-picker-categories"></div>
+      <div class="mix-picker-grid" id="mix-picker-grid"></div>
+    </div>
+  </div>
+
+  <!-- Saved Mixes Modal -->
+  <div class="mix-saved-overlay" id="mix-saved-overlay" role="dialog" aria-modal="true" aria-labelledby="mix-saved-modal-title">
+    <div class="mix-saved-card">
+      <div class="mix-saved-header">
+        <div>
+          <h3 id="mix-saved-modal-title">Saved Mixes</h3>
+          <p class="mix-saved-sub">Saved in your browser localStorage</p>
+        </div>
+        <button type="button" class="mix-picker-close" id="mix-saved-close-btn" aria-label="Close saved mixes">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="mix-saved-list" id="mix-saved-list"></div>
+    </div>
+  </div>
+
+  <!-- Curated Color Palettes Modal -->
+  <div class="palettes-overlay" id="palettes-overlay" role="dialog" aria-modal="true" aria-labelledby="palettes-modal-title">
+    <div class="palettes-card">
+      <div class="palettes-header">
+        <div class="palettes-header-title-wrap">
+          <div class="palettes-badge">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M4 15h16M10 4v16M15 4v16"/></svg>
+            <span>Curated Palettes</span>
+          </div>
+          <h3 id="palettes-modal-title">Discover Color Palettes</h3>
+          <p class="palettes-sub">Explore designer-curated color combinations. Click to copy codes, explore or mix.</p>
+        </div>
+        <button type="button" class="mix-picker-close" id="palettes-close-btn" aria-label="Close palettes">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="palettes-grid" id="curated-palettes-grid"></div>
+    </div>
+  </div>
+
+  <button id="back-to-top-btn" class="back-to-top-btn" aria-label="Back to top" title="Back to top">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <script>window.COLOR_DATA = [{"name":"Red","hex":"#FF0000"},{"name":"White","hex":"#FFFFFF"},{"name":"Cyan","hex":"#00FFFF"},{"name":"Silver","hex":"#C0C0C0"},{"name":"Blue","hex":"#0000FF"},{"name":"Gray or Grey","hex":"#808080"},{"name":"DarkBlue","hex":"#00008B"},{"name":"Black","hex":"#000000"},{"name":"LightBlue","hex":"#ADD8E6"},{"name":"Orange","hex":"#FFA500"},{"name":"Purple","hex":"#800080"},{"name":"Brown","hex":"#A52A2A"},{"name":"Yellow","hex":"#FFFF00"},{"name":"Maroon","hex":"#800000"},{"name":"Lime","hex":"#00FF00"},{"name":"Green","hex":"#008000"},{"name":"Magenta","hex":"#FF00FF"},{"name":"Olive","hex":"#808000"},{"name":"Pink","hex":"#FFC0CB"},{"name":"Aquamarine","hex":"#7FFFD4"},{"name":"Black (W3C)","hex":"#000000"},{"name":"Purple Obsidian","hex":"#0D031B"},{"name":"Black Blue","hex":"#040720"},{"name":"Night","hex":"#0C090A"},{"name":"Obsidian","hex":"#1C1C1C"},{"name":"Dark Plum","hex":"#282224"},{"name":"Charcoal","hex":"#34282C"},{"name":"Oil","hex":"#3B3131"},{"name":"Jet Black","hex":"#343434"},{"name":"Stormy Gray","hex":"#3A3B3C"},{"name":"Charcoal Gray","hex":"#3C4142"},{"name":"Light Black","hex":"#454545"},{"name":"Dark Steampunk","hex":"#4D4D4F"},{"name":"Black Cat","hex":"#413839"},{"name":"Iridium","hex":"#3D3C3A"},{"name":"Black Eel","hex":"#463E3F"},{"name":"Black Cow","hex":"#4C4646"},{"name":"Gray Wolf","hex":"#504A4B"},{"name":"Vampire Gray","hex":"#565051"},{"name":"Iron Gray","hex":"#52595D"},{"name":"Gray Dolphin","hex":"#5C5858"},{"name":"Carbon Gray","hex":"#625D5D"},{"name":"Ash Gray","hex":"#666362"},{"name":"DimGray or DimGrey (W3C)","hex":"#696969"},{"name":"Nardo Gray","hex":"#686A6C"},{"name":"Cloudy Gray","hex":"#6D6968"},{"name":"Smokey Gray","hex":"#726E6D"},{"name":"Alien Gray","hex":"#736F6E"},{"name":"Sonic Silver","hex":"#757575"},{"name":"Platinum Gray","hex":"#797979"},{"name":"Granite","hex":"#837E7C"},{"name":"Gray or Grey (W3C)","hex":"#808080"},{"name":"Battleship Gray","hex":"#848482"},{"name":"Sheet Metal","hex":"#888B90"},{"name":"Dark Gainsboro","hex":"#8C8C8C"},{"name":"Gunmetal Gray","hex":"#8D918D"},{"name":"Cold Metal","hex":"#9B9A96"},{"name":"Stainless Steel Gray","hex":"#99A3A3"},{"name":"DarkGray or DarkGrey (W3C)","hex":"#A9A9A9"},{"name":"Chrome Aluminum","hex":"#A8A9AD"},{"name":"Gray Cloud","hex":"#B6B6B4"},{"name":"Metal","hex":"#B6B6B6"},{"name":"Silver (W3C)","hex":"#C0C0C0"},{"name":"Steampunk","hex":"#C9C1C1"},{"name":"Pale Silver","hex":"#C9C0BB"},{"name":"Gear Steel Gray","hex":"#C0C6C7"},{"name":"Gray Goose","hex":"#D1D0CE"},{"name":"Platinum Silver","hex":"#CECECE"},{"name":"LightGray or LightGrey (W3C)","hex":"#D3D3D3"},{"name":"Silver White","hex":"#DADBDD"},{"name":"Gainsboro (W3C)","hex":"#DCDCDC"},{"name":"Light Steel Gray","hex":"#E0E5E5"},{"name":"WhiteSmoke (W3C)","hex":"#F5F5F5"},{"name":"White Gray","hex":"#EEEEEE"},{"name":"Platinum","hex":"#E5E4E2"},{"name":"Metallic Silver","hex":"#BCC6CC"},{"name":"Blue Gray","hex":"#98AFC7"},{"name":"Roman Silver","hex":"#838996"},{"name":"LightSlateGray or LightSlateGrey (W3C)","hex":"#778899"},{"name":"SlateGray or SlateGrey (W3C)","hex":"#708090"},{"name":"Rat Gray","hex":"#6D7B8D"},{"name":"Slate Granite Gray","hex":"#657383"},{"name":"Jet Gray","hex":"#616D7E"},{"name":"Mist Blue","hex":"#646D7E"},{"name":"Dusty Blue","hex":"#6E7F80"},{"name":"Steel Gray","hex":"#71797E"},{"name":"Marble Blue","hex":"#566D7E"},{"name":"Slate Blue Gray","hex":"#737CA1"},{"name":"Light Purple Blue","hex":"#728FCE"},{"name":"Azure Blue","hex":"#4863A0"},{"name":"Monte Carlo Blue","hex":"#3D5791"},{"name":"Estoril Blue","hex":"#2F539B"},{"name":"YInMn Blue","hex":"#2E5090"},{"name":"Blue Jay","hex":"#2B547E"},{"name":"Charcoal Blue","hex":"#36454F"},{"name":"Dark Blue Gray","hex":"#29465B"},{"name":"Dark Slate","hex":"#2B3856"},{"name":"Deep Sea Blue","hex":"#123456"},{"name":"Midnight Navy","hex":"#003366"},{"name":"Night Blue","hex":"#151B54"},{"name":"MidnightBlue (W3C)","hex":"#191970"},{"name":"Navy (W3C)","hex":"#000080"},{"name":"Denim Dark Blue","hex":"#151B8D"},{"name":"DarkBlue (W3C)","hex":"#00008B"},{"name":"Lapis Blue","hex":"#15317E"},{"name":"New Midnight Blue","hex":"#0000A0"},{"name":"Earth Blue","hex":"#0000A5"},{"name":"Cobalt Blue","hex":"#0020C2"},{"name":"MediumBlue (W3C)","hex":"#0000CD"},{"name":"Blueberry Blue","hex":"#0041C2"},{"name":"Canary Blue","hex":"#2916F5"},{"name":"Blue (W3C)","hex":"#0000FF"},{"name":"Samco Blue","hex":"#0002FF"},{"name":"Bright Blue","hex":"#0909FF"},{"name":"Blue Orchid","hex":"#1F45FC"},{"name":"Sapphire Blue","hex":"#2554C7"},{"name":"Blue Eyes","hex":"#1569C7"},{"name":"Bright Navy Blue","hex":"#1974D2"},{"name":"Balloon Blue","hex":"#2B60DE"},{"name":"RoyalBlue (W3C)","hex":"#4169E1"},{"name":"Ocean Blue","hex":"#2B65EC"},{"name":"Dark Sky Blue","hex":"#0059FF"},{"name":"Blue Ribbon","hex":"#306EFF"},{"name":"Blue Dress","hex":"#157DEC"},{"name":"Neon Blue","hex":"#1589FF"},{"name":"DodgerBlue (W3C)","hex":"#1E90FF"},{"name":"Water Blue","hex":"#0E87CC"},{"name":"Glacial Blue Ice","hex":"#368BC1"},{"name":"SteelBlue (W3C)","hex":"#4682B4"},{"name":"Silk Blue","hex":"#488AC7"},{"name":"Windows Blue","hex":"#357EC7"},{"name":"Blue Ivy","hex":"#3090C7"},{"name":"Cyan Blue","hex":"#14A3C7"},{"name":"Blue Koi","hex":"#659EC7"},{"name":"Columbia Blue","hex":"#87AFC7"},{"name":"Baby Blue","hex":"#95B9C7"},{"name":"CornflowerBlue (W3C)","hex":"#6495ED"},{"name":"Sky Blue Dress","hex":"#6698FF"},{"name":"Iceberg","hex":"#56A5EC"},{"name":"Butterfly Blue","hex":"#38ACEC"},{"name":"DeepSkyBlue (W3C)","hex":"#00BFFF"},{"name":"Midday Blue","hex":"#3BB9FF"},{"name":"Crystal Blue","hex":"#5CB3FF"},{"name":"Denim Blue","hex":"#79BAEC"},{"name":"Day Sky Blue","hex":"#82CAFF"},{"name":"LightSkyBlue (W3C)","hex":"#87CEFA"},{"name":"SkyBlue (W3C)","hex":"#87CEEB"},{"name":"Jeans Blue","hex":"#A0CFEC"},{"name":"Blue Angel","hex":"#B7CEEC"},{"name":"Pastel Blue","hex":"#B4CFEC"},{"name":"Light Day Blue","hex":"#ADDFFF"},{"name":"Sea Blue","hex":"#C2DFFF"},{"name":"Heavenly Blue","hex":"#C6DEFF"},{"name":"Robin Egg Blue","hex":"#BDEDFF"},{"name":"PowderBlue (W3C)","hex":"#B0E0E6"},{"name":"Coral Blue","hex":"#AFDCEC"},{"name":"LightBlue (W3C)","hex":"#ADD8E6"},{"name":"LightSteelBlue (W3C)","hex":"#B0CFDE"},{"name":"Gulf Blue","hex":"#C9DFEC"},{"name":"Pastel Light Blue","hex":"#D5D6EA"},{"name":"Lavender Blue","hex":"#E3E4FA"},{"name":"White Blue","hex":"#DBE9FA"},{"name":"Lavender (W3C)","hex":"#E6E6FA"},{"name":"Water","hex":"#EBF4FA"},{"name":"AliceBlue (W3C)","hex":"#F0F8FF"},{"name":"GhostWhite (W3C)","hex":"#F8F8FF"},{"name":"Azure (W3C)","hex":"#F0FFFF"},{"name":"LightCyan (W3C)","hex":"#E0FFFF"},{"name":"Light Slate","hex":"#CCFFFF"},{"name":"Electric Blue","hex":"#9AFEFF"},{"name":"Tron Blue","hex":"#7DFDFE"},{"name":"Blue Zircon","hex":"#57FEFF"},{"name":"Cyan or Aqua (W3C)","hex":"#00FFFF"},{"name":"Bright Cyan","hex":"#0AFFFF"},{"name":"Neon Cyan","hex":"#4BF0FC"},{"name":"Celeste","hex":"#50EBEC"},{"name":"Blue Diamond","hex":"#4EE2EC"},{"name":"Bright Turquoise","hex":"#16E2F5"},{"name":"Blue Lagoon","hex":"#8EEBEC"},{"name":"PaleTurquoise (W3C)","hex":"#AFEEEE"},{"name":"Pale Blue Lily","hex":"#CFECEC"},{"name":"Light Teal","hex":"#B3D9D9"},{"name":"Tiffany Blue","hex":"#81D8D0"},{"name":"Blue Hosta","hex":"#77BFC7"},{"name":"Cyan Opaque","hex":"#92C7C7"},{"name":"Northern Lights Blue","hex":"#78C7C7"},{"name":"Blue Green","hex":"#7BCCB5"},{"name":"MediumAquaMarine (W3C)","hex":"#66CDAA"},{"name":"Aqua Seafoam Green","hex":"#93E9BE"},{"name":"Magic Mint","hex":"#AAF0D1"},{"name":"Light Aquamarine","hex":"#93FFE8"},{"name":"Aquamarine (W3C)","hex":"#7FFFD4"},{"name":"Bright Teal","hex":"#01F9C6"},{"name":"Turquoise (W3C)","hex":"#40E0D0"},{"name":"MediumTurquoise (W3C)","hex":"#48D1CC"},{"name":"Deep Turquoise","hex":"#48CCCD"},{"name":"Jellyfish","hex":"#46C7C7"},{"name":"Blue Turquoise","hex":"#43C6DB"},{"name":"DarkTurquoise (W3C)","hex":"#00CED1"},{"name":"Macaw Blue Green","hex":"#43BFC7"},{"name":"LightSeaGreen (W3C)","hex":"#20B2AA"},{"name":"Seafoam Green","hex":"#3EA99F"},{"name":"CadetBlue (W3C)","hex":"#5F9EA0"},{"name":"Deep Sea","hex":"#3B9C9C"},{"name":"DarkCyan (W3C)","hex":"#008B8B"},{"name":"Teal Green","hex":"#00827F"},{"name":"Teal (W3C)","hex":"#008080"},{"name":"Teal Blue","hex":"#007C80"},{"name":"Medium Teal","hex":"#045F5F"},{"name":"Dark Teal","hex":"#045D5D"},{"name":"Deep Teal","hex":"#033E3E"},{"name":"DarkSlateGray or DarkSlateGrey (W3C)","hex":"#25383C"},{"name":"Gunmetal","hex":"#2C3539"},{"name":"Blue Moss Green","hex":"#3C565B"},{"name":"Beetle Green","hex":"#4C787E"},{"name":"Grayish Turquoise","hex":"#5E7D7E"},{"name":"Greenish Blue","hex":"#307D7E"},{"name":"Aquamarine Stone","hex":"#348781"},{"name":"Sea Turtle Green","hex":"#438D80"},{"name":"Dull Sea Green","hex":"#4E8975"},{"name":"Dark Green Blue","hex":"#1F6357"},{"name":"Alpine Green","hex":"#1B5448"},{"name":"Deep Sea Green","hex":"#306754"},{"name":"Bottle Green","hex":"#006A4E"},{"name":"SeaGreen (W3C)","hex":"#2E8B57"},{"name":"Elf Green","hex":"#1B8A6B"},{"name":"Dark Mint","hex":"#31906E"},{"name":"Jade","hex":"#00A36C"},{"name":"Earth Green","hex":"#34A56F"},{"name":"Chrome Green","hex":"#1AA260"},{"name":"Mint","hex":"#3EB489"},{"name":"Emerald","hex":"#50C878"},{"name":"Isle Of Man Green","hex":"#22CE83"},{"name":"MediumSeaGreen (W3C)","hex":"#3CB371"},{"name":"Metallic Green","hex":"#7C9D8E"},{"name":"Camouflage Green","hex":"#78866B"},{"name":"Sage Green","hex":"#848B79"},{"name":"Hazel Green","hex":"#617C58"},{"name":"Venom Green","hex":"#728C00"},{"name":"OliveDrab (W3C)","hex":"#6B8E23"},{"name":"Olive (W3C)","hex":"#808000"},{"name":"Ebony","hex":"#555D50"},{"name":"DarkOliveGreen (W3C)","hex":"#556B2F"},{"name":"Military Green","hex":"#4E5B31"},{"name":"Green Leaves","hex":"#3A5F0B"},{"name":"Army Green","hex":"#4B5320"},{"name":"Fern Green","hex":"#667C26"},{"name":"Fall Forest Green","hex":"#4E9258"},{"name":"Irish Green","hex":"#08A04B"},{"name":"Pine Green","hex":"#387C44"},{"name":"Medium Forest Green","hex":"#347235"},{"name":"Racing Green","hex":"#27742C"},{"name":"Jungle Green","hex":"#347C2C"},{"name":"Cactus Green","hex":"#227442"},{"name":"ForestGreen (W3C)","hex":"#228B22"},{"name":"Green (W3C)","hex":"#008000"},{"name":"DarkGreen (W3C)","hex":"#006400"},{"name":"Deep Green","hex":"#056608"},{"name":"Deep Emerald Green","hex":"#046307"},{"name":"Hunter Green","hex":"#355E3B"},{"name":"Dark Forest Green","hex":"#254117"},{"name":"Lotus Green","hex":"#004225"},{"name":"Broccoli Green","hex":"#026C3D"},{"name":"Seaweed Green","hex":"#437C17"},{"name":"Shamrock Green","hex":"#347C17"},{"name":"Green Onion","hex":"#6AA121"},{"name":"Moss Green","hex":"#8A9A5B"},{"name":"Grass Green","hex":"#3F9B0B"},{"name":"Green Pepper","hex":"#4AA02C"},{"name":"Dark Lime Green","hex":"#41A317"},{"name":"Parrot Green","hex":"#12AD2B"},{"name":"Clover Green","hex":"#3EA055"},{"name":"Dinosaur Green","hex":"#73A16C"},{"name":"Green Snake","hex":"#6CBB3C"},{"name":"Alien Green","hex":"#6CC417"},{"name":"Green Apple","hex":"#4CC417"},{"name":"LimeGreen (W3C)","hex":"#32CD32"},{"name":"Pea Green","hex":"#52D017"},{"name":"Kelly Green","hex":"#4CC552"},{"name":"Zombie Green","hex":"#54C571"},{"name":"Green Peas","hex":"#89C35C"},{"name":"Dollar Bill Green","hex":"#85BB65"},{"name":"Frog Green","hex":"#99C68E"},{"name":"Turquoise Green","hex":"#A0D6B4"},{"name":"DarkSeaGreen (W3C)","hex":"#8FBC8F"},{"name":"Basil Green","hex":"#829F82"},{"name":"Gray Green","hex":"#A2AD9C"},{"name":"Light Olive Green","hex":"#B8BC86"},{"name":"Iguana Green","hex":"#9CB071"},{"name":"Citron Green","hex":"#8FB31D"},{"name":"Acid Green","hex":"#B0BF1A"},{"name":"Avocado Green","hex":"#B2C248"},{"name":"Pistachio Green","hex":"#9DC209"},{"name":"Salad Green","hex":"#A1C935"},{"name":"YellowGreen (W3C)","hex":"#9ACD32"},{"name":"Pastel Green","hex":"#77DD77"},{"name":"Hummingbird Green","hex":"#7FE817"},{"name":"Nebula Green","hex":"#59E817"},{"name":"Stoplight Go Green","hex":"#57E964"},{"name":"Neon Green","hex":"#16F529"},{"name":"Jade Green","hex":"#5EFB6E"},{"name":"SpringGreen (W3C)","hex":"#00FF7F"},{"name":"Ocean Green","hex":"#00FF80"},{"name":"Lime Mint Green","hex":"#36F57F"},{"name":"MediumSpringGreen (W3C)","hex":"#00FA9A"},{"name":"Aqua Green","hex":"#12E193"},{"name":"Emerald Green","hex":"#5FFB17"},{"name":"Lime (W3C)","hex":"#00FF00"},{"name":"LawnGreen (W3C)","hex":"#7CFC00"},{"name":"Bright Green","hex":"#66FF00"},{"name":"Chartreuse (W3C)","hex":"#7FFF00"},{"name":"Yellow Lawn Green","hex":"#87F717"},{"name":"Aloe Vera Green","hex":"#98F516"},{"name":"Dull Green Yellow","hex":"#B1FB17"},{"name":"Lemon Green","hex":"#ADF802"},{"name":"GreenYellow (W3C)","hex":"#ADFF2F"},{"name":"Chameleon Green","hex":"#BDF516"},{"name":"Neon Yellow Green","hex":"#DAEE01"},{"name":"Yellow Green Grosbeak","hex":"#E2F516"},{"name":"Tea Green","hex":"#CCFB5D"},{"name":"Slime Green","hex":"#BCE954"},{"name":"Algae Green","hex":"#64E986"},{"name":"LightGreen (W3C)","hex":"#90EE90"},{"name":"Dragon Green","hex":"#6AFB92"},{"name":"PaleGreen (W3C)","hex":"#98FB98"},{"name":"Mint Green","hex":"#98FF98"},{"name":"Green Thumb","hex":"#B5EAAA"},{"name":"Organic Brown","hex":"#E3F9A6"},{"name":"Light Jade","hex":"#C3FDB8"},{"name":"Light Mint Green","hex":"#C2E5D3"},{"name":"Light Rose Green","hex":"#DBF9DB"},{"name":"Chrome White","hex":"#E8F1D4"},{"name":"HoneyDew (W3C)","hex":"#F0FFF0"},{"name":"MintCream (W3C)","hex":"#F5FFFA"},{"name":"LemonChiffon (W3C)","hex":"#FFFACD"},{"name":"Parchment","hex":"#FFFFC2"},{"name":"Cream","hex":"#FFFFCC"},{"name":"Cream White","hex":"#FFFDD0"},{"name":"LightGoldenRodYellow (W3C)","hex":"#FAFAD2"},{"name":"LightYellow (W3C)","hex":"#FFFFE0"},{"name":"Beige (W3C)","hex":"#F5F5DC"},{"name":"White Yellow","hex":"#F2F0DF"},{"name":"Cornsilk (W3C)","hex":"#FFF8DC"},{"name":"Blonde","hex":"#FBF6D9"},{"name":"AntiqueWhite (W3C)","hex":"#FAEBD7"},{"name":"Light Beige","hex":"#FFF0DB"},{"name":"PapayaWhip (W3C)","hex":"#FFEFD5"},{"name":"Champagne","hex":"#F7E7CE"},{"name":"BlanchedAlmond (W3C)","hex":"#FFEBCD"},{"name":"Bisque (W3C)","hex":"#FFE4C4"},{"name":"Wheat (W3C)","hex":"#F5DEB3"},{"name":"Moccasin (W3C)","hex":"#FFE4B5"},{"name":"Peach","hex":"#FFE5B4"},{"name":"Light Orange","hex":"#FED8B1"},{"name":"PeachPuff (W3C)","hex":"#FFDAB9"},{"name":"Coral Peach","hex":"#FBD5AB"},{"name":"NavajoWhite (W3C)","hex":"#FFDEAD"},{"name":"Golden Blonde","hex":"#FBE7A1"},{"name":"Golden Silk","hex":"#F3E3C3"},{"name":"Dark Blonde","hex":"#F0E2B6"},{"name":"Light Gold","hex":"#F1E5AC"},{"name":"Vanilla","hex":"#F3E5AB"},{"name":"Tan Brown","hex":"#ECE5B6"},{"name":"Dirty White","hex":"#E8E4C9"},{"name":"PaleGoldenRod (W3C)","hex":"#EEE8AA"},{"name":"Khaki (W3C)","hex":"#F0E68C"},{"name":"Cardboard Brown","hex":"#EDDA74"},{"name":"Harvest Gold","hex":"#EDE275"},{"name":"Sun Yellow","hex":"#FFE87C"},{"name":"Corn Yellow","hex":"#FFF380"},{"name":"Pastel Yellow","hex":"#FAF884"},{"name":"Neon Yellow","hex":"#FFFF33"},{"name":"Yellow (W3C)","hex":"#FFFF00"},{"name":"Lemon Yellow","hex":"#FEF250"},{"name":"Canary Yellow","hex":"#FFEF00"},{"name":"Banana Yellow","hex":"#F5E216"},{"name":"Mustard Yellow","hex":"#FFDB58"},{"name":"Golden Yellow","hex":"#FFDF00"},{"name":"Bold Yellow","hex":"#F9DB24"},{"name":"Safety Yellow","hex":"#EED202"},{"name":"Rubber Ducky Yellow","hex":"#FFD801"},{"name":"Gold (W3C)","hex":"#FFD700"},{"name":"Bright Gold","hex":"#FDD017"},{"name":"Chrome Gold","hex":"#FFCE44"},{"name":"Golden Brown","hex":"#EAC117"},{"name":"Deep Yellow","hex":"#F6BE00"},{"name":"Macaroni and Cheese","hex":"#F2BB66"},{"name":"Amber","hex":"#FFBF00"},{"name":"Saffron","hex":"#FBB917"},{"name":"Neon Gold","hex":"#FDBD01"},{"name":"Beer","hex":"#FBB117"},{"name":"Yellow Orange or Orange Yellow","hex":"#FFAE42"},{"name":"Cantaloupe","hex":"#FFA62F"},{"name":"Cheese Orange","hex":"#FFA600"},{"name":"Orange (W3C)","hex":"#FFA500"},{"name":"Brown Sand","hex":"#EE9A4D"},{"name":"SandyBrown (W3C)","hex":"#F4A460"},{"name":"Brown Sugar","hex":"#E2A76F"},{"name":"Camel Brown","hex":"#C19A6B"},{"name":"Deer Brown","hex":"#E6BF83"},{"name":"BurlyWood (W3C)","hex":"#DEB887"},{"name":"Tan (W3C)","hex":"#D2B48C"},{"name":"Light French Beige","hex":"#C8AD7F"},{"name":"Sand","hex":"#C2B280"},{"name":"Soft Hazel","hex":"#C6BA8B"},{"name":"Sage","hex":"#BCB88A"},{"name":"Fall Leaf Brown","hex":"#C8B560"},{"name":"Ginger Brown","hex":"#C9BE62"},{"name":"Bronze Gold","hex":"#C9AE5D"},{"name":"DarkKhaki (W3C)","hex":"#BDB76B"},{"name":"Olive Green","hex":"#BAB86C"},{"name":"Brass","hex":"#B5A642"},{"name":"Austin Yellow","hex":"#AD9535"},{"name":"Cookie Brown","hex":"#C7A317"},{"name":"Metallic Gold","hex":"#D4AF37"},{"name":"Mustard","hex":"#E1AD01"},{"name":"Bee Yellow","hex":"#E9AB17"},{"name":"Marigold","hex":"#EBA832"},{"name":"School Bus Yellow","hex":"#E8A317"},{"name":"GoldenRod (W3C)","hex":"#DAA520"},{"name":"Orange Gold","hex":"#D4A017"},{"name":"Champagne Gold","hex":"#D29F51"},{"name":"Caramel","hex":"#C68E17"},{"name":"DarkGoldenRod (W3C)","hex":"#B8860B"},{"name":"Cinnamon","hex":"#C58917"},{"name":"Peru (W3C)","hex":"#CD853F"},{"name":"Bronze","hex":"#CD7F32"},{"name":"Pumpkin Pie","hex":"#CA762B"},{"name":"Tiger Orange","hex":"#C88141"},{"name":"Copper","hex":"#B87333"},{"name":"Dark Gold","hex":"#AA6C39"},{"name":"Metallic Bronze","hex":"#A97142"},{"name":"Dark Almond","hex":"#AB784E"},{"name":"Wood","hex":"#966F33"},{"name":"Khaki Brown","hex":"#906E3E"},{"name":"Oak Brown","hex":"#806517"},{"name":"Antique Bronze","hex":"#665D1E"},{"name":"Hazel","hex":"#8E7618"},{"name":"Dark Yellow","hex":"#8B8000"},{"name":"Dark Moccasin","hex":"#827839"},{"name":"Khaki Green","hex":"#8A865D"},{"name":"Millennium Jade","hex":"#93917C"},{"name":"Dark Beige","hex":"#9F8C76"},{"name":"Bullet Shell","hex":"#AF9B60"},{"name":"Army Brown","hex":"#827B60"},{"name":"Sandstone","hex":"#786D5F"},{"name":"Ash Brown","hex":"#675B58"},{"name":"Taupe","hex":"#483C32"},{"name":"Dark Grayish Olive","hex":"#4A412A"},{"name":"Dark Hazel Brown","hex":"#473810"},{"name":"Mocha","hex":"#493D26"},{"name":"Milk Chocolate","hex":"#513B1C"},{"name":"Western Charcoal","hex":"#49413F"},{"name":"Gray Brown","hex":"#3D3635"},{"name":"Cocoa Brown","hex":"#35281E"},{"name":"Dark Coffee","hex":"#3B2F2F"},{"name":"Old Burgundy","hex":"#43302E"},{"name":"Red Brown","hex":"#622F22"},{"name":"Bakers Brown","hex":"#5C3317"},{"name":"Pullman Brown","hex":"#644117"},{"name":"Dark Brown","hex":"#654321"},{"name":"Sepia Brown","hex":"#704214"},{"name":"Dark Bronze","hex":"#804A00"},{"name":"Coffee","hex":"#6F4E37"},{"name":"Brown Bear","hex":"#835C3B"},{"name":"Red Dirt","hex":"#7F5217"},{"name":"Sepia","hex":"#7F462C"},{"name":"Sienna (W3C)","hex":"#A0522D"},{"name":"SaddleBrown (W3C)","hex":"#8B4513"},{"name":"Dark Sienna","hex":"#8A4117"},{"name":"Sangria","hex":"#7E3817"},{"name":"Blood Red","hex":"#7E3517"},{"name":"Chestnut","hex":"#954535"},{"name":"Dark Terracotta","hex":"#A14D3A"},{"name":"Coral Brown","hex":"#9E4638"},{"name":"Deep Amber","hex":"#A05544"},{"name":"Chestnut Red","hex":"#C34A2C"},{"name":"Ginger Red","hex":"#B83C08"},{"name":"Mahogany","hex":"#C04000"},{"name":"Red Gold","hex":"#EB5406"},{"name":"Red Fox","hex":"#C35817"},{"name":"Ginger","hex":"#B06500"},{"name":"Dark Bisque","hex":"#B86500"},{"name":"Light Brown","hex":"#B5651D"},{"name":"Petra Gold","hex":"#B76734"},{"name":"Brown Rust","hex":"#A55D35"},{"name":"Rust","hex":"#C36241"},{"name":"Copper Red","hex":"#CB6D51"},{"name":"Orange Salmon","hex":"#C47451"},{"name":"Chocolate (W3C)","hex":"#D2691E"},{"name":"Sedona","hex":"#CC6600"},{"name":"Papaya Orange","hex":"#E56717"},{"name":"Halloween Orange","hex":"#E66C2C"},{"name":"Neon Orange","hex":"#FF6700"},{"name":"Bright Orange","hex":"#FF5F1F"},{"name":"Fluro Orange","hex":"#FE632A"},{"name":"Pumpkin Orange","hex":"#F87217"},{"name":"Safety Orange","hex":"#FF7900"},{"name":"Carrot Orange","hex":"#F88017"},{"name":"DarkOrange (W3C)","hex":"#FF8C00"},{"name":"Construction Cone Orange","hex":"#F87431"},{"name":"Indian Saffron","hex":"#FF7722"},{"name":"Sunrise Orange","hex":"#E67451"},{"name":"Terracotta","hex":"#E3735E"},{"name":"Mango Orange","hex":"#FF8040"},{"name":"Coral (W3C)","hex":"#FF7F50"},{"name":"Basket Ball Orange","hex":"#F88158"},{"name":"Light Salmon Rose","hex":"#F9966B"},{"name":"LightSalmon (W3C)","hex":"#FFA07A"},{"name":"Pink Orange","hex":"#F89880"},{"name":"DarkSalmon (W3C)","hex":"#E9967A"},{"name":"Tangerine","hex":"#E78A61"},{"name":"Light Copper","hex":"#DA8A67"},{"name":"Salmon Pink","hex":"#FF8674"},{"name":"Salmon (W3C)","hex":"#FA8072"},{"name":"Peach Pink","hex":"#F98B88"},{"name":"LightCoral (W3C)","hex":"#F08080"},{"name":"Pastel Red","hex":"#F67280"},{"name":"Pink Coral","hex":"#E77471"},{"name":"Bean Red","hex":"#F75D59"},{"name":"Valentine Red","hex":"#E55451"},{"name":"IndianRed (W3C)","hex":"#CD5C5C"},{"name":"Tomato (W3C)","hex":"#FF6347"},{"name":"Shocking Orange","hex":"#E55B3C"},{"name":"OrangeRed (W3C)","hex":"#FF4500"},{"name":"Coral Red","hex":"#FF4040"},{"name":"Red (W3C)","hex":"#FF0000"},{"name":"Neon Red","hex":"#FD1C03"},{"name":"Scarlet Red","hex":"#FF2400"},{"name":"Ruby Red","hex":"#F62217"},{"name":"Ferrari Red","hex":"#F70D1A"},{"name":"Fire Engine Red","hex":"#F62817"},{"name":"Lava Red","hex":"#E42217"},{"name":"Love Red","hex":"#E41B17"},{"name":"Grapefruit","hex":"#DC381F"},{"name":"Strawberry Red","hex":"#C83F49"},{"name":"Cherry Red","hex":"#C24641"},{"name":"Chilli Pepper","hex":"#C11B17"},{"name":"FireBrick (W3C)","hex":"#B22222"},{"name":"Tomato Sauce Red","hex":"#B21807"},{"name":"Brown (W3C)","hex":"#A52A2A"},{"name":"Carbon Red","hex":"#A70D2A"},{"name":"Cranberry","hex":"#9F000F"},{"name":"Saffron Red","hex":"#931314"},{"name":"Carmine Red","hex":"#960018"},{"name":"Crimson Red","hex":"#990000"},{"name":"Red Wine or Wine Red","hex":"#990012"},{"name":"DarkRed (W3C)","hex":"#8B0000"},{"name":"Maroon Red","hex":"#8F0B0B"},{"name":"Maroon (W3C)","hex":"#800000"},{"name":"Burgundy","hex":"#8C001A"},{"name":"Vermilion","hex":"#7E191B"},{"name":"Deep Red","hex":"#800517"},{"name":"Dark Burgundy","hex":"#800020"},{"name":"Garnet Red","hex":"#733635"},{"name":"Maroon Brown","hex":"#6A2617"},{"name":"Red Blood","hex":"#660000"},{"name":"Blood Night","hex":"#551606"},{"name":"Dark Scarlet","hex":"#560319"},{"name":"Chocolate Brown","hex":"#3F000F"},{"name":"Black Bean","hex":"#3D0C02"},{"name":"Dark Maroon","hex":"#2F0909"},{"name":"Midnight","hex":"#2B1B17"},{"name":"Purple Lily","hex":"#550A35"},{"name":"Purple Maroon","hex":"#810541"},{"name":"Plum Pie","hex":"#7D0541"},{"name":"Plum Velvet","hex":"#7D0552"},{"name":"Dark Raspberry","hex":"#872657"},{"name":"Velvet Maroon","hex":"#7E354D"},{"name":"Rosy-Finch","hex":"#7F4E52"},{"name":"Dull Purple","hex":"#7F525D"},{"name":"Puce","hex":"#7F5A58"},{"name":"Rose Dust","hex":"#997070"},{"name":"Pastel Brown","hex":"#B1907F"},{"name":"Rosy Pink","hex":"#B38481"},{"name":"RosyBrown (W3C)","hex":"#BC8F8F"},{"name":"Khaki Rose","hex":"#C5908E"},{"name":"Lipstick Pink","hex":"#C48793"},{"name":"Dusky Pink","hex":"#CC7A8B"},{"name":"Pink Brown","hex":"#C48189"},{"name":"Old Rose","hex":"#C08081"},{"name":"Dusty Pink","hex":"#D58A94"},{"name":"Pink Daisy","hex":"#E799A3"},{"name":"Rose Pink or Pink Rose","hex":"#E7A1B0"},{"name":"Rose","hex":"#E8ADAA"},{"name":"Dusty Rose","hex":"#C9A9A6"},{"name":"Silver Pink","hex":"#C4AEAD"},{"name":"Gold Pink","hex":"#E6C7C2"},{"name":"Rose Gold","hex":"#ECC5C0"},{"name":"Deep Peach","hex":"#FFCBA4"},{"name":"Pastel Orange","hex":"#F8B88B"},{"name":"Desert Sand","hex":"#EDC9AF"},{"name":"Unbleached Silk","hex":"#FFDDCA"},{"name":"Pig Pink","hex":"#FDD7E4"},{"name":"Pale Pink","hex":"#F2D4D7"},{"name":"Blush","hex":"#FFE6E8"},{"name":"MistyRose (W3C)","hex":"#FFE4E1"},{"name":"Pink Bubble Gum","hex":"#FFDFDD"},{"name":"Light Rose","hex":"#FBCFCD"},{"name":"Light Red","hex":"#FFCCCB"},{"name":"Rose Quartz","hex":"#F7CAC9"},{"name":"Warm Pink","hex":"#F6C6BD"},{"name":"Deep Rose","hex":"#FBBBB9"},{"name":"Pink (W3C)","hex":"#FFC0CB"},{"name":"LightPink (W3C)","hex":"#FFB6C1"},{"name":"Soft Pink","hex":"#FFB8BF"},{"name":"Powder Pink","hex":"#FFB2D0"},{"name":"Donut Pink","hex":"#FAAFBE"},{"name":"Baby Pink","hex":"#FAAFBA"},{"name":"Flamingo Pink","hex":"#F9A7B0"},{"name":"Pastel Pink","hex":"#FEA3AA"},{"name":"Baker-Miller Pink","hex":"#FF91AF"},{"name":"Cadillac Pink","hex":"#E38AAE"},{"name":"Carnation Pink","hex":"#F778A1"},{"name":"Pastel Rose","hex":"#E5788F"},{"name":"Blush Red","hex":"#E56E94"},{"name":"PaleVioletRed (W3C)","hex":"#DB7093"},{"name":"Purple Pink","hex":"#D16587"},{"name":"Tulip Pink","hex":"#C25A7C"},{"name":"Bashful Pink","hex":"#C25283"},{"name":"Dark Pink","hex":"#E75480"},{"name":"Dark Hot Pink","hex":"#F660AB"},{"name":"HotPink (W3C)","hex":"#FF69B4"},{"name":"Watermelon Pink","hex":"#FC6C85"},{"name":"Violet Red","hex":"#F6358A"},{"name":"Hot Deep Pink","hex":"#F52887"},{"name":"Bright Pink","hex":"#FF007F"},{"name":"Red Magenta","hex":"#FF0080"},{"name":"DeepPink (W3C)","hex":"#FF1493"},{"name":"Neon Pink","hex":"#F535AA"},{"name":"Chrome Pink","hex":"#FF33AA"},{"name":"Neon Hot Pink","hex":"#FD349C"},{"name":"Pink Cupcake","hex":"#E45E9D"},{"name":"Royal Pink","hex":"#E759AC"},{"name":"Dimorphotheca Magenta","hex":"#E3319D"},{"name":"Barbie Pink","hex":"#DA1884"},{"name":"Pink Lemonade","hex":"#E4287C"},{"name":"Red Pink","hex":"#FA2A55"},{"name":"Raspberry","hex":"#E30B5D"},{"name":"Crimson (W3C)","hex":"#DC143C"},{"name":"Bright Maroon","hex":"#C32148"},{"name":"Rose Red","hex":"#C21E56"},{"name":"Rogue Pink","hex":"#C12869"},{"name":"Burnt Pink","hex":"#C12267"},{"name":"Pink Violet","hex":"#CA226B"},{"name":"Magenta Pink","hex":"#CC338B"},{"name":"MediumVioletRed (W3C)","hex":"#C71585"},{"name":"Dark Carnation Pink","hex":"#C12283"},{"name":"Light Maroon","hex":"#A24857"},{"name":"Raspberry Purple","hex":"#B3446C"},{"name":"Pink Plum","hex":"#B93B8F"},{"name":"Orchid (W3C)","hex":"#DA70D6"},{"name":"Deep Mauve","hex":"#DF73D4"},{"name":"Violet (W3C)","hex":"#EE82EE"},{"name":"Fuchsia Pink","hex":"#FF77FF"},{"name":"Bright Neon Pink","hex":"#F433FF"},{"name":"Magenta or Fuchsia (W3C)","hex":"#FF00FF"},{"name":"Crimson Purple","hex":"#E238EC"},{"name":"Heliotrope Purple","hex":"#D462FF"},{"name":"Tyrian Purple","hex":"#C45AEC"},{"name":"MediumOrchid (W3C)","hex":"#BA55D3"},{"name":"Purple Flower","hex":"#A74AC7"},{"name":"Orchid Purple","hex":"#B048B5"},{"name":"Rich Lilac","hex":"#B666D2"},{"name":"Pastel Violet","hex":"#D291BC"},{"name":"Rosy","hex":"#A17188"},{"name":"Mauve Taupe","hex":"#915F6D"},{"name":"Viola Purple","hex":"#7E587E"},{"name":"Eggplant","hex":"#614051"},{"name":"Plum Purple","hex":"#583759"},{"name":"Grape","hex":"#5E5A80"},{"name":"Purple Navy","hex":"#4E5180"},{"name":"SlateBlue (W3C)","hex":"#6A5ACD"},{"name":"Blue Lotus","hex":"#6960EC"},{"name":"Blurple","hex":"#5865F2"},{"name":"Light Slate Blue","hex":"#736AFF"},{"name":"MediumSlateBlue (W3C)","hex":"#7B68EE"},{"name":"Periwinkle Purple","hex":"#7575CF"},{"name":"Very Peri","hex":"#6667AB"},{"name":"Dark Lavender","hex":"#734F96"},{"name":"Bright Grape","hex":"#6F2DA8"},{"name":"Bright Purple","hex":"#6A0DAD"},{"name":"Purple Amethyst","hex":"#6C2DC7"},{"name":"Blue Magenta","hex":"#822EFF"},{"name":"Dark Blurple","hex":"#5539CC"},{"name":"Deep Periwinkle","hex":"#5453A6"},{"name":"DarkSlateBlue (W3C)","hex":"#483D8B"},{"name":"Purple Haze","hex":"#4E387E"},{"name":"Purple Iris","hex":"#571B7E"},{"name":"Dark Purple","hex":"#4B0150"},{"name":"Deep Purple","hex":"#36013F"},{"name":"Midnight Purple","hex":"#2E1A47"},{"name":"Purple Monster","hex":"#461B7E"},{"name":"Indigo (W3C)","hex":"#4B0082"},{"name":"Blue Whale","hex":"#342D7E"},{"name":"RebeccaPurple (W3C)","hex":"#663399"},{"name":"Purple Jam","hex":"#6A287E"},{"name":"DarkMagenta (W3C)","hex":"#8B008B"},{"name":"Purple (W3C)","hex":"#800080"},{"name":"French Lilac","hex":"#86608E"},{"name":"DarkOrchid (W3C)","hex":"#9932CC"},{"name":"DarkViolet (W3C)","hex":"#9400D3"},{"name":"Purple Violet","hex":"#8D38C9"},{"name":"Jasmine Purple","hex":"#A23BEC"},{"name":"Purple Daffodil","hex":"#B041FF"},{"name":"Clematis Violet","hex":"#842DCE"},{"name":"BlueViolet (W3C)","hex":"#8A2BE2"},{"name":"Purple Sage Bush","hex":"#7A5DC7"},{"name":"Lovely Purple","hex":"#7F38EC"},{"name":"Neon Purple","hex":"#9D00FF"},{"name":"Purple Plum","hex":"#8E35EF"},{"name":"Aztech Purple","hex":"#893BFF"},{"name":"MediumPurple (W3C)","hex":"#9370DB"},{"name":"Light Purple","hex":"#8467D7"},{"name":"Crocus Purple","hex":"#9172EC"},{"name":"Purple Mimosa","hex":"#9E7BFF"},{"name":"Pastel Indigo","hex":"#8686AF"},{"name":"Lavender Purple","hex":"#967BB6"},{"name":"Rose Purple","hex":"#B09FCA"},{"name":"Viola","hex":"#C8C4DF"},{"name":"Periwinkle","hex":"#CCCCFF"},{"name":"Pale Lilac","hex":"#DCD0FF"},{"name":"Lilac","hex":"#C8A2C8"},{"name":"Mauve","hex":"#E0B0FF"},{"name":"Bright Lilac","hex":"#D891EF"},{"name":"Purple Dragon","hex":"#C38EC7"},{"name":"Plum (W3C)","hex":"#DDA0DD"},{"name":"Blush Pink","hex":"#E6A9EC"},{"name":"Pastel Purple","hex":"#F2A2E8"},{"name":"Blossom Pink","hex":"#F9B7FF"},{"name":"Wisteria Purple","hex":"#C6AEC7"},{"name":"Purple Thistle","hex":"#D2B9D3"},{"name":"Thistle (W3C)","hex":"#D8BFD8"},{"name":"Purple White","hex":"#DFD3E3"},{"name":"Periwinkle Pink","hex":"#E9CFEC"},{"name":"Cotton Candy","hex":"#FCDFFF"},{"name":"Lavender Pinocchio","hex":"#EBDDE2"},{"name":"Dark White","hex":"#E1D9D1"},{"name":"Ash White","hex":"#E9E4D4"},{"name":"Warm White","hex":"#EFEBD8"},{"name":"White Chocolate","hex":"#EDE6D6"},{"name":"Creamy White","hex":"#F0E9D6"},{"name":"Off White","hex":"#F8F0E3"},{"name":"Soft Ivory","hex":"#FAF0DD"},{"name":"Cosmic Latte","hex":"#FFF8E7"},{"name":"Pearl White","hex":"#F8F6F0"},{"name":"Red White","hex":"#F3E8EA"},{"name":"LavenderBlush (W3C)","hex":"#FFF0F5"},{"name":"Pearl","hex":"#FDEEF4"},{"name":"Egg Shell","hex":"#FFF9E3"},{"name":"OldLace (W3C)","hex":"#FEF0E3"},{"name":"White Ice","hex":"#EAEEE9"},{"name":"Linen (W3C)","hex":"#FAF0E6"},{"name":"SeaShell (W3C)","hex":"#FFF5EE"},{"name":"Bone White","hex":"#F9F6EE"},{"name":"Rice","hex":"#FAF5EF"},{"name":"FloralWhite (W3C)","hex":"#FFFAF0"},{"name":"Ivory (W3C)","hex":"#FFFFF0"},{"name":"White Gold","hex":"#FFFFF4"},{"name":"Light White","hex":"#FFFFF7"},{"name":"Cotton","hex":"#FBFBF9"},{"name":"Snow (W3C)","hex":"#FFFAFA"},{"name":"Milk White","hex":"#FEFCFF"},{"name":"Half White","hex":"#FFFEFA"},{"name":"White (W3C)","hex":"#FFFFFF"}];</script>
+  <script src="ch.js"></script>
+</body>
+</html>

@@ -8,7 +8,8 @@
     "start": "node server.ts",
     "build": "node build.js",
     "preview": "node server.ts",
-    "lint": "node -c server.ts build.js ch.js"
+    "lint": "node -c server.ts build.js ch.js",
+    "test": "node -c server.ts build.js ch.js && node build.js"
   },
   "dependencies": {
     "express": "^4.19.2"

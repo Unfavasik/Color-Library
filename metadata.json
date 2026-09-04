@@ -2,5 +2,5 @@
   "name": "Color Library",
   "description": "Color Library is a free color-code resource for designers and developers to explore, search, and copy HTML, HEX, RGB, and HSL color codes, curated palettes, and custom color mixes.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": []
 }

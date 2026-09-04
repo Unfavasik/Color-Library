@@ -829,27 +829,28 @@ render(); updatePicker('#3B82F6');
 const pagesData = {
   'privacy-policy': {
     title: 'Privacy Policy',
-    content: `<h2>1. Introduction</h2><p>Welcome to Color Library. We are committed to protecting your privacy and ensuring you have a secure, transparent experience while exploring color palettes, CSS gradients, and HTML color codes.</p><h2>2. Information We Collect</h2><p>Color Library does not require user registration or account creation. We do not collect personally identifiable information (PII) such as your name, email address, or phone number.</p><h2>3. How We Use Information</h2><p>Since we do not collect personal information, no user data is shared, sold, or rented to third parties. Any interactions remain strictly confidential and client-side.</p><h2>4. Cookies and Local Storage</h2><p>We use browser local storage solely to save your favorite color selections and UI preferences locally on your device. This data never leaves your browser and can be cleared at any time through your browser settings.</p><h2>5. Analytics and Third-Party Services</h2><p>We do not utilize intrusive tracking cookies or external analytics platforms that monitor your personal browsing habits.</p><h2>6. Data Security</h2><p>Because your saved favorites and preferences are stored exclusively on your local device, no user data is transmitted or stored on external database servers.</p><h2>7. Children's Privacy</h2><p>Color Library is safe for users of all ages. We do not knowingly collect any data from children under the age of 13.</p><h2>8. Your Rights</h2><p>You retain full control over your local data. You may clear your browser storage at any time to remove all saved favorites and preferences instantly.</p><h2>9. Changes to This Privacy Policy</h2><p>We may update this Privacy Policy from time to time to reflect improvements in our platform. Any modifications will be posted directly on this page.</p><h2>10. Contact Us</h2><p>If you have any questions or concerns regarding our privacy practices, please feel free to reach out via our Contact / Feedback form available in the More menu.</p>`
+    content: `<h2>1. Introduction</h2><p>Welcome to Color Library. We are committed to protecting your privacy and ensuring you have a secure, transparent experience while exploring color palettes, CSS gradients, and HTML color codes.</p><h2>2. Information We Collect</h2><p>Color Library does not require user registration or account creation. We do not collect personally identifiable information (PII) such as your name, email address, or phone number.</p><h2>3. How We Use Information</h2><p>Since we do not collect personal information, no user data is shared, sold, or rented to third parties. Any interactions remain strictly confidential and client-side.</p><h2>4. Cookies and Local Storage</h2><p>We use browser local storage solely to save your favorite color selections and UI preferences locally on your device. This data never leaves your browser and can be cleared at any time through your browser settings.</p><h2>5. Analytics and Third-Party Services</h2><p>We do not utilize intrusive tracking cookies or external analytics platforms that monitor your personal browsing habits.</p><h2>6. Data Security</h2><p>Because your saved favorites and preferences are stored exclusively on your local device, no user data is transmitted or stored on external database servers.</p><h2>7. Children's Privacy</h2><p>Color Library is safe for users of all ages. We do not knowingly collect any data from children under the age of 13.</p><h2>8. Your Rights</h2><p>You retain full control over your local data. You may clear your browser storage at any time to remove all saved favorites and preferences instantly.</p><h2>9. Changes to This Privacy Policy</h2><p>We may update this Privacy Policy from time to time to reflect improvements in our platform. Any modifications will be posted directly on this page.</p><h2>10. Contact Us</h2><p>If you have any questions or concerns regarding our privacy practices, please feel free to reach out via our <a href="/contact">Contact / Feedback</a> form.</p>`
   },
-  'terms': {
-    title: 'Terms & Conditions',
-    content: `<h2>1. Acceptance of Terms</h2><p>By accessing and using Color Library, you agree to comply with and be bound by these Terms and Conditions. If you do not agree with any part of these terms, please discontinue use of the website.</p><h2>2. Use of the Website</h2><p>Color Library is provided as a complimentary resource platform for discovering, exploring, copying, and utilizing HTML and CSS color codes, palettes, and gradients for personal and commercial projects.</p><h2>3. Color Information</h2><p>All color values, HEX codes, RGB values, and HSL data are provided for general design reference and inspiration. Display calibration and hardware variations may affect how colors appear on your screen.</p><h2>4. Accuracy Disclaimer</h2><p>While we strive to ensure the utmost accuracy of all color values and metadata, Color Library makes no guarantees regarding the absolute precision or suitability of color codes for specific production or printing requirements.</p><h2>5. Intellectual Property</h2><p>All interface layouts, branding, graphics, typography pairings, and curated color data collections are protected by applicable intellectual property laws. Unauthorized reproduction or scraping is prohibited.</p><h2>6. Acceptable Use</h2><p>Users agree not to misuse the platform, attempt unauthorized access to website infrastructure, or disrupt the normal operation of the service.</p><h2>7. External Links</h2><p>The website may contain references or links to external websites and resources. Color Library assumes no responsibility or liability for the content or practices of third-party sites.</p><h2>8. Limitation of Liability</h2><p>Color Library is provided on an "as is" and "as available" basis without warranties of any kind, either express or implied. We shall not be held liable for any direct or indirect damages arising from the use of this website.</p><h2>9. Changes to Terms</h2><p>We reserve the right to modify or replace these Terms and Conditions at any time without prior notice. Continued use of the website following any changes constitutes acceptance of those changes.</p><h2>10. Contact</h2><p>If you have any questions concerning these terms, please contact us through the feedback option in the application menu.</p>`
+  'terms-of-service': {
+    title: 'Terms of Service',
+    content: `<h2>1. Acceptance of Terms</h2><p>By accessing and using Color Library, you agree to comply with and be bound by these Terms of Service. If you do not agree with any part of these terms, please discontinue use of the website.</p><h2>2. Use of the Website</h2><p>Color Library is provided as a complimentary resource platform for discovering, exploring, copying, and utilizing HTML and CSS color codes, palettes, and gradients for personal and commercial projects.</p><h2>3. Color Information</h2><p>All color values, HEX codes, RGB values, and HSL data are provided for general design reference and inspiration. Display calibration and hardware variations may affect how colors appear on your screen.</p><h2>4. Accuracy Disclaimer</h2><p>While we strive to ensure the utmost accuracy of all color values and metadata, Color Library makes no guarantees regarding the absolute precision or suitability of color codes for specific production or printing requirements.</p><h2>5. Intellectual Property</h2><p>All interface layouts, branding, graphics, typography pairings, and curated color data collections are protected by applicable intellectual property laws. Unauthorized reproduction or scraping is prohibited.</p><h2>6. Acceptable Use</h2><p>Users agree not to misuse the platform, attempt unauthorized access to website infrastructure, or disrupt the normal operation of the service.</p><h2>7. External Links</h2><p>The website may contain references or links to external websites and resources. Color Library assumes no responsibility or liability for the content or practices of third-party sites.</p><h2>8. Limitation of Liability</h2><p>Color Library is provided on an "as is" and "as available" basis without warranties of any kind, either express or implied. We shall not be held liable for any direct or indirect damages arising from the use of this website.</p><h2>9. Changes to Terms</h2><p>We reserve the right to modify or replace these Terms of Service at any time without prior notice. Continued use of the website following any changes constitutes acceptance of those changes.</p><h2>10. Contact</h2><p>If you have any questions concerning these terms, please contact us through our <a href="/contact">Contact / Feedback</a> form.</p>`
   },
   'about': {
     title: 'About Color Library',
     content: `<p>Color Library is a simple web-based resource for discovering, exploring, copying, and using HTML and CSS colors. Designed with speed and minimalism in mind, it empowers creators to find the perfect shade instantly.</p><h2>Key Features &amp; Tools</h2><ul><li><strong>HTML Color Codes:</strong> Comprehensive directory of over 140+ standard color names and HEX values.</li><li><strong>HEX Values:</strong> Instant hex code generation for web styling and CSS rules.</li><li><strong>RGB Values:</strong> Accurate Red, Green, Blue decimal color conversions.</li><li><strong>HSL Values:</strong> Hue, Saturation, and Lightness representation for precise tonal adjustments.</li><li><strong>Color Picker:</strong> Interactive stage with hue slider and real-time swatch preview.</li><li><strong>Color Converter:</strong> Seamless translation between multiple color formats.</li><li><strong>Color Palettes:</strong> Handcrafted color schemes for modern web interfaces.</li><li><strong>Gradients:</strong> Stunning CSS gradient combinations ready to copy and paste.</li><li><strong>Search and Copy Tools:</strong> Lightning-fast filtering and one-click clipboard copying.</li></ul><h2>Our Philosophy</h2><p>We believe color selection should be frictionless, elegant, and lightning-fast. Color Library eliminates clutter so you can focus purely on crafting beautiful digital experiences.</p>`
   },
-  developer: {
+  'developer': {
     title: 'Developer Details',
     content: `<div style="text-align: center; padding: 10px 0 20px;"><div style="width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; font-size: 28px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; box-shadow: 0 8px 20px rgba(59,130,246,0.25);">DA</div><h3 style="margin: 0 0 4px; font-size: 20px; color: #0f172a;">Dev Asik</h3><p style="margin: 0; color: #64748b; font-size: 14px; font-weight: 600;">Web Developer &amp; Creator</p></div><h4>Project Information</h4><p><strong>Project Name:</strong> Color Library</p><p><strong>Description:</strong> A high-performance, modern color exploration and utility tool built for developers and designers.</p><h4>Technology Stack</h4><ul><li>HTML5 / Semantic Markup</li><li>Modern CSS3 (Tailwind-aligned utility design &amp; custom styling)</li><li>Vanilla JavaScript (ES6+ with reactive state management)</li><li>React / Full-stack Cloud Run environment</li></ul><h4>Connect &amp; Contributions</h4><p>Created with precision and craftsmanship. Maintained under the Color Library workspace.</p>`
   },
-  contact: {
-    title: 'Contact / Feedback',
-    content: `<p>We value your feedback, feature suggestions, and bug reports. Send us a message below and we will get back to you promptly!</p><form id="contact-form" style="display: flex; flex-direction: column; gap: 14px; margin-top: 16px;"><label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #475569;">Your Name<input type="text" id="contact-name" required placeholder="e.g., Alex Smith" style="height: 42px; padding: 0 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none;" /></label><label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #475569;">Email Address<input type="email" id="contact-email" required placeholder="alex@example.com" style="height: 42px; padding: 0 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none;" /></label><label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #475569;">Message / Feedback<textarea id="contact-msg" required rows="4" placeholder="Tell us what you think or report an issue..." style="padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; font-family: inherit; resize: vertical;"></textarea></label><button type="submit" style="height: 44px; background: #3b82f6; color: #fff; font-weight: 600; border: 0; border-radius: 8px; cursor: pointer; margin-top: 4px; box-shadow: 0 4px 12px rgba(59,130,246,0.2);">Send Feedback</button></form>`
+  'contact': {
+    title: 'Contact & Feedback',
+    content: `<p>We value your feedback, feature suggestions, and bug reports. Send us a message below and we will get back to you promptly!</p><form id="contact-form" style="display: flex; flex-direction: column; gap: 14px; margin-top: 16px; max-width: 600px;"><label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #475569;">Your Name<input type="text" id="contact-name" required placeholder="e.g., Alex Smith" style="height: 44px; padding: 0 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; background: #fff;" /></label><label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #475569;">Email Address<input type="email" id="contact-email" required placeholder="alex@example.com" style="height: 44px; padding: 0 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; background: #fff;" /></label><label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #475569;">Message / Feedback<textarea id="contact-msg" required rows="5" placeholder="Tell us what you think or report an issue..." style="padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; font-family: inherit; resize: vertical; background: #fff;"></textarea></label><button type="submit" style="height: 46px; background: #2563eb; color: #fff; font-weight: 600; font-size: 15px; border: 0; border-radius: 8px; cursor: pointer; margin-top: 6px; box-shadow: 0 4px 12px rgba(37,99,235,0.2);">Send Feedback</button></form>`
   }
 };
 pagesData['privacy'] = pagesData['privacy-policy'];
-pagesData['terms-and-conditions'] = pagesData['terms'];
+pagesData['terms'] = pagesData['terms-of-service'];
+pagesData['terms-and-conditions'] = pagesData['terms-of-service'];
 
 function openMoreMenu() {
   const overlay = $('#more-overlay');
@@ -887,19 +888,26 @@ function closeContentModal() {
 function navigateHome() {
   closeMoreMenu();
   closeContentModal();
-  if (window.location.hash && window.location.hash !== '') {
+  const colorMixOverlay = $('#color-mix-overlay');
+  if (colorMixOverlay && colorMixOverlay.classList.contains('active')) {
+    colorMixOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') {
+    try {
+      history.pushState(null, '', '/');
+    } catch (_) {
+      window.location.href = '/';
+      return;
+    }
+  } else if (window.location.hash) {
     try {
       history.pushState(null, '', window.location.pathname + window.location.search);
     } catch (_) {
       window.location.hash = '';
     }
   }
-  const homeView = $('#home-view');
-  const pageView = $('#page-view');
-  if (homeView) homeView.classList.remove('hidden');
-  if (pageView) pageView.classList.remove('active');
-  document.title = 'Color Library — HTML Color Codes';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  handleRoute();
 }
 
 on('#more-link', 'click', (e) => {
@@ -911,27 +919,23 @@ on('#more-overlay', 'click', (e) => {
   if (e.target === $('#more-overlay')) closeMoreMenu();
 });
 
-$$('.more-menu-item').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const key = btn.dataset.page;
-    closeMoreMenu();
-    if (key === 'privacy' || key === 'privacy-policy') {
-      window.location.hash = 'privacy-policy';
+$$('.more-menu-item').forEach((item) => {
+  item.addEventListener('click', (e) => {
+    const pageKey = item.dataset.page;
+    if (pageKey === 'developer') {
+      e.preventDefault();
+      closeMoreMenu();
+      openContentModal('developer');
+      return;
+    }
+    const href = item.getAttribute('href');
+    if (href && href.startsWith('/')) {
+      e.preventDefault();
+      closeMoreMenu();
+      if (window.location.pathname !== href) {
+        history.pushState(null, '', href);
+      }
       handleRoute();
-    } else if (key === 'terms') {
-      window.location.hash = 'terms';
-      handleRoute();
-    } else if (key === 'about') {
-      window.location.hash = 'about';
-      handleRoute();
-    } else if (key === 'developer') {
-      window.location.hash = 'developer';
-      handleRoute();
-    } else if (key === 'contact') {
-      window.location.hash = 'contact';
-      handleRoute();
-    } else {
-      openContentModal(key);
     }
   });
 });
@@ -939,15 +943,21 @@ $$('.more-menu-item').forEach((btn) => {
 $$('.footer-links a, .footer-dev-link').forEach((link) => {
   link.addEventListener('click', (e) => {
     const href = link.getAttribute('href');
-    if (href && href.startsWith('#')) {
-      const targetHash = href.substring(1);
-      if (['privacy-policy', 'terms', 'about', 'developer'].includes(targetHash)) {
-        e.preventDefault();
-        closeMoreMenu();
-        closeContentModal();
-        window.location.hash = targetHash;
-        handleRoute();
+    if (href === '#developer') {
+      e.preventDefault();
+      closeMoreMenu();
+      closeContentModal();
+      openContentModal('developer');
+      return;
+    }
+    if (href && href.startsWith('/')) {
+      e.preventDefault();
+      closeMoreMenu();
+      closeContentModal();
+      if (window.location.pathname !== href) {
+        history.pushState(null, '', href);
       }
+      handleRoute();
     }
   });
 });
@@ -960,10 +970,25 @@ document.addEventListener('click', (e) => {
     return;
   }
   const brandLink = e.target.closest('.brand');
-  if (brandLink && window.location.hash) {
-    e.preventDefault();
-    navigateHome();
-    return;
+  if (brandLink) {
+    if (window.location.pathname !== '/' || window.location.hash) {
+      e.preventDefault();
+      navigateHome();
+      return;
+    }
+  }
+  const cleanLink = e.target.closest('a[href^="/"]');
+  if (cleanLink && !cleanLink.getAttribute('target') && !cleanLink.getAttribute('download')) {
+    const href = cleanLink.getAttribute('href');
+    if (['/', '/privacy-policy', '/terms-of-service', '/contact', '/about', '/color-mix'].includes(href)) {
+      e.preventDefault();
+      closeMoreMenu();
+      closeContentModal();
+      if (window.location.pathname !== href) {
+        history.pushState(null, '', href);
+      }
+      handleRoute();
+    }
   }
 });
 
@@ -984,19 +1009,49 @@ document.addEventListener('keydown', (e) => {
 
 function getActiveRoute() {
   const path = (window.location.pathname || '').replace(/\/+$/, '').toLowerCase();
-  const hash = (window.location.hash || '').toLowerCase();
+  const rawHash = (window.location.hash || '').toLowerCase().replace(/^#\/?/, '');
+  const decodedHash = decodeURIComponent(rawHash).trim();
 
+  // If someone accessed legacy hash or URL with space / capital letters
+  if (path === '/privacy-policy' || path === '/privacy' || path === '/privacy-policy.html' || decodedHash === 'privacy-policy' || decodedHash === 'privacy policy' || decodedHash === 'privacy') {
+    if (window.location.hash || path !== '/privacy-policy') {
+      try { history.replaceState(null, '', '/privacy-policy'); } catch (_) {}
+    }
+    return 'privacy-policy';
+  }
+  if (path === '/terms-of-service' || path === '/terms' || path === '/terms-and-conditions' || path === '/terms-of-service.html' || decodedHash === 'terms-of-service' || decodedHash === 'terms' || decodedHash === 'terms-and-conditions' || decodedHash === 'terms & conditions') {
+    if (window.location.hash || path !== '/terms-of-service') {
+      try { history.replaceState(null, '', '/terms-of-service'); } catch (_) {}
+    }
+    return 'terms-of-service';
+  }
+  if (path === '/contact' || path === '/contact-us' || path === '/contact.html' || decodedHash === 'contact' || decodedHash === 'contact-us') {
+    if (window.location.hash || path !== '/contact') {
+      try { history.replaceState(null, '', '/contact'); } catch (_) {}
+    }
+    return 'contact';
+  }
+  if (path === '/about' || path === '/about-us' || path === '/about.html' || decodedHash === 'about' || decodedHash === 'about-us') {
+    if (window.location.hash || path !== '/about') {
+      try { history.replaceState(null, '', '/about'); } catch (_) {}
+    }
+    return 'about';
+  }
+  if (path === '/color-mix' || path === '/color-mix.html' || path === '/colormix' || decodedHash === 'color-mix' || decodedHash === 'color mix' || decodedHash === 'colormix') {
+    if (window.location.hash || path !== '/color-mix') {
+      try { history.replaceState(null, '', '/color-mix'); } catch (_) {}
+    }
+    return 'color-mix';
+  }
+
+  const hash = (window.location.hash || '').toLowerCase();
   if (hash === '#color-mix' || path === '/color-mix') return 'color-mix';
   if (hash === '#palettes' || hash === '#palette' || path === '/palettes' || path === '/palette') return 'palettes';
   if (hash === '#recently-viewed' || hash === '#recent' || path === '/recently-viewed' || path === '/recent') return 'recently-viewed';
   if (hash === '#saved' || hash === '#favorites' || path === '/favorites' || path === '/saved') return 'favorites';
   if (hash === '#colors' || hash === '#color-chart' || path === '/color-chart' || path === '/colors') return 'color-chart';
   if (hash === '#tools' || path === '/tools') return 'tools';
-  if (hash === '#privacy-policy' || hash === '#privacy' || path === '/privacy-policy' || path === '/privacy') return 'privacy-policy';
-  if (hash === '#terms' || hash === '#terms-and-conditions' || path === '/terms' || path === '/terms-and-conditions') return 'terms';
-  if (hash === '#about' || hash === '#about-us' || path === '/about' || path === '/about-us') return 'about';
   if (hash === '#developer' || path === '/developer') return 'developer';
-  if (hash === '#contact' || path === '/contact') return 'contact';
   return 'home';
 }
 
@@ -1069,7 +1124,7 @@ function handleRoute() {
     return;
   }
 
-  if (route === 'privacy-policy' || route === 'terms' || route === 'about') {
+  if (route === 'privacy-policy' || route === 'terms-of-service' || route === 'about' || route === 'contact') {
     closeMoreMenu();
     closeContentModal();
     if (palettesOverlay && palettesOverlay.classList.contains('active')) {
@@ -1084,27 +1139,38 @@ function handleRoute() {
     if (homeView) homeView.classList.add('hidden');
     if (pageView) pageView.classList.add('active');
     
-    const page = pagesData[route] || pagesData['about'];
+    const page = pagesData[route] || pagesData['privacy-policy'];
     if (page) {
       document.title = `${page.title} — Color Library`;
     }
     
     if (page && pageContent) {
       pageContent.innerHTML = `
-        <button type="button" class="page-back-btn" id="page-back-btn" aria-label="Back to Home">
+        <a href="/" class="page-back-btn" id="page-back-btn" aria-label="Back to Home">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
           Back to Home
-        </button>
+        </a>
         <h1>${page.title}</h1>
-        ${(route === 'privacy-policy' || route === 'terms') ? `<div class="page-date">Last updated: September 2, 2026</div>` : ''}
+        ${(route === 'privacy-policy' || route === 'terms-of-service') ? `<div class="page-date">Last updated: September 2, 2026</div>` : ''}
         ${page.content}
         <div class="page-bottom-nav">
-          <button type="button" class="page-back-btn" aria-label="Back to Home">
+          <a href="/" class="page-back-btn" aria-label="Back to Home">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             Back to Home
-          </button>
+          </a>
         </div>
       `;
+
+      if (route === 'contact') {
+        const contactForm = $('#contact-form');
+        if (contactForm) {
+          contactForm.onsubmit = (e) => {
+            e.preventDefault();
+            contactForm.reset();
+            showToast('Thank you for your feedback!');
+          };
+        }
+      }
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } else if (route === 'developer') {
@@ -1112,11 +1178,6 @@ function handleRoute() {
     if (homeView) homeView.classList.remove('hidden');
     if (pageView) pageView.classList.remove('active');
     openContentModal('developer');
-  } else if (route === 'contact') {
-    closeMoreMenu();
-    if (homeView) homeView.classList.remove('hidden');
-    if (pageView) pageView.classList.remove('active');
-    openContentModal('contact');
   } else {
     document.title = 'Color Library — HTML Color Codes';
     if (homeView) homeView.classList.remove('hidden');
@@ -1289,8 +1350,18 @@ function closeColorMix() {
   if (overlay && overlay.classList.contains('active')) {
     overlay.classList.remove('active');
     document.body.style.overflow = '';
-    if (window.location.hash === '#color-mix') {
-      history.replaceState(null, '', '#home');
+    if (window.location.pathname === '/color-mix') {
+      try {
+        history.pushState(null, '', '/');
+      } catch (_) {
+        window.location.href = '/';
+        return;
+      }
+      handleRoute();
+    } else if (window.location.hash === '#color-mix') {
+      try {
+        history.replaceState(null, '', window.location.pathname);
+      } catch (_) {}
       handleRoute();
     }
   }
@@ -1390,8 +1461,7 @@ function selectRandomBaseColors() {
   }
 
   renderMixSlots();
-  generateColorMix();
-  showToast(`Selected ${count} random base colors`);
+  generateColorMix(true);
 }
 
 function generateColorMix(isShuffle = false) {
@@ -1586,6 +1656,23 @@ function renderCurrentMixResult() {
 
   // 6. Favorite button state
   updateSingleMixFavState(mix.hex);
+
+  // 7. Dynamic random color/gradient on Generate Again button
+  const genAgainBtn = $('#mix-generate-again-btn');
+  if (genAgainBtn) {
+    const vibrantGradients = [
+      'linear-gradient(135deg, #8b5cf6, #ec4899)',
+      'linear-gradient(135deg, #3b82f6, #06b6d4)',
+      'linear-gradient(135deg, #f59e0b, #ef4444)',
+      'linear-gradient(135deg, #10b981, #3b82f6)',
+      'linear-gradient(135deg, #ec4899, #f97316)',
+      'linear-gradient(135deg, #6366f1, #a855f7)',
+      'linear-gradient(135deg, #14b8a6, #84cc16)',
+      'linear-gradient(135deg, #d946ef, #0284c7)'
+    ];
+    const pickedGrad = vibrantGradients[Math.floor(Math.random() * vibrantGradients.length)];
+    genAgainBtn.style.background = pickedGrad;
+  }
 }
 
 function updateSingleMixFavState(hex) {
@@ -1794,6 +1881,9 @@ function renderMixPickerGrid() {
       if (colorMixState.activeSlotIndex !== null) {
         colorMixState.selectedColors[colorMixState.activeSlotIndex] = { name, hex };
         renderMixSlots();
+        if (colorMixState.currentMix) {
+          generateColorMix(false);
+        }
         closeMixPicker();
         showToast(`Selected ${name}`);
       }
@@ -2180,17 +2270,29 @@ function initColorMix() {
   if (featureCard) {
     featureCard.addEventListener('click', (e) => {
       e.preventDefault();
-      window.location.hash = '#color-mix';
-      openColorMix();
+      if (window.location.pathname !== '/color-mix') {
+        history.pushState(null, '', '/color-mix');
+      }
+      handleRoute();
     });
   }
 
   // Back & Close buttons
   const backBtn = $('#color-mix-back-btn');
-  if (backBtn) backBtn.addEventListener('click', closeColorMix);
+  if (backBtn) {
+    backBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeColorMix();
+    });
+  }
 
   const closeBtn = $('#color-mix-close-btn');
-  if (closeBtn) closeBtn.addEventListener('click', closeColorMix);
+  if (closeBtn) {
+    closeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeColorMix();
+    });
+  }
 
   // Counter +/- buttons
   const decBtn = $('#mix-dec-btn');
@@ -2198,17 +2300,16 @@ function initColorMix() {
   if (decBtn) decBtn.addEventListener('click', () => updateMixCount(colorMixState.count - 1));
   if (incBtn) incBtn.addEventListener('click', () => updateMixCount(colorMixState.count + 1));
 
-  // Random base colors button
+  // Random button (primary action): picks random colors and generates mix
   const randomBaseBtn = $('#mix-random-base-btn');
   if (randomBaseBtn) randomBaseBtn.addEventListener('click', selectRandomBaseColors);
 
-  // Generate Mix button: creates EXACTLY ONE final mixed color
+  // Fallback triggers for generateBtn & generateAgainBtn if present
   const generateBtn = $('#mix-generate-btn');
-  if (generateBtn) generateBtn.addEventListener('click', () => generateColorMix(false));
+  if (generateBtn) generateBtn.addEventListener('click', selectRandomBaseColors);
 
-  // Generate Again / shuffle button
   const generateAgainBtn = $('#mix-generate-again-btn');
-  if (generateAgainBtn) generateAgainBtn.addEventListener('click', () => generateColorMix(true));
+  if (generateAgainBtn) generateAgainBtn.addEventListener('click', selectRandomBaseColors);
 
   // Copy HEX button
   const copyHexBtn = $('#mix-copy-hex-btn');
