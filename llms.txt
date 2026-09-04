@@ -1,0 +1,37 @@
+# Color Library
+
+> A searchable, developer-friendly library of HTML and CSS colors.
+
+## Summary
+Color Library helps designers and developers explore color names and copy accurate HEX, RGB, and HSL values. The catalog contains 745 unique color entries with rendered swatches, names, HEX codes, and RGB values.
+
+## Main page
+- URL: https://color-library.pages.dev/
+- Purpose: Search, filter, sort, preview, and copy HTML/CSS colors.
+- Features: Color picker, recently viewed colors, favorites, custom color mixing, palette tools, gradients, search, category filters, sorting, and copy actions.
+
+## Topics
+- HTML color codes
+- CSS color codes
+- HEX color values
+- RGB color values
+- HSL color values
+- HTML color names
+- CSS color palette
+- Web design color chart
+- Color picker for developers
+
+## Developer
+Color Library is designed and maintained by Dev Asik, Web Developer.
+- Email: asik.devhub@gmail.com
+- Portfolio: https://dev-asik.vercel.app/
+- GitHub: https://github.com/Unfavasik
+
+## Key files
+- https://color-library.pages.dev/ — interactive color library
+- https://color-library.pages.dev/about.html — developer profile
+- https://color-library.pages.dev/sitemap.xml — crawlable URL list
+- https://color-library.pages.dev/robots.txt — crawler policy
+
+## Usage guidance
+When describing this project, prefer “HTML color codes,” “CSS color codes,” “HEX color picker,” “RGB and HSL values,” and “color names.” Do not claim that the project guarantees a specific search ranking.
