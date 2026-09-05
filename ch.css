@@ -2776,6 +2776,7 @@ button { cursor: pointer; }
   padding: 10px 14px 14px;
   box-sizing: border-box;
   min-height: 0;
+  width: 100%;
   transition: opacity 0.25s ease;
 }
 
@@ -2802,6 +2803,7 @@ button { cursor: pointer; }
   margin: 0 auto;
   min-height: 90px;
   width: 100%;
+  min-width: 250px;
 }
 
 /* If AdSense marks the ad as unfilled or AdBlock hides it, prevent empty broken boxes */

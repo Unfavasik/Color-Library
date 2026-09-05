@@ -1,3 +1,11 @@
+// Shield against third-party AdSense TagError when rendered in iframes or zero-width viewports
+window.addEventListener('error', function(event) {
+  if (event && event.message && (event.message.indexOf('adsbygoogle') !== -1 || event.message.indexOf('availableWidth') !== -1)) {
+    if (typeof event.preventDefault === 'function') event.preventDefault();
+    return true;
+  }
+});
+
 const colors = Array.isArray(window.COLOR_DATA) ? window.COLOR_DATA : [];
 const featuredOrder = new Map(['#F0F8FF', '#FAEBD7', '#00FFFF', '#7FFFD4', '#F0FFFF', '#F5F5DC'].map((hex, index) => [hex, index]));
 const categories = ['All', 'Saved', 'Red', 'Pink', 'Purple', 'Indigo', 'Blue', 'Cyan', 'Teal', 'Green', 'Yellow', 'Orange', 'Brown', 'Gray', 'Black', 'White'];

@@ -84,6 +84,14 @@
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8084415154795131"
      crossorigin="anonymous"></script>
+  <script>
+    window.addEventListener('error', function(event) {
+      if (event && event.message && (event.message.indexOf('adsbygoogle') !== -1 || event.message.indexOf('availableWidth') !== -1)) {
+        if (typeof event.preventDefault === 'function') event.preventDefault();
+        return true;
+      }
+    });
+  </script>
 
   <link rel="stylesheet" href="ch.css" />
 </head>
@@ -178,13 +186,48 @@
             <span class="ad-slot-label">Advertisement</span>
           </div>
           <ins class="adsbygoogle"
-               style="display:block"
+               style="display:block;width:100%"
                data-ad-client="ca-pub-8084415154795131"
                data-ad-slot="YOUR_AD_SLOT_ID"
                data-ad-format="auto"
                data-full-width-responsive="true"></ins>
           <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
+            (function() {
+              function initAdSlot() {
+                try {
+                  var container = document.getElementById('ad-hero-slot');
+                  var ins = container ? container.querySelector('ins.adsbygoogle') : null;
+                  if (!ins || ins.getAttribute('data-adsbygoogle-status')) return;
+                  var width = ins.offsetWidth || (ins.parentElement ? ins.parentElement.offsetWidth : 0);
+                  if (width > 0) {
+                    (window.adsbygoogle = window.adsbygoogle || []).push({});
+                  } else {
+                    var attempts = 0;
+                    var timer = setInterval(function() {
+                      attempts++;
+                      if (!ins || ins.getAttribute('data-adsbygoogle-status')) {
+                        clearInterval(timer);
+                        return;
+                      }
+                      var curWidth = ins.offsetWidth || (ins.parentElement ? ins.parentElement.offsetWidth : 0);
+                      if (curWidth > 0) {
+                        clearInterval(timer);
+                        try {
+                          (window.adsbygoogle = window.adsbygoogle || []).push({});
+                        } catch (err) {}
+                      } else if (attempts >= 20) {
+                        clearInterval(timer);
+                      }
+                    }, 250);
+                  }
+                } catch (e) {}
+              }
+              if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initAdSlot);
+              } else {
+                initAdSlot();
+              }
+            })();
           </script>
         </div>
       </section>
