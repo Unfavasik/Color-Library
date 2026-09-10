@@ -58,7 +58,10 @@
       --bg-base: #0c0e17;
       --hero-accent-1: #ff6b3d;
       --hero-accent-2: #8834df;
+      --title-accent-gradient: linear-gradient(135deg, #ffb399 0%, var(--hero-accent-1) 52%, #e04a1a 100%);
+      --title-glow: rgba(255, 107, 61, 0.4);
       --ambient-glow-1: rgba(255, 107, 61, 0.28);
+      --ambient-glow-mid: rgba(255, 107, 61, 0.14);
       --ambient-glow-2: rgba(136, 52, 223, 0.22);
       --ambient-glow-3: rgba(0, 150, 255, 0.14);
       --surface-glass: rgba(255, 255, 255, 0.04);
@@ -85,7 +88,7 @@
       background-image:
         radial-gradient(circle at 75% 18%, var(--ambient-glow-1) 0%, transparent 45%),
         radial-gradient(circle at 15% 12%, var(--ambient-glow-2) 0%, transparent 40%),
-        radial-gradient(circle at 50% 55%, rgba(255, 107, 61, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 50% 55%, var(--ambient-glow-mid) 0%, transparent 50%),
         radial-gradient(circle at 85% 80%, var(--ambient-glow-2) 0%, transparent 45%),
         radial-gradient(circle at 20% 90%, var(--ambient-glow-3) 0%, transparent 40%);
       background-attachment: fixed;
@@ -162,6 +165,14 @@
       font-weight: 800;
       letter-spacing: -0.03em;
       color: #fff;
+    }
+
+    .brand-text .brand-accent {
+      background: var(--title-accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: inline-block;
     }
 
     .nav-links {
@@ -263,9 +274,9 @@
     .hero-section {
       padding: 60px 0 80px;
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: 1.05fr 0.95fr;
       align-items: center;
-      gap: 48px;
+      gap: 32px;
       position: relative;
     }
 
@@ -301,10 +312,12 @@
     }
 
     .hero-title .title-accent {
-      background: linear-gradient(135deg, #ff9e7d 0%, var(--hero-accent-1) 50%, #ff521a 100%);
+      background: var(--title-accent-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
       display: inline-block;
+      filter: drop-shadow(0 4px 20px var(--title-glow));
     }
 
     .hero-subtitle {
@@ -425,24 +438,42 @@
     .hero-device-wrapper {
       position: relative;
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
+      width: 100%;
+      padding-left: 16px;
     }
 
     .hero-device {
-      width: 100%;
-      max-width: 380px;
-      background: rgba(18, 20, 32, 0.75);
+      width: 360px;
+      max-width: 360px;
+      margin: 0;
+      background: rgba(18, 20, 32, 0.82);
       border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: 28px;
       padding: 22px;
       box-shadow:
-        0 24px 60px rgba(0, 0, 0, 0.5),
-        0 0 40px rgba(255, 107, 61, 0.15),
+        0 24px 60px rgba(0, 0, 0, 0.55),
+        0 0 45px var(--title-glow),
         inset 0 1px 1px rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(24px);
       position: relative;
       z-index: 2;
+    }
+
+    .hero-device::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      right: -10px;
+      bottom: -6px;
+      left: 10px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+      z-index: -1;
+      pointer-events: none;
     }
 
     .device-header {
@@ -592,20 +623,25 @@
     /* HANDWRITTEN ANNOTATION */
     .handwritten-annotation {
       position: absolute;
-      top: 15%;
-      right: -80px;
-      z-index: 1;
+      top: 18%;
+      left: 395px;
+      z-index: 3;
       font-family: 'Caveat', cursive;
-      font-size: 22px;
-      line-height: 1.15;
-      color: rgba(255, 255, 255, 0.85);
-      transform: rotate(6deg);
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+      transform: rotate(4deg);
       pointer-events: none;
+      white-space: nowrap;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.8));
     }
 
     .handwritten-annotation svg {
       margin-top: 6px;
-      stroke: rgba(255, 255, 255, 0.6);
+      stroke: rgba(255, 255, 255, 0.9);
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.8));
     }
 
     /* 4 FEATURE CARDS */
@@ -1099,7 +1135,7 @@
           <div class="logo-disc left"></div>
           <div class="logo-disc right"></div>
         </div>
-        <span class="brand-text">Colour Library</span>
+        <span class="brand-text">Colour <span class="brand-accent">Library</span></span>
       </a>
 
       <nav class="nav-links" aria-label="Primary Navigation">
@@ -1525,12 +1561,25 @@
       document.getElementById('preview-hex').textContent = hex;
       document.title = `${hex} — Colour Library Preview`;
 
+      // Calculate luminous gradient for "Library" text matching active color
+      const lightL = Math.min(Math.max(l + 25, 75), 88);
+      const lightS = Math.min(Math.max(s, 60), 95);
+      const deepL = Math.max(Math.min(l - 6, 52), 36);
+      const deepS = Math.min(Math.max(s + 5, 80), 100);
+      const hueShift = (h + 8) % 360;
+
+      const titleGradient = `linear-gradient(135deg, hsl(${h}, ${lightS}%, ${lightL}%) 0%, ${hex} 52%, hsl(${hueShift}, ${deepS}%, ${deepL}%) 100%)`;
+      const titleGlow = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.45)`;
+
       // Set CSS variables
       document.documentElement.style.setProperty('--hero-accent-1', hex);
+      document.documentElement.style.setProperty('--title-accent-gradient', titleGradient);
+      document.documentElement.style.setProperty('--title-glow', titleGlow);
       if (palette[1]) {
         document.documentElement.style.setProperty('--hero-accent-2', palette[1]);
       }
-      document.documentElement.style.setProperty('--ambient-glow-1', `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.28)`);
+      document.documentElement.style.setProperty('--ambient-glow-1', `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.32)`);
+      document.documentElement.style.setProperty('--ambient-glow-mid', `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.16)`);
 
       // Update mockup chips
       [1, 2, 3, 4, 5].forEach((num, idx) => {
