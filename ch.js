@@ -2945,8 +2945,10 @@ function initColorMix() {
   const randomBaseBtn = $('#mix-random-base-btn');
   if (randomBaseBtn) randomBaseBtn.addEventListener('click', randomizeGradient);
 
-  const pagePreviewBtn = $('#mix-page-preview-btn');
-  if (pagePreviewBtn) pagePreviewBtn.addEventListener('click', openMixPagePreview);
+  const pagePreviewBtns = document.querySelectorAll('#mix-page-preview-btn, .mix-page-preview-btn, [data-action="page-preview"]');
+  pagePreviewBtns.forEach((btn) => {
+    btn.addEventListener('click', openMixPagePreview);
+  });
 
   // Add Stop button
   const addStopBtn = $('#mix-add-stop-btn');
