@@ -1246,11 +1246,17 @@ if (backToTopBtn) {
 const SAVED_MIXES_KEY = 'colorLibrarySavedMixes';
 
 const colorMixState = {
-  count: 3,
+  angle: 135,
+  stops: [
+    { hex: '#3B82F6', pos: 0, name: 'Blue' },
+    { hex: '#EC4899', pos: 100, name: 'Pink' }
+  ],
+  count: 2,
+  comboName: null,
   selectedColors: [
     { name: 'Blue', hex: '#3B82F6' },
-    { name: 'Purple', hex: '#8B5CF6' },
     { name: 'Pink', hex: '#EC4899' },
+    { name: 'Purple', hex: '#8B5CF6' },
     { name: 'Teal', hex: '#14B8A6' },
     { name: 'Amber', hex: '#F59E0B' }
   ],
@@ -1348,8 +1354,8 @@ function openColorMix() {
     document.body.style.overflow = 'hidden';
     overlay.scrollTop = 0;
     updateSavedMixesCountBadge();
-    renderMixSlots();
-    initSmokyGenerateButton();
+    renderColorStops();
+    updateGradientDisplay();
   }
 }
 
@@ -1373,6 +1379,472 @@ function closeColorMix() {
       handleRoute();
     }
   }
+}
+
+function updateGradientDisplay() {
+  const stops = colorMixState.stops || [];
+  if (stops.length < 2) return;
+  const angle = colorMixState.angle || 135;
+
+  const sortedStops = [...stops].sort((a, b) => a.pos - b.pos);
+  const stopsCssPart = sortedStops.map(s => `${s.hex.toUpperCase()} ${s.pos}%`).join(', ');
+  const gradientCss = `linear-gradient(${angle}deg, ${stopsCssPart})`;
+
+  const stage = $('#mix-gradient-stage');
+  if (stage) stage.style.background = gradientCss;
+
+  const hexFlow = $('#mix-stage-hex-flow');
+  if (hexFlow) {
+    if (sortedStops.length > 2) {
+      hexFlow.textContent = `${sortedStops[0].hex.toUpperCase()} • ${sortedStops.length} Colors • ${sortedStops[sortedStops.length - 1].hex.toUpperCase()}`;
+    } else {
+      hexFlow.textContent = `${sortedStops[0].hex.toUpperCase()} → ${sortedStops[sortedStops.length - 1].hex.toUpperCase()}`;
+    }
+  }
+
+  const nameEl = $('#mix-stage-color-name');
+  if (nameEl) {
+    if (colorMixState.comboName) {
+      nameEl.textContent = colorMixState.comboName;
+    } else {
+      const firstName = findClosestColorName(sortedStops[0].hex);
+      const lastName = findClosestColorName(sortedStops[sortedStops.length - 1].hex);
+      if (sortedStops.length > 2) {
+        nameEl.textContent = `${sortedStops.length}-Color ${firstName} & ${lastName} Blend`;
+      } else {
+        nameEl.textContent = `${firstName} to ${lastName} Blend`;
+      }
+    }
+  }
+
+  const hexValPill = $('#mix-stage-hex-val');
+  if (hexValPill) {
+    hexValPill.textContent = `${angle}deg`;
+  }
+
+  const dotEl = $('#mix-stage-dot');
+  if (dotEl) {
+    dotEl.style.backgroundColor = sortedStops[0].hex;
+  }
+
+  const codeText = $('#mix-css-code-text');
+  if (codeText) {
+    codeText.textContent = `background: linear-gradient(\n  ${angle}deg, ${stopsCssPart}\n);`;
+  }
+
+  // Update angle chips active state
+  document.querySelectorAll('.mix-angle-chip').forEach(chip => {
+    const chipAngle = parseInt(chip.getAttribute('data-angle'), 10);
+    chip.classList.toggle('active', chipAngle === angle);
+  });
+}
+
+function renderColorStops() {
+  const listEl = $('#mix-stops-list');
+  if (!listEl) return;
+
+  const stops = colorMixState.stops;
+
+  // Sync mode count selector (2 to 7 colors)
+  const countSelect = $('#mix-colors-count-select');
+  if (countSelect) {
+    countSelect.value = String(Math.max(2, Math.min(7, stops.length)));
+  }
+
+  // Update Add Stop button disabled appearance if at max (7)
+  const addStopBtn = $('#mix-add-stop-btn');
+  if (addStopBtn) {
+    if (stops.length >= 7) {
+      addStopBtn.classList.add('disabled');
+      addStopBtn.title = 'Maximum 7 stops reached';
+    } else {
+      addStopBtn.classList.remove('disabled');
+      addStopBtn.title = 'Add Color Stop';
+    }
+  }
+
+  listEl.innerHTML = stops.map((stop, idx) => `
+    <div class="mix-stop-row" data-stop-index="${idx}">
+      <div class="mix-stop-swatch-wrap">
+        <span class="mix-stop-swatch" style="background-color: ${stop.hex};"></span>
+        <input type="color" class="mix-stop-color-input" value="${stop.hex}" data-color-idx="${idx}" aria-label="Color stop ${idx + 1}" />
+      </div>
+      <input type="text" class="mix-stop-hex-input" value="${stop.hex.toUpperCase()}" maxlength="7" spellcheck="false" data-hex-idx="${idx}" aria-label="Hex for stop ${idx + 1}" />
+      <div class="mix-stop-slider-wrap">
+        <input type="range" class="mix-stop-slider" min="0" max="100" value="${stop.pos}" data-slider-idx="${idx}" aria-label="Position for stop ${idx + 1}" />
+        <span class="mix-stop-pos-val" id="mix-stop-pos-${idx}">${stop.pos}%</span>
+      </div>
+      <button type="button" class="mix-stop-del-btn" data-del-idx="${idx}" ${stops.length <= 2 ? 'disabled' : ''} aria-label="Delete stop ${idx + 1}" title="${stops.length <= 2 ? 'Minimum 2 stops required' : 'Delete stop'}">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="3 6 5 6 21 6"></polyline>
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+        </svg>
+      </button>
+    </div>
+  `).join('');
+
+  // Bind events for color inputs
+  listEl.querySelectorAll('.mix-stop-color-input').forEach(input => {
+    input.addEventListener('input', (e) => {
+      const idx = parseInt(e.target.dataset.colorIdx, 10);
+      const newHex = e.target.value.toUpperCase();
+      colorMixState.stops[idx].hex = newHex;
+      const hexInput = listEl.querySelector(`.mix-stop-hex-input[data-hex-idx="${idx}"]`);
+      if (hexInput) hexInput.value = newHex;
+      const swatch = input.previousElementSibling;
+      if (swatch) swatch.style.backgroundColor = newHex;
+      updateGradientDisplay();
+    });
+  });
+
+  // Bind events for hex text inputs
+  listEl.querySelectorAll('.mix-stop-hex-input').forEach(input => {
+    input.addEventListener('change', (e) => {
+      const idx = parseInt(e.target.dataset.hexIdx, 10);
+      let val = e.target.value.trim();
+      if (!val.startsWith('#')) val = '#' + val;
+      if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
+        val = val.toUpperCase();
+        colorMixState.stops[idx].hex = val;
+        e.target.value = val;
+        const colorInput = listEl.querySelector(`.mix-stop-color-input[data-color-idx="${idx}"]`);
+        if (colorInput) colorInput.value = val;
+        const swatch = listEl.querySelector(`[data-stop-index="${idx}"] .mix-stop-swatch`);
+        if (swatch) swatch.style.backgroundColor = val;
+        updateGradientDisplay();
+      } else {
+        e.target.value = colorMixState.stops[idx].hex.toUpperCase();
+      }
+    });
+  });
+
+  // Bind events for slider position inputs
+  listEl.querySelectorAll('.mix-stop-slider').forEach(slider => {
+    slider.addEventListener('input', (e) => {
+      const idx = parseInt(e.target.dataset.sliderIdx, 10);
+      const pos = parseInt(e.target.value, 10);
+      colorMixState.stops[idx].pos = pos;
+      const posLabel = $(`#mix-stop-pos-${idx}`);
+      if (posLabel) posLabel.textContent = `${pos}%`;
+      updateGradientDisplay();
+    });
+  });
+
+  // Bind events for delete buttons
+  listEl.querySelectorAll('.mix-stop-del-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (colorMixState.stops.length <= 2) return;
+      const idx = parseInt(btn.dataset.delIdx, 10);
+      colorMixState.stops.splice(idx, 1);
+      colorMixState.count = colorMixState.stops.length;
+      renderColorStops();
+      updateGradientDisplay();
+      showToast('Stop removed');
+    });
+  });
+}
+
+function setGradientColorCount(newCount) {
+  const targetCount = Math.max(2, Math.min(7, parseInt(newCount, 10) || 2));
+  colorMixState.count = targetCount;
+  const currentCount = colorMixState.stops.length;
+
+  if (targetCount > currentCount) {
+    const needed = targetCount - currentCount;
+    const existingHexes = new Set(colorMixState.stops.map(s => s.hex.toUpperCase()));
+    const candidates = colors.filter(c => !existingHexes.has(c.hex.toUpperCase()));
+    const shuffled = [...candidates].sort(() => Math.random() - 0.5);
+
+    for (let i = 0; i < needed; i++) {
+      const col = shuffled[i] || colors[Math.floor(Math.random() * colors.length)];
+      colorMixState.stops.push({
+        hex: col.hex.toUpperCase(),
+        pos: 0,
+        name: col.name
+      });
+    }
+  } else if (targetCount < currentCount) {
+    colorMixState.stops = colorMixState.stops.slice(0, targetCount);
+  }
+
+  // Redistribute stops evenly across 0% to 100%
+  colorMixState.stops.forEach((stop, idx) => {
+    stop.pos = Math.round((idx / (targetCount - 1)) * 100);
+  });
+
+  renderColorStops();
+  updateGradientDisplay();
+  showToast(`✓ Set to ${targetCount} Colors mix mode`);
+}
+
+function addGradientStop() {
+  if (colorMixState.stops.length >= 7) {
+    showToast('Maximum 7 color stops allowed');
+    return;
+  }
+  openMixPicker(null, 'add-stop');
+}
+
+function addGradientStopWithColor(color) {
+  if (colorMixState.stops.length >= 7) {
+    showToast('Maximum 7 color stops allowed');
+    return;
+  }
+  const hex = color.hex.toUpperCase();
+  const name = color.name || findClosestColorName(hex);
+
+  // Intelligently position new stop in the largest gap between existing stops
+  const currentStops = [...colorMixState.stops].sort((a, b) => a.pos - b.pos);
+  let newPos = 50;
+  if (currentStops.length === 2) {
+    newPos = 50;
+  } else if (currentStops.length >= 3) {
+    let maxGap = -1;
+    let bestPos = 50;
+    for (let i = 0; i < currentStops.length - 1; i++) {
+      const gap = currentStops[i + 1].pos - currentStops[i].pos;
+      if (gap > maxGap) {
+        maxGap = gap;
+        bestPos = Math.round((currentStops[i].pos + currentStops[i + 1].pos) / 2);
+      }
+    }
+    newPos = bestPos;
+  }
+
+  colorMixState.stops.push({
+    hex,
+    pos: newPos,
+    name
+  });
+
+  colorMixState.count = colorMixState.stops.length;
+  colorMixState.stops.sort((a, b) => a.pos - b.pos);
+  renderColorStops();
+  updateGradientDisplay();
+  showToast(`✓ Added ${name} (${hex}) stop`);
+}
+
+// Curated Top 10k Master Color Combinations (Iconic 7-stop ramps from world-class designs)
+const WORLD_TOP_MASTER_PALETTES = [
+  { name: 'Tokyo Cyberpunk', colors: ['#0D0221', '#541388', '#F72585', '#7209B7', '#3A0CA3', '#4361EE', '#4CC9F0'] },
+  { name: 'Sunset Horizon', colors: ['#FF0844', '#FF4E50', '#F9D423', '#F857A6', '#FF5858', '#FF6A00', '#EE0979'] },
+  { name: 'Nordic Aurora', colors: ['#0575E6', '#00F260', '#24FE41', '#38EF7D', '#11998E', '#00C9FF', '#92FE9D'] },
+  { name: 'Rose Gold Elegance', colors: ['#3D0C11', '#8C1D40', '#C56C86', '#F8A5C2', '#F78FB3', '#F5CD79', '#FFF3EB'] },
+  { name: 'Deep Oceanic Abyss', colors: ['#020024', '#090979', '#0072B5', '#00D4FF', '#2BD9FE', '#A0E9FF', '#E2F7FE'] },
+  { name: 'Emerald Sanctuary', colors: ['#051F20', '#0B2B26', '#163832', '#235347', '#8EB69B', '#38EF7D', '#DAF1DE'] },
+  { name: 'Royal Amethyst & Topaz', colors: ['#2E0854', '#4B1278', '#6A0572', '#AB2A7E', '#D9822B', '#E5A93C', '#FCE38A'] },
+  { name: 'California Peach Bloom', colors: ['#FA709A', '#FEE140', '#FFA07A', '#FF6B6B', '#FF7E67', '#FDAC53', '#FEE5A5'] },
+  { name: 'Mediterranean Azure', colors: ['#002244', '#005F73', '#0A9396', '#94D2BD', '#E9D8A6', '#EE9B00', '#CA6702'] },
+  { name: 'Kyoto Cherry Blossom', colors: ['#355C7D', '#6C5B7B', '#C06C84', '#F67280', '#F8B195', '#FFECCC', '#FFF5EB'] },
+  { name: 'Velvet Espresso & Ochre', colors: ['#1A0C08', '#381D14', '#5E3023', '#895737', '#C08552', '#DAB49D', '#F3E9DC'] },
+  { name: 'Synthwave Neon Dusk', colors: ['#1B003A', '#49117C', '#8C1F94', '#D43790', '#EC627A', '#F9957F', '#FDD5B1'] },
+  { name: 'Matcha Cream & Olive', colors: ['#1E2D24', '#3E5641', '#668066', '#A3B18A', '#DAD7CD', '#F4F1DE', '#FAF9F6'] },
+  { name: 'Electric Hyper-Pop', colors: ['#08F7FE', '#09FBD3', '#FE53BB', '#F5D300', '#7122FA', '#FF2A85', '#00E8C6'] },
+  { name: 'Opal Holographic Mist', colors: ['#74EBD5', '#9FACE6', '#FFB199', '#FF0844', '#FEE140', '#FA709A', '#B0EDFD'] },
+  { name: 'Mystic Indigo Nebula', colors: ['#0A091A', '#201658', '#1D24CA', '#98E4FF', '#FF0080', '#7928CA', '#4318FF'] },
+  { name: 'Sahara Terracotta Sun', colors: ['#261108', '#59200B', '#9A3412', '#C2410C', '#EA580C', '#FDBA74', '#FFEDD5'] },
+  { name: 'French Riviera Chic', colors: ['#003049', '#D62828', '#F77F00', '#FCBF49', '#EAE2B7', '#5BC0BE', '#3A506B'] },
+  { name: 'Midnight Violet Glow', colors: ['#050510', '#100B2B', '#27084A', '#580A77', '#A01A7D', '#E24B6A', '#FF9671'] },
+  { name: 'Alpine Glacier Peak', colors: ['#0F1E36', '#1E3A5F', '#2C698D', '#4192A8', '#8ADBE5', '#C7F9CC', '#EDF6F9'] },
+  { name: 'Warm Amber & Honey', colors: ['#3A1C00', '#632B00', '#9E4700', '#D97706', '#F59E0B', '#FCD34D', '#FEF3C7'] },
+  { name: 'Lavender Haze Twilight', colors: ['#161026', '#2F2052', '#583D72', '#9F5F80', '#FF8474', '#FFC1B6', '#FCEFEF'] },
+  { name: 'Cyber Mint & Plum', colors: ['#140152', '#020122', '#22007C', '#49117C', '#00FFC6', '#00BFA5', '#64FFDA'] },
+  { name: 'Tuscan Vineyard', colors: ['#1E0F1C', '#421930', '#741D43', '#B22234', '#D46A6A', '#EBB071', '#F5E6CC'] },
+  { name: 'Bioluminescent Reef', colors: ['#03071E', '#0A2540', '#0077B6', '#00B4D8', '#48CAE4', '#00F5D4', '#E0FBFC'] },
+  { name: 'Golden Hour Radiance', colors: ['#2C0E37', '#621B59', '#A82B69', '#E04E59', '#FF8A50', '#FFC857', '#FFE8B0'] },
+  { name: 'Sage Botanical Leaf', colors: ['#1F2421', '#334139', '#536B5E', '#7F9C8B', '#A8C3B1', '#CCE3DE', '#EAF4F4'] },
+  { name: 'Crimson Velvet & Noir', colors: ['#0D0208', '#250902', '#38040E', '#640D14', '#800E13', '#AD2831', '#D44D5C'] },
+  { name: 'Tropical Lagoon Bliss', colors: ['#004E64', '#00A5CF', '#25A18E', '#7AE582', '#9FFFCB', '#FFD166', '#EF476F'] },
+  { name: 'Cupertino Pro Horizon', colors: ['#0F1117', '#1A1D27', '#252D3D', '#3B82F6', '#8B5CF6', '#EC4899', '#F43F5E'] },
+  { name: 'Dribbble Curated Velvet', colors: ['#111827', '#1F2937', '#4F46E5', '#7C3AED', '#C026D3', '#DB2777', '#F59E0B'] },
+  { name: 'Vogue Haute Glamour', colors: ['#0A0A0A', '#1C1C1C', '#333333', '#555555', '#888888', '#CCCCCC', '#F7F7F7'] },
+  { name: 'Cosmic Starlight Halo', colors: ['#03001C', '#301E67', '#5B8FB9', '#B6EADA', '#E3F4F4', '#FFD369', '#EEEEEE'] },
+  { name: 'Sunset Sorbet Delight', colors: ['#4A0E4E', '#811762', '#B82376', '#EB4D55', '#FF7F50', '#FFA07A', '#FFE4E1'] },
+  { name: 'Nordic Pine & Lichen', colors: ['#0B1D12', '#143621', '#215937', '#388659', '#52AA76', '#8FCDA4', '#D4EEDB'] },
+  { name: 'Solar Flare Corona', colors: ['#300000', '#6B0000', '#B30000', '#FF2A00', '#FF7300', '#FFB700', '#FFFF66'] },
+  { name: 'Twilight Ocean Mist', colors: ['#061121', '#0E2948', '#174A74', '#2072A1', '#33A3CF', '#68CEEE', '#B4EDFD'] },
+  { name: 'Mulberry & Champagne', colors: ['#240024', '#470047', '#730073', '#A81C7E', '#D94B8A', '#F799B5', '#FFF0F5'] },
+  { name: 'Sedona Red Rocks', colors: ['#331005', '#5C1D0A', '#8F2F12', '#C4461C', '#E26D3B', '#F19E6E', '#FAD5BC'] },
+  { name: 'Starfall Galaxy', colors: ['#080417', '#1A0C38', '#341666', '#5C2499', '#903DD1', '#C471ED', '#F64F59'] }
+];
+
+// Procedural archetypes for producing 10,000+ harmonic color ramps
+const TOP_10K_ARCHETYPES = [
+  { name: 'Sunset Radiance', baseHue: 345, span: 85, satMin: 72, satMax: 94, lightMin: 32, lightMax: 70 },
+  { name: 'Nordic Polar Aurora', baseHue: 175, span: 95, satMin: 68, satMax: 92, lightMin: 30, lightMax: 72 },
+  { name: 'Tokyo Cyberpunk Neon', baseHue: 275, span: 135, satMin: 78, satMax: 96, lightMin: 24, lightMax: 68 },
+  { name: 'Rose Gold & Champagne', baseHue: 340, span: 60, satMin: 55, satMax: 82, lightMin: 28, lightMax: 84 },
+  { name: 'Emerald Oasis & Mint', baseHue: 150, span: 70, satMin: 58, satMax: 86, lightMin: 22, lightMax: 74 },
+  { name: 'Imperial Amethyst & Gold', baseHue: 280, span: 165, satMin: 70, satMax: 90, lightMin: 25, lightMax: 76 },
+  { name: 'California Peach Bloom', baseHue: 15, span: 65, satMin: 72, satMax: 95, lightMin: 45, lightMax: 82 },
+  { name: 'Deep Oceanic Abyss', baseHue: 215, span: 55, satMin: 75, satMax: 95, lightMin: 18, lightMax: 72 },
+  { name: 'Velvet Espresso & Ochre', baseHue: 25, span: 45, satMin: 45, satMax: 75, lightMin: 16, lightMax: 78 },
+  { name: 'Kyoto Pastel Dream', baseHue: 290, span: 90, satMin: 48, satMax: 72, lightMin: 62, lightMax: 88 },
+  { name: 'Deep Space Cosmic', baseHue: 245, span: 115, satMin: 70, satMax: 95, lightMin: 14, lightMax: 65 },
+  { name: 'Botanical Sage & Olive', baseHue: 95, span: 65, satMin: 35, satMax: 65, lightMin: 24, lightMax: 76 },
+  { name: 'Electric Hyper-Pop', baseHue: 185, span: 180, satMin: 85, satMax: 98, lightMin: 42, lightMax: 72 },
+  { name: 'Golden Hour Sunbeam', baseHue: 32, span: 50, satMin: 78, satMax: 96, lightMin: 30, lightMax: 78 },
+  { name: 'Alpine Glacier & Frost', baseHue: 195, span: 60, satMin: 60, satMax: 85, lightMin: 26, lightMax: 82 },
+  { name: 'Vibrant Tropicana', baseHue: 330, span: 125, satMin: 80, satMax: 96, lightMin: 38, lightMax: 74 }
+];
+
+function samplePaletteColors(hexList, count) {
+  if (count <= 1) return [hexList[0]];
+  if (count >= hexList.length) return hexList.slice(0, count);
+  const sampled = [];
+  const maxIdx = hexList.length - 1;
+  for (let i = 0; i < count; i++) {
+    const idx = Math.round((i / (count - 1)) * maxIdx);
+    sampled.push(hexList[idx]);
+  }
+  return sampled;
+}
+
+function generateProceduralTop10kCombo(count) {
+  const archetype = TOP_10K_ARCHETYPES[Math.floor(Math.random() * TOP_10K_ARCHETYPES.length)];
+  const comboNumber = Math.floor(Math.random() * 9999) + 1;
+  const comboName = `${archetype.name} #${comboNumber.toLocaleString()}`;
+
+  const baseHue = (archetype.baseHue + (Math.random() - 0.5) * 30 + 360) % 360;
+  const isReverse = Math.random() > 0.5;
+
+  const hexes = [];
+  for (let i = 0; i < count; i++) {
+    const t = i / (count - 1);
+    const progress = isReverse ? (1 - t) : t;
+    const hue = (baseHue + progress * archetype.span + 360) % 360;
+    const sat = archetype.satMin + Math.random() * (archetype.satMax - archetype.satMin);
+    const light = archetype.lightMin + progress * (archetype.lightMax - archetype.lightMin);
+
+    const rgb = hslToRgbValues(hue, sat, light);
+    const hex = rgbToHexCode(rgb[0], rgb[1], rgb[2]);
+    hexes.push(hex);
+  }
+
+  const colors = hexes.map(hex => ({
+    hex,
+    name: findClosestColorName(hex)
+  }));
+
+  return { name: comboName, colors };
+}
+
+function getTop10kBestColorCombo(count) {
+  // Balance between the curated master palettes and the procedural 10,000+ harmonic engine
+  const useCurated = Math.random() < 0.45;
+  if (useCurated) {
+    const pal = WORLD_TOP_MASTER_PALETTES[Math.floor(Math.random() * WORLD_TOP_MASTER_PALETTES.length)];
+    const hexList = (Math.random() > 0.5) ? [...pal.colors].reverse() : [...pal.colors];
+    const sampledHexes = samplePaletteColors(hexList, count);
+    return {
+      name: pal.name,
+      colors: sampledHexes.map(hex => ({
+        hex: hex.toUpperCase(),
+        name: findClosestColorName(hex)
+      }))
+    };
+  }
+
+  return generateProceduralTop10kCombo(count);
+}
+
+function randomizeGradient() {
+  // Use user-selected mode count (2 to 7), fallback to current stops count
+  const count = Math.max(2, Math.min(7, colorMixState.count || colorMixState.stops.length || 2));
+  colorMixState.count = count;
+
+  const angles = [45, 90, 135, 180, 225];
+  colorMixState.angle = angles[Math.floor(Math.random() * angles.length)];
+
+  // Update angle chip UI
+  document.querySelectorAll('.mix-angle-chip').forEach(chip => {
+    const chipAngle = parseInt(chip.dataset.angle, 10);
+    chip.classList.toggle('active', chipAngle === colorMixState.angle);
+  });
+
+  // Pull a world-class color combo from the Top 10k best color combos collection
+  const combo = getTop10kBestColorCombo(count);
+  colorMixState.comboName = combo.name;
+
+  // Re-generate stops with selected count and even position spacing
+  colorMixState.stops = combo.colors.map((col, idx) => ({
+    hex: col.hex.toUpperCase(),
+    pos: Math.round((idx / (count - 1)) * 100),
+    name: col.name
+  }));
+
+  renderColorStops();
+  updateGradientDisplay();
+  showToast(`✨ Top 10k Combo: ${combo.name} (${count} Colors)`);
+}
+
+function copyGradientCss() {
+  const stops = [...colorMixState.stops].sort((a, b) => a.pos - b.pos);
+  const angle = colorMixState.angle || 135;
+  const stopsCssPart = stops.map(s => `${s.hex.toUpperCase()} ${s.pos}%`).join(', ');
+  const css = `background: linear-gradient(${angle}deg, ${stopsCssPart});`;
+
+  copyText(css).then(() => {
+    const btnText = $('#mix-css-copy-btn-text');
+    const copyBtn = $('#mix-css-copy-btn');
+    if (btnText) btnText.textContent = 'Copied!';
+    if (copyBtn) copyBtn.classList.add('copied');
+    showToast('✓ CSS gradient copied to clipboard!');
+
+    setTimeout(() => {
+      if (btnText) btnText.textContent = 'Copy';
+      if (copyBtn) copyBtn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+function saveCurrentGradient() {
+  const stops = [...colorMixState.stops].sort((a, b) => a.pos - b.pos);
+  const angle = colorMixState.angle || 135;
+  const stopsCssPart = stops.map(s => `${s.hex.toUpperCase()} ${s.pos}%`).join(', ');
+  const gradientCss = `linear-gradient(${angle}deg, ${stopsCssPart})`;
+  
+  let name = colorMixState.comboName;
+  if (!name) {
+    const firstName = findClosestColorName(stops[0].hex);
+    const lastName = findClosestColorName(stops[stops.length - 1].hex);
+    name = `${firstName} to ${lastName} Gradient`;
+  } else if (!name.toLowerCase().includes('gradient')) {
+    name = `${name} Gradient`;
+  }
+
+  const item = {
+    id: 'gradient_' + Date.now(),
+    name,
+    angle,
+    stops: stops.map(s => ({ ...s })),
+    gradientCss,
+    hex: stops[0].hex,
+    hexes: stops.map(s => s.hex),
+    inputHexFlow: `${stops[0].hex.toUpperCase()} → ${stops[stops.length - 1].hex.toUpperCase()}`,
+    date: new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+  };
+
+  const list = getSavedMixes();
+  list.unshift(item);
+  saveSavedMixes(list);
+  updateSavedMixesCountBadge();
+
+  const saveBtn = $('#mix-save-gradient-btn');
+  if (saveBtn) {
+    const origHtml = saveBtn.innerHTML;
+    saveBtn.innerHTML = `
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <span>Saved!</span>
+    `;
+    setTimeout(() => {
+      saveBtn.innerHTML = origHtml;
+    }, 2000);
+  }
+
+  showToast(`♥ Saved "${name}" to favorites!`);
 }
 
 function updateMixCount(newCount) {
@@ -1430,7 +1902,6 @@ function renderMixSlots() {
 
   container.innerHTML = html;
 
-  // Bind click handlers to slots
   container.querySelectorAll('.mix-slot-item').forEach((slot) => {
     slot.addEventListener('click', () => {
       const idx = parseInt(slot.dataset.slotIndex, 10);
@@ -1454,22 +1925,15 @@ function renderMixSlots() {
 
 function selectRandomBaseColors() {
   const count = colorMixState.count;
-  // Pick diverse hues
-  const step = Math.floor(colors.length / count);
-  const offset = Math.floor(Math.random() * step);
-  const picked = [];
+  const combo = getTop10kBestColorCombo(count);
 
   for (let i = 0; i < count; i++) {
-    const idx = (offset + i * step + Math.floor(Math.random() * (step / 2))) % colors.length;
-    picked.push({ name: colors[idx].name, hex: colors[idx].hex });
-  }
-
-  for (let i = 0; i < count; i++) {
-    colorMixState.selectedColors[i] = picked[i];
+    colorMixState.selectedColors[i] = combo.colors[i];
   }
 
   renderMixSlots();
   generateColorMix(true);
+  showToast(`✨ Top 10k Combo: ${combo.name}`);
 }
 
 function generateColorMix(isShuffle = false) {
@@ -1808,18 +2272,36 @@ function copyCurrentMixHex() {
   }, 16);
 }
 
-/* Slot Color Picker Modal */
-function openMixPicker(slotIndex) {
-  colorMixState.activeSlotIndex = slotIndex;
+/* Color Picker Modal (Slots & Gradient Stops) */
+function openMixPicker(targetIndex = null, mode = 'slot') {
+  colorMixState.pickerMode = mode;
+  colorMixState.activeSlotIndex = mode === 'slot' ? targetIndex : null;
+  colorMixState.activeStopIndex = mode === 'edit-stop' ? targetIndex : null;
   colorMixState.pickerSearch = '';
   colorMixState.pickerCategory = 'All';
 
   const overlay = $('#mix-picker-overlay');
   const searchInput = $('#mix-picker-search');
   const modalTitle = $('#mix-picker-modal-title');
+  const modalSub = overlay ? overlay.querySelector('.mix-picker-sub') : null;
 
-  if (modalTitle) modalTitle.textContent = `Select Color ${slotIndex + 1}`;
-  if (searchInput) searchInput.value = '';
+  if (modalTitle) {
+    if (mode === 'add-stop') {
+      modalTitle.textContent = 'Add Color Stop';
+      if (modalSub) modalSub.textContent = 'Search by color name or enter any color code (HEX)';
+    } else if (mode === 'edit-stop') {
+      modalTitle.textContent = `Edit Color Stop ${targetIndex !== null ? targetIndex + 1 : 1}`;
+      if (modalSub) modalSub.textContent = 'Search by color name or enter any color code (HEX)';
+    } else {
+      modalTitle.textContent = `Select Color ${targetIndex !== null ? targetIndex + 1 : 1}`;
+      if (modalSub) modalSub.textContent = 'Choose from the Color Library';
+    }
+  }
+
+  if (searchInput) {
+    searchInput.value = '';
+    searchInput.placeholder = 'Search by color name or HEX (e.g. Blue, #3B82F6)...';
+  }
 
   renderMixPickerCategories();
   renderMixPickerGrid();
@@ -1827,6 +2309,41 @@ function openMixPicker(slotIndex) {
   if (overlay) {
     overlay.classList.add('active');
     setTimeout(() => { if (searchInput) searchInput.focus(); }, 100);
+  }
+}
+
+function handleMixPickerSelect(hex, name) {
+  const normHex = hex.toUpperCase();
+  const normName = name || findClosestColorName(normHex) || 'Custom Color';
+
+  if (colorMixState.pickerMode === 'add-stop') {
+    addGradientStopWithColor({ hex: normHex, name: normName });
+    closeMixPicker();
+    return;
+  }
+
+  if (colorMixState.pickerMode === 'edit-stop') {
+    const idx = colorMixState.activeStopIndex;
+    if (idx !== null && colorMixState.stops[idx]) {
+      colorMixState.stops[idx].hex = normHex;
+      colorMixState.stops[idx].name = normName;
+      renderColorStops();
+      updateGradientDisplay();
+      closeMixPicker();
+      showToast(`✓ Updated stop to ${normName}`);
+    }
+    return;
+  }
+
+  // Legacy slot mode
+  if (colorMixState.activeSlotIndex !== null) {
+    colorMixState.selectedColors[colorMixState.activeSlotIndex] = { name: normName, hex: normHex };
+    renderMixSlots();
+    if (colorMixState.currentMix) {
+      generateColorMix(false);
+    }
+    closeMixPicker();
+    showToast(`Selected ${normName}`);
   }
 }
 
@@ -1857,44 +2374,68 @@ function renderMixPickerGrid() {
   const grid = $('#mix-picker-grid');
   if (!grid) return;
 
-  const query = colorMixState.pickerSearch.trim().toLowerCase();
+  const rawQuery = (colorMixState.pickerSearch || '').trim();
+  const lowerQuery = rawQuery.toLowerCase();
   const cat = colorMixState.pickerCategory;
 
   const filtered = colors.filter((color) => {
-    const matchesQuery = !query || color.name.toLowerCase().includes(query) || color.hex.toLowerCase().includes(query);
+    const matchesQuery = !lowerQuery || color.name.toLowerCase().includes(lowerQuery) || color.hex.toLowerCase().includes(lowerQuery);
     if (!matchesQuery) return false;
     if (cat === 'All') return true;
     return classify(color.hex) === cat;
   });
 
-  if (!filtered.length) {
-    grid.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 28px; color: #94a3b8; font-size: 13px;">No matching colors found</div>`;
+  // Check if rawQuery is a valid 3-char or 6-char hex code (with or without #)
+  let customHexCard = '';
+  let cleanHex = rawQuery;
+  if (!cleanHex.startsWith('#') && (/^[0-9a-f]{3}$/i.test(cleanHex) || /^[0-9a-f]{6}$/i.test(cleanHex))) {
+    cleanHex = '#' + cleanHex;
+  }
+  if (/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(cleanHex)) {
+    const fullHex = cleanHex.length === 4
+      ? '#' + cleanHex[1] + cleanHex[1] + cleanHex[2] + cleanHex[2] + cleanHex[3] + cleanHex[3]
+      : cleanHex;
+    const normHex = fullHex.toUpperCase();
+    const customName = findClosestColorName(normHex) || 'Custom Color';
+    customHexCard = `
+      <div class="mix-picker-item mix-picker-custom-hex" data-select-hex="${normHex}" data-select-name="${escapeHtml(customName)}" role="button" tabindex="0" style="border: 2px solid #0066ff; background: #eff6ff; grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 12px; margin-bottom: 6px; cursor: pointer;">
+        <span class="mix-picker-swatch" style="background-color: ${normHex}; width: 36px; height: 36px; min-width: 36px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.15); box-shadow: 0 1px 3px rgba(0,0,0,0.1);"></span>
+        <div class="mix-picker-info" style="flex: 1;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="mix-picker-name" style="color: #0066ff; font-weight: 700; font-size: 14px;">Add Code: ${normHex}</span>
+            <span style="background: #0066ff; color: #fff; font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 4px;">Custom HEX</span>
+          </div>
+          <span class="mix-picker-hex" style="color: #475569; font-size: 12px;">Closest match: ${escapeHtml(customName)} — Click to add</span>
+        </div>
+      </div>
+    `;
+  }
+
+  if (!filtered.length && !customHexCard) {
+    grid.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 32px 16px; color: #64748b; font-size: 14px;">
+      <p style="margin: 0 0 6px 0; font-weight: 600; color: #334155;">No matching colors found</p>
+      <p style="margin: 0; font-size: 12px; color: #94a3b8;">Type a color name (e.g. "Emerald", "Cyan") or enter a HEX code (e.g. "#FF5733")</p>
+    </div>`;
     return;
   }
 
-  grid.innerHTML = filtered.map((color) => `
-    <div class="mix-picker-item" data-select-hex="${color.hex}" data-select-name="${escapeHtml(color.name)}" role="button" tabindex="0">
+  const itemsHtml = filtered.map((color) => `
+    <div class="mix-picker-item" data-select-hex="${color.hex.toUpperCase()}" data-select-name="${escapeHtml(color.name)}" role="button" tabindex="0">
       <span class="mix-picker-swatch" style="background-color: ${color.hex};"></span>
       <div class="mix-picker-info">
         <span class="mix-picker-name">${escapeHtml(color.name)}</span>
-        <span class="mix-picker-hex">${color.hex}</span>
+        <span class="mix-picker-hex">${color.hex.toUpperCase()}</span>
       </div>
     </div>
   `).join('');
+
+  grid.innerHTML = customHexCard + itemsHtml;
 
   grid.querySelectorAll('.mix-picker-item').forEach((item) => {
     item.addEventListener('click', () => {
       const hex = item.getAttribute('data-select-hex');
       const name = item.getAttribute('data-select-name');
-      if (colorMixState.activeSlotIndex !== null) {
-        colorMixState.selectedColors[colorMixState.activeSlotIndex] = { name, hex };
-        renderMixSlots();
-        if (colorMixState.currentMix) {
-          generateColorMix(false);
-        }
-        closeMixPicker();
-        showToast(`Selected ${name}`);
-      }
+      handleMixPickerSelect(hex, name);
     });
   });
 }
@@ -1982,19 +2523,28 @@ function renderMixSavedList() {
       const idx = parseInt(btn.getAttribute('data-load-index'), 10);
       const item = list[idx];
       if (item) {
-        if (item.baseColors && Array.isArray(item.baseColors) && item.baseColors.length) {
-          colorMixState.count = Math.min(5, Math.max(2, item.baseColors.length));
-          item.baseColors.forEach((c, i) => {
-            if (i < 5) colorMixState.selectedColors[i] = c;
-          });
-          updateMixCount(colorMixState.count);
+        if (item.stops && Array.isArray(item.stops) && item.stops.length) {
+          colorMixState.stops = item.stops.map(s => ({ ...s }));
+          colorMixState.angle = item.angle || 135;
+        } else if (item.baseColors && Array.isArray(item.baseColors) && item.baseColors.length) {
+          const step = 100 / Math.max(1, item.baseColors.length - 1);
+          colorMixState.stops = item.baseColors.map((c, i) => ({
+            hex: c.hex.toUpperCase(),
+            pos: Math.round(i * step),
+            name: c.name
+          }));
+          colorMixState.angle = item.angle || 135;
+        } else if (item.hex) {
+          colorMixState.stops = [
+            { hex: item.hex.toUpperCase(), pos: 0, name: item.name || 'Color 1' },
+            { hex: '#EC4899', pos: 100, name: 'Pink' }
+          ];
+          colorMixState.angle = 135;
         }
-        colorMixState.currentMix = item;
-        colorMixState.history.push(item);
-        colorMixState.historyIndex = colorMixState.history.length - 1;
-        renderCurrentMixResult();
+        renderColorStops();
+        updateGradientDisplay();
         closeMixSaved();
-        showToast(`Loaded "${item.name || item.hex}"`);
+        showToast(`Loaded "${item.name || 'Gradient'}"`);
       }
     });
   });
@@ -2308,16 +2858,50 @@ function initColorMix() {
   if (decBtn) decBtn.addEventListener('click', () => updateMixCount(colorMixState.count - 1));
   if (incBtn) incBtn.addEventListener('click', () => updateMixCount(colorMixState.count + 1));
 
-  // Random button (primary action): picks random colors and generates mix
+  // Random button: picks random colors and updates gradient
   const randomBaseBtn = $('#mix-random-base-btn');
-  if (randomBaseBtn) randomBaseBtn.addEventListener('click', selectRandomBaseColors);
+  if (randomBaseBtn) randomBaseBtn.addEventListener('click', randomizeGradient);
 
-  // Fallback triggers for generateBtn & generateAgainBtn if present
+  // Add Stop button
+  const addStopBtn = $('#mix-add-stop-btn');
+  if (addStopBtn) addStopBtn.addEventListener('click', addGradientStop);
+
+  // Color count mode select (2 to 7 colors)
+  const countSelect = $('#mix-colors-count-select');
+  if (countSelect) {
+    countSelect.addEventListener('change', (e) => {
+      setGradientColorCount(e.target.value);
+    });
+  }
+
+  // Copy CSS Code buttons
+  const cssCopyBtn = $('#mix-css-copy-btn');
+  if (cssCopyBtn) cssCopyBtn.addEventListener('click', copyGradientCss);
+
+  const codeOverlayCopy = $('#mix-code-overlay-copy');
+  if (codeOverlayCopy) codeOverlayCopy.addEventListener('click', copyGradientCss);
+
+  // Save Gradient button
+  const saveGradientBtn = $('#mix-save-gradient-btn');
+  if (saveGradientBtn) saveGradientBtn.addEventListener('click', saveCurrentGradient);
+
+  // Angle chips
+  document.querySelectorAll('.mix-angle-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const a = parseInt(chip.getAttribute('data-angle'), 10);
+      if (!isNaN(a)) {
+        colorMixState.angle = a;
+        updateGradientDisplay();
+      }
+    });
+  });
+
+  // Fallback triggers for legacy mix buttons if present
   const generateBtn = $('#mix-generate-btn');
-  if (generateBtn) generateBtn.addEventListener('click', selectRandomBaseColors);
+  if (generateBtn) generateBtn.addEventListener('click', randomizeGradient);
 
   const generateAgainBtn = $('#mix-generate-again-btn');
-  if (generateAgainBtn) generateAgainBtn.addEventListener('click', selectRandomBaseColors);
+  if (generateAgainBtn) generateAgainBtn.addEventListener('click', randomizeGradient);
 
   // Copy HEX button
   const copyHexBtn = $('#mix-copy-hex-btn');
@@ -2412,9 +2996,18 @@ function initColorMix() {
       colorMixState.pickerSearch = e.target.value;
       renderMixPickerGrid();
     });
+    pickerSearch.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const firstItem = document.querySelector('#mix-picker-grid .mix-picker-item');
+        if (firstItem) firstItem.click();
+      }
+    });
   }
 
-  // Initial render of slots and badge
+  // Initial render of gradient, stops, slots, and badge
+  renderColorStops();
+  updateGradientDisplay();
   updateMixCount(colorMixState.count);
   updateSavedMixesCountBadge();
   initSmokyGenerateButton();
