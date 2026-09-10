@@ -975,110 +975,376 @@ button { cursor: pointer; }
   }
 }
 
-/* 1. CSS Code Section */
-.mix-css-header {
+/* 1. CSS Code Section - Professional IDE Code Editor */
+.mix-css-section {
+  margin-bottom: 24px;
+}
+
+.mix-css-section-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
 }
 
-.mix-css-header h3 {
+.mix-css-section-header h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   color: #0f172a;
   letter-spacing: -0.2px;
 }
 
-.mix-btn-copy-pill {
+.mix-css-ready-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: #059669;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  padding: 2px 9px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+}
+
+/* Professional Code Editor Window */
+.mix-code-editor {
+  position: relative;
+  background: #0d1117;
+  border-radius: 12px;
+  border: 1px solid #30363d;
+  box-shadow: 0 10px 28px -6px rgba(15, 23, 42, 0.35), 0 2px 8px rgba(15, 23, 42, 0.15);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mix-code-editor:hover {
+  border-color: #3b4252;
+  box-shadow: 0 12px 32px -4px rgba(15, 23, 42, 0.42), 0 3px 10px rgba(15, 23, 42, 0.2);
+}
+
+/* Top Window Header Bar */
+.mix-editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: #161b22;
+  border-bottom: 1px solid #21262d;
+  gap: 12px;
+  user-select: none;
+}
+
+.mix-editor-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* 3 macOS / Window Chrome dots */
+.mix-editor-dots {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 16px;
-  background: #0066ff;
-  color: #ffffff;
-  border: none;
-  border-radius: 9999px;
-  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.mix-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.mix-dot-close {
+  background-color: #ff5f56;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 95, 86, 0.2);
+}
+
+.mix-dot-min {
+  background-color: #ffbd2e;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 189, 46, 0.2);
+}
+
+.mix-dot-max {
+  background-color: #27c93f;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(39, 201, 63, 0.2);
+}
+
+/* Active File Tab */
+.mix-editor-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-bottom: 1px solid #0d1117;
+  border-radius: 6px 6px 0 0;
+  margin-bottom: -9px;
+  padding-bottom: 9px;
+  white-space: nowrap;
+}
+
+.mix-editor-tab-icon {
+  color: #38bdf8;
+  flex-shrink: 0;
+}
+
+.mix-editor-filename {
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #c9d1d9;
+  letter-spacing: -0.01em;
+}
+
+/* Top Header Right Controls */
+.mix-editor-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.mix-editor-lang-tag {
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #58a6ff;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  border-radius: 4px;
+  padding: 2px 7px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Integrated Developer Copy Button */
+.mix-editor-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 11px;
+  background: #21262d;
+  color: #c9d1d9;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11.5px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 102, 255, 0.25);
-  transition: background 0.15s ease, transform 0.1s ease;
+  transition: all 0.15s ease;
+  white-space: nowrap;
 }
 
-.mix-btn-copy-pill:hover {
-  background: #0052cc;
+.mix-editor-copy-btn:hover {
+  background: #30363d;
+  color: #f0f6fc;
+  border-color: #8b949e;
 }
 
-.mix-btn-copy-pill:active {
+.mix-editor-copy-btn:active {
   transform: scale(0.97);
 }
 
-.mix-code-box {
+.mix-editor-copy-btn .mix-copy-icon-check {
+  display: none;
+}
+
+.mix-editor-copy-btn.copied {
+  background: rgba(46, 160, 67, 0.2);
+  color: #3fb950;
+  border-color: rgba(46, 160, 67, 0.5);
+  box-shadow: 0 0 10px rgba(46, 160, 67, 0.15);
+}
+
+.mix-editor-copy-btn.copied .mix-copy-icon-default {
+  display: none;
+}
+
+.mix-editor-copy-btn.copied .mix-copy-icon-check {
+  display: inline-block;
+}
+
+/* Editor Body & Scroll Area */
+.mix-editor-body {
   position: relative;
-  background: #f1f5f9;
-  border-radius: 16px;
-  padding: 16px 18px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 14px;
-  line-height: 1.6;
-  color: #1e293b;
-  border: 1px solid #e2e8f0;
-  overflow: hidden;
+  background: #0d1117;
 }
 
-.mix-code-box pre {
-  margin: 0;
-  white-space: pre-wrap;
-  word-break: break-all;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
+.mix-editor-scroll-area {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 14px 16px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #30363d transparent;
 }
 
-.mix-code-overlay-copy {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 32px;
-  height: 32px;
-  display: grid;
-  place-items: center;
+.mix-editor-scroll-area::-webkit-scrollbar {
+  height: 6px;
+}
+
+.mix-editor-scroll-area::-webkit-scrollbar-track {
   background: transparent;
-  border: none;
-  border-radius: 8px;
-  color: #64748b;
-  cursor: pointer;
-  transition: color 0.15s, background 0.15s;
 }
 
-.mix-code-overlay-copy:hover {
-  color: #0f172a;
-  background: rgba(0, 0, 0, 0.05);
+.mix-editor-scroll-area::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 4px;
 }
 
+.mix-editor-scroll-area::-webkit-scrollbar-thumb:hover {
+  background: #484f58;
+}
+
+.mix-editor-code-table {
+  display: flex;
+  flex-direction: column;
+  min-width: max-content;
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.mix-code-line {
+  display: flex;
+  align-items: center;
+  min-width: max-content;
+  padding: 1px 4px;
+  border-radius: 4px;
+  transition: background-color 0.12s ease;
+}
+
+.mix-code-line:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+/* Gutter & Line Numbers */
+.mix-line-num {
+  user-select: none;
+  -webkit-user-select: none;
+  width: 26px;
+  padding-right: 12px;
+  margin-right: 12px;
+  text-align: right;
+  color: #484f58;
+  font-size: 12px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+  border-right: 1px solid #21262d;
+}
+
+.mix-line-code {
+  white-space: pre;
+  color: #e6edf3;
+  tab-size: 4;
+}
+
+/* Syntax Highlighting Tokens (VS Code Dark+ & Modern IDE Theme) */
 .tok-prop {
-  color: #334155;
+  color: #79c0ff; /* CSS Property names: vibrant cyan blue */
   font-weight: 500;
 }
 
+.tok-punct {
+  color: #8b949e; /* Punctuation :, ;, (, ), , : subtle slate */
+}
+
 .tok-fn {
-  color: #2563eb;
+  color: #d2a8ff; /* CSS functions like linear-gradient: warm violet */
   font-weight: 600;
 }
 
-.tok-angle {
-  color: #2563eb;
+.tok-num {
+  color: #ffa657; /* Numbers: warm amber */
+  font-weight: 500;
+}
+
+.tok-unit {
+  color: #ff7b72; /* Units like deg, %: soft coral pink */
+  font-weight: 500;
 }
 
 .tok-hex {
+  color: #f0f6fc; /* Hex color value: high-contrast white */
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.tok-hash {
+  color: #f778ba; /* # prefix: neon rose syntax hash */
   font-weight: 700;
 }
 
-.tok-pct {
-  color: #7c3aed;
-  font-weight: 600;
+.tok-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  margin-right: 5px;
+  vertical-align: -1px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.7);
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .mix-editor-header {
+    padding: 7px 10px;
+    gap: 8px;
+  }
+
+  .mix-editor-dots {
+    gap: 5px;
+  }
+
+  .mix-dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .mix-editor-tab {
+    padding: 2px 7px;
+    margin-bottom: -8px;
+    padding-bottom: 8px;
+  }
+
+  .mix-editor-filename {
+    font-size: 11px;
+  }
+
+  .mix-editor-lang-tag {
+    font-size: 9.5px;
+    padding: 1px 5px;
+  }
+
+  .mix-editor-copy-btn {
+    padding: 3px 8px;
+    font-size: 11px;
+    gap: 4px;
+  }
+
+  .mix-editor-scroll-area {
+    padding: 12px 12px;
+  }
+
+  .mix-editor-code-table {
+    font-size: 12px;
+    line-height: 1.65;
+  }
+
+  .mix-line-num {
+    width: 20px;
+    padding-right: 8px;
+    margin-right: 8px;
+    font-size: 11px;
+  }
 }
 
 /* 2. Color Stops Section */

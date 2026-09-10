@@ -80,6 +80,9 @@
     });
   </script>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="ch.css" />
 </head>
 <body>
@@ -396,29 +399,58 @@
         <!-- Controls Column matching IMG_20260910_145342.jpg -->
         <section class="color-mix-controls-col" aria-label="Gradient Settings & CSS Code">
           <div class="mix-control-card">
-            <!-- 1. CSS Code Section -->
-            <div class="mix-css-header">
-              <h3>CSS Code</h3>
-              <button type="button" class="mix-btn-copy-pill" id="mix-css-copy-btn" aria-label="Copy CSS Code">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                </svg>
-                <span id="mix-css-copy-btn-text">Copy</span>
-              </button>
-            </div>
+            <!-- 1. CSS Code Section - Professional IDE Code Editor -->
+            <div class="mix-css-section">
+              <div class="mix-css-section-header">
+                <h3>CSS Code</h3>
+                <span class="mix-css-ready-badge">Ready to use</span>
+              </div>
 
-            <!-- Code Box -->
-            <div class="mix-code-box">
-              <pre><code id="mix-css-code-text">background: linear-gradient(
-  135deg, #3B82F6 0%, #EC4899 100%
-);</code></pre>
-              <button type="button" class="mix-code-overlay-copy" id="mix-code-overlay-copy" aria-label="Copy CSS code" title="Copy code">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                </svg>
-              </button>
+              <!-- IDE Code Editor Window -->
+              <div class="mix-code-editor" id="mix-code-editor">
+                <!-- Top Editor Bar / Window Chrome -->
+                <div class="mix-editor-header">
+                  <div class="mix-editor-header-left">
+                    <div class="mix-editor-dots" aria-hidden="true">
+                      <span class="mix-dot mix-dot-close" title="Close"></span>
+                      <span class="mix-dot mix-dot-min" title="Minimize"></span>
+                      <span class="mix-dot mix-dot-max" title="Maximize"></span>
+                    </div>
+                    <div class="mix-editor-tab">
+                      <svg class="mix-editor-tab-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="16 18 22 12 16 6"></polyline>
+                        <polyline points="8 6 2 12 8 18"></polyline>
+                      </svg>
+                      <span class="mix-editor-filename">gradient.css</span>
+                    </div>
+                  </div>
+                  <div class="mix-editor-actions">
+                    <span class="mix-editor-lang-tag">CSS</span>
+                    <button type="button" class="mix-editor-copy-btn" id="mix-css-copy-btn" aria-label="Copy CSS Code" title="Copy CSS code to clipboard">
+                      <svg class="mix-copy-icon-default" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                      </svg>
+                      <svg class="mix-copy-icon-check" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                      <span id="mix-css-copy-btn-text">Copy</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Code Body with Line Numbers and Syntax Highlighting -->
+                <div class="mix-editor-body">
+                  <div class="mix-editor-scroll-area">
+                    <div class="mix-editor-code-table" id="mix-css-code-text" role="region" aria-label="CSS Source Code">
+                      <div class="mix-code-line"><span class="mix-line-num">1</span><span class="mix-line-code"><span class="tok-prop">background</span><span class="tok-punct">:</span> <span class="tok-fn">linear-gradient</span><span class="tok-punct">(</span></span></div>
+                      <div class="mix-code-line"><span class="mix-line-num">2</span><span class="mix-line-code">    <span class="tok-num">135</span><span class="tok-unit">deg</span><span class="tok-punct">,</span> <span class="tok-swatch" style="background-color: #3B82F6;" aria-hidden="true"></span><span class="tok-hex"><span class="tok-hash">#</span>3B82F6</span> <span class="tok-num">0</span><span class="tok-unit">%</span><span class="tok-punct">,</span></span></div>
+                      <div class="mix-code-line"><span class="mix-line-num">3</span><span class="mix-line-code">    <span class="tok-swatch" style="background-color: #EC4899;" aria-hidden="true"></span><span class="tok-hex"><span class="tok-hash">#</span>EC4899</span> <span class="tok-num">100</span><span class="tok-unit">%</span></span></div>
+                      <div class="mix-code-line"><span class="mix-line-num">4</span><span class="mix-line-code"><span class="tok-punct">);</span></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <!-- 2. Color Stops Section -->

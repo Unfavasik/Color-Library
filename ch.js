@@ -1381,6 +1381,45 @@ function closeColorMix() {
   }
 }
 
+function buildCssCodeEditorHtml(angle, sortedStops) {
+  if (!sortedStops || sortedStops.length === 0) return '';
+  const escapeHtml = (str) => String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const lines = [];
+
+  // Line 1: background: linear-gradient(
+  lines.push({
+    num: 1,
+    html: `<span class="tok-prop">background</span><span class="tok-punct">:</span> <span class="tok-fn">linear-gradient</span><span class="tok-punct">(</span>`
+  });
+
+  // Line 2: 4 spaces indentation, angle + first stop
+  const firstStop = sortedStops[0];
+  const firstHex = firstStop.hex.toUpperCase();
+  lines.push({
+    num: 2,
+    html: `    <span class="tok-num">${angle}</span><span class="tok-unit">deg</span><span class="tok-punct">,</span> <span class="tok-swatch" style="background-color: ${escapeHtml(firstStop.hex)};" aria-hidden="true"></span><span class="tok-hex"><span class="tok-hash">#</span>${firstHex.replace('#', '')}</span> <span class="tok-num">${firstStop.pos}</span><span class="tok-unit">%</span><span class="tok-punct">,</span>`
+  });
+
+  // Lines 3 to N: remaining stops
+  for (let i = 1; i < sortedStops.length; i++) {
+    const stop = sortedStops[i];
+    const hex = stop.hex.toUpperCase();
+    const isLast = i === sortedStops.length - 1;
+    lines.push({
+      num: i + 2,
+      html: `    <span class="tok-swatch" style="background-color: ${escapeHtml(stop.hex)};" aria-hidden="true"></span><span class="tok-hex"><span class="tok-hash">#</span>${hex.replace('#', '')}</span> <span class="tok-num">${stop.pos}</span><span class="tok-unit">%</span>${isLast ? '' : '<span class="tok-punct">,</span>'}`
+    });
+  }
+
+  // Final line: );
+  lines.push({
+    num: sortedStops.length + 2,
+    html: `<span class="tok-punct">);</span>`
+  });
+
+  return lines.map(line => `<div class="mix-code-line"><span class="mix-line-num">${line.num}</span><span class="mix-line-code">${line.html}</span></div>`).join('');
+}
+
 function updateGradientDisplay() {
   const stops = colorMixState.stops || [];
   if (stops.length < 2) return;
@@ -1429,7 +1468,7 @@ function updateGradientDisplay() {
 
   const codeText = $('#mix-css-code-text');
   if (codeText) {
-    codeText.textContent = `background: linear-gradient(\n  ${angle}deg, ${stopsCssPart}\n);`;
+    codeText.innerHTML = buildCssCodeEditorHtml(angle, sortedStops);
   }
 
   // Update angle chips active state
