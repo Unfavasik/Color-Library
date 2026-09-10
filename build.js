@@ -22,6 +22,8 @@ const coreFiles = [
   'contact.html',
   'about.html',
   'color-mix.html',
+  'mix.css',
+  'mix.js',
   'ch.css',
   'ch.js',
   'ch.woff2',
