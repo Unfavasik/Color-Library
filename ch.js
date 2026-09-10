@@ -1975,6 +1975,50 @@ function selectRandomBaseColors() {
   showToast(`✨ Top 10k Combo: ${combo.name}`);
 }
 
+function openMixPagePreview() {
+  const mix = colorMixState.currentMix || colorMixState.history[colorMixState.historyIndex];
+  let previewHex = '';
+  let previewName = colorMixState.comboName || (mix && mix.name ? mix.name : 'Custom Color');
+  let previewFlow = '';
+  let previewColors = [];
+
+  // Always use the current stops first, so 3-, 4-, and 5+ color mixes never
+  // fall back to an older two-color result from the legacy single-mix state.
+  if (Array.isArray(colorMixState.stops) && colorMixState.stops.length) {
+    const activeStops = colorMixState.stops.filter((stop) => stop && /^#[0-9a-f]{6}$/i.test(stop.hex || ''));
+    const rgbValues = activeStops.map((stop) => hexToRgb(stop.hex)).filter(Boolean);
+    if (rgbValues.length) {
+      const average = rgbValues.reduce((sum, rgb) => [sum[0] + rgb[0], sum[1] + rgb[1], sum[2] + rgb[2]], [0, 0, 0])
+        .map((value) => Math.round(value / rgbValues.length));
+      previewHex = rgbToHexCode(average[0], average[1], average[2]);
+      previewName = colorMixState.comboName || findClosestColorName(previewHex) || previewName;
+      previewFlow = activeStops.map((stop) => stop.hex.toUpperCase()).join(' → ');
+      previewColors = activeStops.map((stop) => stop.hex.toUpperCase());
+    }
+  }
+
+  if (!previewHex && mix && mix.hex) {
+    previewHex = mix.hex;
+    previewName = mix.name || previewName;
+    previewFlow = mix.inputHexFlow || '';
+    previewColors = (mix.baseColors || []).map((color) => color.hex.toUpperCase()).filter((hex) => /^#[0-9A-F]{6}$/.test(hex));
+    if (!previewColors.length) previewColors = [previewHex.toUpperCase()];
+  }
+
+  if (!previewHex) {
+    showToast('Generate a color mix first');
+    return;
+  }
+
+  const params = new URLSearchParams({
+    hex: previewHex.toUpperCase(),
+    name: previewName,
+    flow: previewFlow,
+    colors: previewColors.join(',')
+  });
+  window.location.href = `/color-preview?${params.toString()}`;
+}
+
 function generateColorMix(isShuffle = false) {
   const count = colorMixState.count;
   const baseColors = [];
@@ -2901,6 +2945,9 @@ function initColorMix() {
   const randomBaseBtn = $('#mix-random-base-btn');
   if (randomBaseBtn) randomBaseBtn.addEventListener('click', randomizeGradient);
 
+  const pagePreviewBtn = $('#mix-page-preview-btn');
+  if (pagePreviewBtn) pagePreviewBtn.addEventListener('click', openMixPagePreview);
+
   // Add Stop button
   const addStopBtn = $('#mix-add-stop-btn');
   if (addStopBtn) addStopBtn.addEventListener('click', addGradientStop);
@@ -3069,5 +3116,3 @@ function trackAdConversion(conversionLabel, conversionValue = 0) {
   }
 }
 window.trackAdConversion = trackAdConversion;
-
-

@@ -1602,6 +1602,7 @@ button { cursor: pointer; }
 }
 
 .mix-random-btn {
+  flex: 1;
   height: 52px;
   min-height: 52px;
   padding: 0 22px;
@@ -1636,6 +1637,39 @@ button { cursor: pointer; }
 .mix-random-btn .mix-dice-icon {
   font-size: 18px;
   line-height: 1;
+}
+
+.mix-page-preview-btn {
+  flex: 1;
+  height: 52px;
+  min-height: 52px;
+  padding: 0 18px;
+  background: #eef2ff;
+  color: #4338ca;
+  border: 1.5px solid #c7d2fe;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(67, 56, 202, 0.08);
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.mix-page-preview-btn:hover {
+  background: #e0e7ff;
+  border-color: #818cf8;
+  color: #3730a3;
+  box-shadow: 0 4px 12px rgba(67, 56, 202, 0.16);
+  transform: translateY(-1px);
+}
+
+.mix-page-preview-btn:active {
+  transform: scale(0.98);
 }
 
 .mix-save-gradient-btn {
@@ -1676,7 +1710,9 @@ button { cursor: pointer; }
     gap: 10px;
   }
   .mix-random-btn,
+  .mix-page-preview-btn,
   .mix-save-gradient-btn {
+    flex: none;
     width: 100%;
   }
 }
@@ -3649,6 +3685,4 @@ ins.adsbygoogle[data-ad-status="unfilled"] {
     min-height: 50px;
   }
 }
-
-
 

@@ -22,6 +22,7 @@ const coreFiles = [
   'contact.html',
   'about.html',
   'color-mix.html',
+  'color-preview.html',
   'mix.css',
   'mix.js',
   'ch.css',
@@ -45,7 +46,7 @@ for (const file of coreFiles) {
 }
 
 // 2b. Copy dedicated route directories
-const routeDirs = ['privacy-policy', 'terms-of-service', 'contact', 'about', 'color-mix'];
+const routeDirs = ['privacy-policy', 'terms-of-service', 'contact', 'about', 'color-mix', 'color-preview'];
 for (const dir of routeDirs) {
   const src = path.join(ROOT_DIR, dir);
   const dest = path.join(DIST_DIR, dir);
