@@ -1588,6 +1588,11 @@
       document.documentElement.style.setProperty('--ambient-glow-1', `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.32)`);
       document.documentElement.style.setProperty('--ambient-glow-mid', `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.16)`);
 
+      // Make the selected random mix visible across the preview page background.
+      const backgroundStops = palette.length > 1 ? palette : [hex, '#8834DF'];
+      document.body.style.backgroundColor = hex;
+      document.body.style.backgroundImage = `linear-gradient(135deg, ${backgroundStops.join(', ')})`;
+
       // Update mockup chips
       [1, 2, 3, 4, 5].forEach((num, idx) => {
         const chip = document.getElementById(`swatch-${num}`);
