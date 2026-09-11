@@ -47,7 +47,7 @@ for (const file of coreFiles) {
 }
 
 // 2b. Copy dedicated route directories
-const routeDirs = ['privacy-policy', 'terms-of-service', 'contact', 'about', 'color-mix', 'color-preview'];
+const routeDirs = ['privacy-policy', 'terms-of-service', 'contact', 'about', 'color-mix', 'color-preview', '404'];
 for (const dir of routeDirs) {
   const src = path.join(ROOT_DIR, dir);
   const dest = path.join(DIST_DIR, dir);

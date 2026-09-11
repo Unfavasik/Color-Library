@@ -94,7 +94,14 @@ function copyText(value) {
   if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(value);
   const input = document.createElement('textarea'); input.value = value; input.style.position = 'fixed'; input.style.opacity = '0'; document.body.appendChild(input); input.select(); document.execCommand('copy'); input.remove(); return Promise.resolve();
 }
-function showToast(message = 'Copied to clipboard') { const toast = $('#toast'); toast.textContent = message; toast.classList.add('show'); clearTimeout(showToast.timer); showToast.timer = setTimeout(() => toast.classList.remove('show'), 1600); }
+function showToast(message = 'Copied to clipboard') {
+  const toast = $('#toast');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.classList.add('show');
+  clearTimeout(showToast.timer);
+  showToast.timer = setTimeout(() => toast.classList.remove('show'), 1600);
+}
 
 function getHeartSvg(isFav, size = 14) {
   return `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
@@ -236,10 +243,15 @@ function renderFilters() {
       </button>`
     : '';
 
-  $('#filters').innerHTML = buttons + resetBtnHtml;
+  const filtersEl = $('#filters');
+  if (filtersEl) {
+    filtersEl.innerHTML = buttons + resetBtnHtml;
+  }
 }
 
 function renderGrid() {
+  const grid = $('#color-grid');
+  if (!grid) return;
   const list = filteredColors();
   let emptyMessage = 'No colors found. Try another name, HEX code, or category.';
   if (state.category === 'Saved') {
@@ -272,9 +284,9 @@ function renderGrid() {
     }
   }
 
-  const grid = $('#color-grid');
   grid.innerHTML = list.length ? list.map(cardTemplate).join('') : `<div class="empty-state">${emptyMessage}</div>`;
-  $('#count-badge').textContent = `${list.length} Colors`;
+  const countBadge = $('#count-badge');
+  if (countBadge) countBadge.textContent = `${list.length} Colors`;
 
   // Animate children using CSS transition on opacity and transform
   requestAnimationFrame(() => {
@@ -519,18 +531,33 @@ function openColorMixWithColors(hexList) {
 }
 
 function render() { renderFilters(); renderGrid(); renderRecentlyViewed(); }
-function setQuery(value) { state.query = value; $('#hero-search').value = value; $('#global-search').value = value; renderGrid(); }
+function setQuery(value) {
+  state.query = value;
+  const heroSearch = $('#hero-search');
+  if (heroSearch) heroSearch.value = value;
+  const globalSearch = $('#global-search');
+  if (globalSearch) globalSearch.value = value;
+  renderGrid();
+}
 function updatePicker(hex) {
   const rgb = hexToRgb(hex); if (!rgb) return;
   const normalized = '#' + hex.replace('#', '').toUpperCase(); state.selected = normalized;
   const [h, s, l] = rgbToHsl(rgb);
-  $('#hex-value').value = normalized; $('#rgb-value').value = formatRgb(rgb); $('#hsl-value').value = `${h}, ${s}%, ${l}%`; $('#hue-slider').value = h;
-  $('#swatch-preview').style.background = normalized; $('#color-stage').style.background = `linear-gradient(to bottom, transparent, #000), linear-gradient(to right, #fff, hsl(${h} ${s}% ${Math.max(l, 50)}%))`;
-  $('#color-stage').style.setProperty('--stage-x', s + '%');
-  $('#color-stage').style.setProperty('--stage-y', Math.max(0, Math.min(100, (90 - l) / 0.8)) + '%');
+  const hexVal = $('#hex-value'); if (hexVal) hexVal.value = normalized;
+  const rgbVal = $('#rgb-value'); if (rgbVal) rgbVal.value = formatRgb(rgb);
+  const hslVal = $('#hsl-value'); if (hslVal) hslVal.value = `${h}, ${s}%, ${l}%`;
+  const hueSlider = $('#hue-slider'); if (hueSlider) hueSlider.value = h;
+  const swatchPreview = $('#swatch-preview'); if (swatchPreview) swatchPreview.style.background = normalized;
+  const colorStage = $('#color-stage');
+  if (colorStage) {
+    colorStage.style.background = `linear-gradient(to bottom, transparent, #000), linear-gradient(to right, #fff, hsl(${h} ${s}% ${Math.max(l, 50)}%))`;
+    colorStage.style.setProperty('--stage-x', s + '%');
+    colorStage.style.setProperty('--stage-y', Math.max(0, Math.min(100, (90 - l) / 0.8)) + '%');
+  }
   const match = colors.find((color) => color.hex.toUpperCase() === normalized);
   const colorName = match ? match.name : (normalized === '#3B82F6' ? 'Cornflower Blue' : 'Custom Color');
-  $('#selected-name').textContent = colorName;
+  const selName = $('#selected-name');
+  if (selName) selName.textContent = colorName;
 
   const swatchFav = $('#favorite-toggle');
   if (swatchFav) {
@@ -570,7 +597,6 @@ on('#color-grid', 'click', (event) => {
   if (favBtn) {
     event.stopPropagation();
     toggleFavorite(favBtn.dataset.fav, favBtn.dataset.name);
-    addRecentlyViewed({ type: 'color', hex: favBtn.dataset.fav, name: favBtn.dataset.name });
     return;
   }
   const button = event.target.closest('[data-copy]');
@@ -584,7 +610,6 @@ on('#color-grid', 'click', (event) => {
   }
   if (card && card.dataset.hex) {
     updatePicker(card.dataset.hex);
-    addRecentlyViewed({ type: 'color', hex: card.dataset.hex, name: card.dataset.name });
     const pickerEl = $('#picker');
     if (pickerEl && window.innerWidth < 768) {
       pickerEl.scrollIntoView({ behavior: 'smooth' });
@@ -610,7 +635,6 @@ on('#random-color', 'click', () => {
   const color = colors[Math.floor(Math.random() * colors.length)];
   if (color) {
     updatePicker(color.hex);
-    addRecentlyViewed({ type: 'color', hex: color.hex, name: color.name });
     showToast(`${color.name} selected`);
   }
 });
@@ -641,18 +665,12 @@ $$('[data-copy-target]').forEach((button) => button.addEventListener('click', ()
 }));
 on('#hex-value', 'change', (event) => {
   updatePicker(event.target.value);
-  addRecentlyViewed({ type: 'color', hex: event.target.value });
 });
 on('#hue-slider', 'input', (event) => { const hue = event.target.value; updatePicker('#' + hslToHex(Number(hue), 91, 60)); });
-on('#hue-slider', 'change', () => {
-  const colorName = $('#selected-name')?.textContent || '';
-  addRecentlyViewed({ type: 'color', hex: state.selected, name: colorName });
-});
 on('#favorite-toggle', 'click', () => {
   const match = colors.find((c) => c.hex.toUpperCase() === state.selected.toUpperCase());
   const colorName = match ? match.name : state.selected;
   toggleFavorite(state.selected, colorName);
-  addRecentlyViewed({ type: 'color', hex: state.selected, name: colorName });
 });
 on('#theme-toggle', 'click', () => showToast('Light mode is active in this preview'));
 document.addEventListener('keydown', (event) => { if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); const gs = $('#global-search'); if (gs) gs.focus(); } });
@@ -743,7 +761,6 @@ on('#curated-palettes-grid', 'click', (e) => {
     updatePicker(hex);
     const match = colors.find((c) => c.hex.toUpperCase() === hex.toUpperCase());
     const name = match ? match.name : findClosestColorName(hex);
-    addRecentlyViewed({ type: 'color', hex, name });
     showToast(`${name} (${hex}) loaded into picker`);
     closeCuratedPalettes();
     const picker = $('#picker');
@@ -771,7 +788,6 @@ on('#curated-palettes-grid', 'click', (e) => {
     const idx = parseInt(mixCuratedBtn.dataset.mixCurated, 10);
     const pal = CURATED_PALETTES[idx];
     if (pal) {
-      addRecentlyViewed({ type: 'palette', title: pal.name, colors: pal.colors });
       closeCuratedPalettes();
       openColorMixWithColors(pal.colors);
     }
@@ -824,8 +840,6 @@ if (colorStage) {
       try {
         colorStage.releasePointerCapture(e.pointerId);
       } catch (err) {}
-      const colorName = $('#selected-name')?.textContent || '';
-      addRecentlyViewed({ type: 'color', hex: state.selected, name: colorName });
     }
   };
   colorStage.addEventListener('pointerup', endPointer);
@@ -872,8 +886,10 @@ function openContentModal(pageKey) {
   closeMoreMenu();
   const page = pagesData[pageKey];
   if (!page) return;
-  $('#content-modal-title').textContent = page.title;
-  $('#content-modal-body').innerHTML = page.content;
+  const titleEl = $('#content-modal-title');
+  if (titleEl) titleEl.textContent = page.title;
+  const bodyEl = $('#content-modal-body');
+  if (bodyEl) bodyEl.innerHTML = page.content;
   const modalOverlay = $('#content-modal-overlay');
   if (modalOverlay) modalOverlay.classList.add('open');
 
@@ -1244,6 +1260,7 @@ if (backToTopBtn) {
    ======================================================== */
 
 const SAVED_MIXES_KEY = 'colorLibrarySavedMixes';
+const MIX_HISTORY_STORAGE_KEY = 'colorLibraryMixHistory';
 
 const colorMixState = {
   angle: 135,
@@ -1267,6 +1284,104 @@ const colorMixState = {
   pickerCategory: 'All',
   pickerSearch: ''
 };
+
+const MIX_STATE_STORAGE_KEY = 'colorLibraryActiveMix';
+
+function saveMixStateToStorage() {
+  try {
+    sessionStorage.setItem(MIX_STATE_STORAGE_KEY, JSON.stringify({
+      angle: colorMixState.angle,
+      stops: colorMixState.stops,
+      count: colorMixState.count,
+      comboName: colorMixState.comboName
+    }));
+  } catch (err) {
+    console.warn('Error saving mix state:', err);
+  }
+}
+
+function restoreMixStateFromStorage() {
+  try {
+    const raw = sessionStorage.getItem(MIX_STATE_STORAGE_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    if (saved && Array.isArray(saved.stops) && saved.stops.length) {
+      colorMixState.angle = saved.angle ?? colorMixState.angle;
+      colorMixState.stops = saved.stops;
+      colorMixState.count = saved.count ?? colorMixState.stops.length;
+      colorMixState.comboName = saved.comboName ?? null;
+    }
+  } catch (err) {
+    console.warn('Error restoring mix state:', err);
+  }
+}
+
+function getMixHistory() {
+  try {
+    const raw = localStorage.getItem(MIX_HISTORY_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (err) {
+    console.warn('Error reading mix history:', err);
+    return [];
+  }
+}
+
+function saveMixHistory(list) {
+  try {
+    localStorage.setItem(MIX_HISTORY_STORAGE_KEY, JSON.stringify(list.slice(0, 40)));
+  } catch (err) {
+    console.warn('Error saving mix history:', err);
+  }
+}
+
+function updateMixHistoryCountBadge() {
+  const list = getMixHistory();
+  const badges = document.querySelectorAll('#color-mix-history-count, .color-mix-history-count');
+  badges.forEach(b => { b.textContent = list.length; });
+}
+
+function recordMixHistory(stops, angle, comboName) {
+  if (!stops || !stops.length) return;
+  const sortedStops = [...stops].sort((a, b) => a.pos - b.pos);
+  const angleVal = angle || 135;
+  const stopsCssPart = sortedStops.map(s => `${s.hex.toUpperCase()} ${s.pos}%`).join(', ');
+  const gradientCss = `linear-gradient(${angleVal}deg, ${stopsCssPart})`;
+
+  let name = comboName;
+  if (!name) {
+    const firstName = findClosestColorName(sortedStops[0].hex);
+    const lastName = findClosestColorName(sortedStops[sortedStops.length - 1].hex);
+    name = `${firstName} to ${lastName} Gradient`;
+  }
+
+  const hexSignature = sortedStops.map(s => `${s.hex.toUpperCase()}@${s.pos}`).join('|') + `_${angleVal}`;
+
+  const list = getMixHistory();
+  if (list.length > 0 && list[0].signature === hexSignature) {
+    return;
+  }
+
+  const historyItem = {
+    id: 'mix_hist_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+    signature: hexSignature,
+    name,
+    angle: angleVal,
+    stops: sortedStops.map(s => ({ ...s })),
+    count: sortedStops.length,
+    gradientCss,
+    hex: sortedStops[0].hex,
+    hexes: sortedStops.map(s => s.hex),
+    inputHexFlow: `${sortedStops[0].hex.toUpperCase()} → ${sortedStops[sortedStops.length - 1].hex.toUpperCase()}`,
+    date: new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
+    timestamp: Date.now()
+  };
+
+  list.unshift(historyItem);
+  saveMixHistory(list);
+  updateMixHistoryCountBadge();
+}
 
 function getSavedMixes() {
   try {
@@ -1613,6 +1728,8 @@ function setGradientColorCount(newCount) {
 
   renderColorStops();
   updateGradientDisplay();
+  saveMixStateToStorage();
+  recordMixHistory(colorMixState.stops, colorMixState.angle, colorMixState.comboName);
   showToast(`✓ Set to ${targetCount} Colors mix mode`);
 }
 
@@ -1660,6 +1777,8 @@ function addGradientStopWithColor(color) {
   colorMixState.stops.sort((a, b) => a.pos - b.pos);
   renderColorStops();
   updateGradientDisplay();
+  saveMixStateToStorage();
+  recordMixHistory(colorMixState.stops, colorMixState.angle, colorMixState.comboName);
   showToast(`✓ Added ${name} (${hex}) stop`);
 }
 
@@ -1814,6 +1933,8 @@ function randomizeGradient() {
 
   renderColorStops();
   updateGradientDisplay();
+  saveMixStateToStorage();
+  recordMixHistory(colorMixState.stops, colorMixState.angle, colorMixState.comboName);
   showToast(`✨ Top 10k Combo: ${combo.name} (${count} Colors)`);
 }
 
@@ -2016,6 +2137,7 @@ function openMixPagePreview() {
     flow: previewFlow,
     colors: previewColors.join(',')
   });
+  saveMixStateToStorage();
   window.location.href = `/color-preview?${params.toString()}`;
 }
 
@@ -2126,12 +2248,6 @@ function generateColorMix(isShuffle = false) {
   colorMixState.history.push(newMix);
   colorMixState.historyIndex = colorMixState.history.length - 1;
   colorMixState.currentMix = newMix;
-
-  addRecentlyViewed({
-    type: 'palette',
-    title: `${newMix.name} Mix`,
-    colors: baseColors.map((c) => c.hex)
-  });
 
   renderCurrentMixResult();
 }
@@ -2412,6 +2528,8 @@ function handleMixPickerSelect(hex, name) {
       colorMixState.stops[idx].name = normName;
       renderColorStops();
       updateGradientDisplay();
+      saveMixStateToStorage();
+      recordMixHistory(colorMixState.stops, colorMixState.angle, colorMixState.comboName);
       closeMixPicker();
       showToast(`✓ Updated stop to ${normName}`);
     }
@@ -2664,6 +2782,135 @@ function renderMixSavedList() {
   });
 }
 
+function openMixHistory() {
+  const overlay = $('#mix-history-overlay');
+  if (overlay) {
+    overlay.classList.add('active');
+    renderMixHistoryList();
+  }
+}
+
+function closeMixHistory() {
+  const overlay = $('#mix-history-overlay');
+  if (overlay) overlay.classList.remove('active');
+}
+
+function clearAllMixHistory() {
+  saveMixHistory([]);
+  updateMixHistoryCountBadge();
+  renderMixHistoryList();
+  showToast('✓ Mix history cleared');
+}
+
+function renderMixHistoryList() {
+  const container = $('#mix-history-list');
+  if (!container) return;
+
+  const list = getMixHistory();
+
+  if (!list.length) {
+    container.innerHTML = `
+      <div class="mix-saved-empty">
+        <div style="font-size: 32px; margin-bottom: 8px;">⏱️</div>
+        <p style="font-weight: 700; color: #1e293b; font-size: 15px;">No mix history yet</p>
+        <p style="font-size: 13px; color: #64748b; margin-top: 4px; max-width: 320px; margin-left: auto; margin-right: auto; line-height: 1.5;">
+          Randomize color combinations or adjust gradient stops in Color Mix to automatically track your previous blends here.
+        </p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = list.map((item, idx) => {
+    const hex = item.hex || (item.stops && item.stops[0]?.hex) || '#333333';
+    const name = item.name || 'Gradient Mix';
+    const flow = item.inputHexFlow || (item.stops ? item.stops.map(s => s.hex).join(' → ') : hex);
+    const count = item.count || (item.stops ? item.stops.length : 2);
+    const angle = item.angle || 135;
+
+    const stopDots = (item.stops && Array.isArray(item.stops) && item.stops.length)
+      ? `<div style="display: flex; align-items: center; gap: 5px; margin-top: 6px;">
+          <span style="font-size: 11px; color: #94a3b8; font-weight: 500;">Stops:</span>
+          ${item.stops.map(s => `<span title="${escapeHtml(s.name || s.hex)}: ${s.hex} (${s.pos}%)" style="display: inline-block; width: 14px; height: 14px; border-radius: 50%; background: ${s.hex}; border: 1px solid rgba(0,0,0,0.15); box-shadow: 0 1px 2px rgba(0,0,0,0.1);"></span>`).join('')}
+         </div>`
+      : '';
+
+    return `
+      <div class="mix-saved-card-item" data-history-id="${item.id}">
+        <div class="mix-saved-card-top">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; background: #eff6ff; color: #2563eb; font-size: 10px; font-weight: 700;">${idx + 1}</span>
+            <span class="mix-saved-date">${item.date || 'Recent'}</span>
+          </div>
+          <div class="mix-saved-card-actions">
+            <button type="button" class="mix-saved-btn mix-saved-load-btn" data-history-load-index="${idx}" title="Restore this gradient into editor">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              Restore
+            </button>
+            <button type="button" class="mix-saved-btn mix-saved-copy-btn" data-history-copy-index="${idx}" title="Copy CSS code">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              CSS
+            </button>
+            <button type="button" class="mix-saved-btn mix-saved-del-btn" data-history-del-index="${idx}" title="Delete from history" aria-label="Delete">✕</button>
+          </div>
+        </div>
+        <div class="mix-saved-strips" data-history-load-index="${idx}" style="background: ${item.gradientCss}; height: 52px; border-radius: 9px; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.12); cursor: pointer;" title="Click to restore this mix">
+          <span style="background: rgba(15,23,42,0.8); color: #ffffff; padding: 4px 14px; border-radius: 999px; font-family: monospace; font-size: 11.5px; font-weight: 700; letter-spacing: 0.5px; box-shadow: 0 2px 5px rgba(0,0,0,0.25);">${count} Colors · ${angle}°</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 2px;">
+          <div class="mix-saved-hexes" style="display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: #475569;">
+            <span style="font-weight: 700; color: #0f172a; font-size: 14px;">${escapeHtml(name)}</span>
+            <span style="font-family: monospace; font-size: 11px; color: #64748b;">${escapeHtml(flow)}</span>
+          </div>
+          ${stopDots}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Bind History Actions
+  container.querySelectorAll('[data-history-load-index]').forEach((el) => {
+    el.addEventListener('click', () => {
+      const idx = parseInt(el.getAttribute('data-history-load-index'), 10);
+      const item = list[idx];
+      if (item && Array.isArray(item.stops) && item.stops.length) {
+        colorMixState.stops = item.stops.map(s => ({ ...s }));
+        colorMixState.angle = item.angle || 135;
+        colorMixState.count = colorMixState.stops.length;
+        colorMixState.comboName = item.name || null;
+        renderColorStops();
+        updateGradientDisplay();
+        saveMixStateToStorage();
+        closeMixHistory();
+        showToast(`✓ Restored "${item.name || 'Gradient'}"`);
+      }
+    });
+  });
+
+  container.querySelectorAll('[data-history-copy-index]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const idx = parseInt(btn.getAttribute('data-history-copy-index'), 10);
+      const item = list[idx];
+      if (item && item.gradientCss) {
+        copyText(`background: ${item.gradientCss};`).then(() => showToast('✓ Gradient CSS copied to clipboard!'));
+      }
+    });
+  });
+
+  container.querySelectorAll('[data-history-del-index]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const idx = parseInt(btn.getAttribute('data-history-del-index'), 10);
+      list.splice(idx, 1);
+      saveMixHistory(list);
+      updateMixHistoryCountBadge();
+      renderMixHistoryList();
+      showToast('Removed from mix history');
+    });
+  });
+}
+
 /* Smoky Button WebGL Shader Animation for Generate Mix Button */
 const SMOKE_VERTEX_SHADER = `
   attribute vec2 aPosition;
@@ -2906,6 +3153,8 @@ function initSmokyGenerateButton() {
 
 /* Event listeners initialization for Color Mix */
 function initColorMix() {
+  restoreMixStateFromStorage();
+
   // Feature strip card
   const featureCard = $('#feature-color-mix');
   if (featureCard) {
@@ -3067,6 +3316,23 @@ function initColorMix() {
     });
   }
 
+  // History trigger & modal
+  const historyTrigger = $('#color-mix-history-trigger');
+  if (historyTrigger) historyTrigger.addEventListener('click', openMixHistory);
+
+  const historyClose = $('#mix-history-close-btn');
+  if (historyClose) historyClose.addEventListener('click', closeMixHistory);
+
+  const historyClear = $('#mix-history-clear-btn');
+  if (historyClear) historyClear.addEventListener('click', clearAllMixHistory);
+
+  const historyOverlay = $('#mix-history-overlay');
+  if (historyOverlay) {
+    historyOverlay.addEventListener('click', (e) => {
+      if (e.target === historyOverlay) closeMixHistory();
+    });
+  }
+
   // Color picker sheet modal
   const pickerClose = $('#mix-picker-close-btn');
   if (pickerClose) pickerClose.addEventListener('click', closeMixPicker);
@@ -3098,13 +3364,137 @@ function initColorMix() {
   updateGradientDisplay();
   updateMixCount(colorMixState.count);
   updateSavedMixesCountBadge();
+  updateMixHistoryCountBadge();
+  if (getMixHistory().length === 0) {
+    recordMixHistory(colorMixState.stops, colorMixState.angle, colorMixState.comboName);
+  }
   initSmokyGenerateButton();
 }
 
+/* ==========================================================================
+   Tubelight Navbar Interactive Controller
+   ========================================================================== */
+function initTubelightNav() {
+  const nav = $('#primary-nav');
+  const lamp = $('#tubelight-lamp');
+  if (!nav || !lamp) return;
+
+  const links = nav.querySelectorAll('.nav-link');
+  if (!links.length) return;
+
+  function updateLamp(targetLink) {
+    if (!targetLink || !lamp) return;
+    const left = targetLink.offsetLeft;
+    const width = targetLink.offsetWidth;
+
+    lamp.style.transform = `translateX(${left}px)`;
+    lamp.style.width = `${width}px`;
+    lamp.style.opacity = '1';
+  }
+
+  const activeLink = nav.querySelector('.nav-link.active') || links[0];
+  if (activeLink) {
+    setTimeout(() => updateLamp(activeLink), 50);
+  }
+
+  links.forEach((link) => {
+    link.addEventListener('click', (e) => {
+      links.forEach((l) => l.classList.remove('active'));
+      link.classList.add('active');
+      updateLamp(link);
+    });
+
+    link.addEventListener('mouseenter', () => {
+      updateLamp(link);
+    });
+  });
+
+  nav.addEventListener('mouseleave', () => {
+    const currentActive = nav.querySelector('.nav-link.active') || links[0];
+    if (currentActive) updateLamp(currentActive);
+  });
+
+  window.addEventListener('resize', () => {
+    const currentActive = nav.querySelector('.nav-link.active') || links[0];
+    if (currentActive) updateLamp(currentActive);
+  });
+}
+
+/* ==========================================================================
+   Animated Tab Bar Interactive Controller
+   ========================================================================== */
+function initAnimatedTabBar() {
+  const menu = $('#animated-menu');
+  const menuBorder = $('#menu-border');
+  const container = $('#tab-demo-container');
+  if (!menu || !menuBorder) return;
+
+  const items = menu.querySelectorAll('.menu__item');
+  if (!items.length) return;
+
+  let activeIndex = 0;
+
+  function offsetMenuBorder() {
+    const activeItem = items[activeIndex];
+    if (!activeItem || !menu || !menuBorder) return;
+
+    const offsetActiveItem = activeItem.getBoundingClientRect();
+    const menuRect = menu.getBoundingClientRect();
+
+    const left = Math.floor(
+      offsetActiveItem.left -
+      menuRect.left -
+      (menuBorder.offsetWidth - offsetActiveItem.width) / 2
+    );
+
+    menuBorder.style.transform = `translate3d(${left}px, 0, 0)`;
+  }
+
+  function handleItemClick(index) {
+    if (activeIndex === index) return;
+
+    items.forEach((item, idx) => {
+      item.classList.toggle('active', idx === index);
+    });
+
+    activeIndex = index;
+    const activeItem = items[index];
+    const newBg = activeItem.getAttribute('data-bg');
+
+    if (container && newBg) {
+      container.style.backgroundColor = newBg;
+    }
+
+    offsetMenuBorder();
+  }
+
+  items.forEach((item, index) => {
+    item.addEventListener('click', () => handleItemClick(index));
+  });
+
+  window.addEventListener('resize', () => {
+    menuBorder.style.transition = 'none';
+    offsetMenuBorder();
+    setTimeout(() => {
+      menuBorder.style.transition = '';
+    }, 50);
+  });
+
+  setTimeout(() => {
+    offsetMenuBorder();
+  }, 100);
+}
+
 if (document.readyState === 'loading') {
-  window.addEventListener('DOMContentLoaded', initColorMix);
+  window.addEventListener('DOMContentLoaded', () => {
+    initColorMix();
+    initTubelightNav();
+    initAnimatedTabBar();
+  });
 } else {
   initColorMix();
+  initTubelightNav();
+  initAnimatedTabBar();
 }
 
 // Google Ads conversion helper (safe fallback when gtag is loaded)

@@ -14,7 +14,8 @@ const cleanRoutes: Record<string, string> = {
   "/contact": "contact/index.html",
   "/about": "about/index.html",
   "/color-mix": "color-mix/index.html",
-  "/color-preview": "color-preview/index.html"
+  "/color-preview": "color-preview/index.html",
+  "/404": "404/index.html"
 };
 
 for (const [routePath, relativeFilePath] of Object.entries(cleanRoutes)) {

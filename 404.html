@@ -1,31 +1,383 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="robots" content="noindex, follow" />
-<title>Page Not Found | Color Library</title>
-<link rel="icon" href="favicon.ico" />
-<link rel="stylesheet" href="ch.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, follow" />
+  <title>Page Not Found | Color Library</title>
+  <meta name="description" content="The requested page could not be found. Explore popular HTML colors, color palettes, and tools on Color Library." />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/ch.css" />
+  <style>
+    .not-found-container {
+      max-width: 960px;
+      margin: 40px auto 60px;
+      padding: 0 24px;
+      text-align: center;
+    }
+    .not-found-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #2563eb;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .not-found-title {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+      line-height: 1.15;
+    }
+    .not-found-desc {
+      font-size: 16px;
+      color: #64748b;
+      max-width: 540px;
+      margin: 0 auto 28px;
+      line-height: 1.6;
+    }
+    .not-found-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+    .btn-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: #2563eb;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.2);
+    }
+    .btn-home:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+    .btn-mix {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: #fff;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 600;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn-mix:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
+    }
+
+    /* Popular Colors Section */
+    .popular-colors-section {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 32px 28px;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+      text-align: left;
+    }
+    .popular-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .popular-header h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .popular-header .view-all-link {
+      font-size: 13px;
+      font-weight: 600;
+      color: #2563eb;
+      text-decoration: none;
+    }
+    .popular-header .view-all-link:hover {
+      text-decoration: underline;
+    }
+
+    .popular-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .popular-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border: 1px solid #f1f5f9;
+      background: #f8fafc;
+      border-radius: 10px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.28s ease;
+      will-change: transform;
+      cursor: pointer;
+    }
+    .popular-card:hover {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+    }
+    .popular-card:active {
+      transform: translateY(-1px) scale(0.99);
+      transition-duration: 0.1s;
+    }
+    .popular-card:hover .popular-swatch {
+      transform: scale(1.08);
+    }
+    .popular-swatch {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .popular-info {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .popular-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1e293b;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .popular-hex {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    /* Popular categories / quick tags */
+    .quick-tags {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding-top: 18px;
+      border-top: 1px solid #f1f5f9;
+    }
+    .quick-tags-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .quick-tag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .quick-tag-pill:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+    .quick-tag-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+  </style>
 </head>
 <body>
   <div class="app-shell">
     <header class="site-header">
       <div class="header-inner">
-        <a class="brand" href="/"><img src="color-library.png" alt="Color Library" class="brand-mark"></a>
-        <nav class="primary-nav"><a href="/">Home</a></nav>
+        <a class="brand" href="/" aria-label="Color Library home">
+          <img src="/color-library.png" alt="Color Library" class="brand-mark" />
+        </a>
+        <nav class="primary-nav" aria-label="Primary navigation">
+          <a href="/">Home</a>
+          <a href="/#colors">Colors <svg class="nav-chevron" viewBox="0 0 16 16" fill="none"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="/#recently-viewed">Recent</a>
+          <a href="/#tools">Tools <svg class="nav-chevron" viewBox="0 0 16 16" fill="none"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="/about">About</a>
+        </nav>
+        <div class="header-actions">
+          <label class="global-search" aria-label="Search colors">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <input id="global-search" type="search" placeholder="Search colors, codes, names..." autocomplete="off" />
+            <kbd>Ctrl K</kbd>
+          </label>
+        </div>
       </div>
     </header>
+
     <main>
-      <section class="seo-content" style="min-height:50vh;display:flex;align-items:center;justify-content:center;text-align:center">
-        <div>
-          <h1>404 — Page Not Found</h1>
-          <p>The page you're looking for doesn't exist.</p>
-          <p><a href="/" style="color:#125dcc;font-weight:700">Go back to Color Library →</a></p>
+      <div class="not-found-container">
+        <div class="not-found-badge">404 Error</div>
+        <h1 class="not-found-title">Page Not Found</h1>
+        <p class="not-found-desc">
+          The page or color code you are looking for doesn't exist or has been moved. Explore our popular colors or return to the main toolkit.
+        </p>
+
+        <div class="not-found-actions">
+          <a href="/" class="btn-home">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Go to Home
+          </a>
+          <a href="/color-mix" class="btn-mix">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/></svg>
+            Try Color Mix
+          </a>
+          <a href="/#palettes" class="btn-mix">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M4 15h16M10 4v16M15 4v16"/></svg>
+            Color Palettes
+          </a>
         </div>
-      </section>
+
+        <!-- Popular Colors Section -->
+        <section class="popular-colors-section" aria-label="Popular Colors">
+          <div class="popular-header">
+            <h2>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              Popular Colors
+            </h2>
+            <a href="/#colors" class="view-all-link">Browse all colors →</a>
+          </div>
+
+          <div class="popular-grid">
+            <a href="/#colors" class="popular-card" title="Explore Blue Colors">
+              <div class="popular-swatch" style="background: #3b82f6;"></div>
+              <div class="popular-info">
+                <span class="popular-name">Cornflower Blue</span>
+                <span class="popular-hex">#3B82F6</span>
+              </div>
+            </a>
+            <a href="/#colors" class="popular-card" title="Explore Emerald Colors">
+              <div class="popular-swatch" style="background: #10b981;"></div>
+              <div class="popular-info">
+                <span class="popular-name">Emerald Green</span>
+                <span class="popular-hex">#10B981</span>
+              </div>
+            </a>
+            <a href="/#colors" class="popular-card" title="Explore Crimson Colors">
+              <div class="popular-swatch" style="background: #ef4444;"></div>
+              <div class="popular-info">
+                <span class="popular-name">Crimson Red</span>
+                <span class="popular-hex">#EF4444</span>
+              </div>
+            </a>
+            <a href="/#colors" class="popular-card" title="Explore Purple Colors">
+              <div class="popular-swatch" style="background: #8b5cf6;"></div>
+              <div class="popular-info">
+                <span class="popular-name">Royal Violet</span>
+                <span class="popular-hex">#8B5CF6</span>
+              </div>
+            </a>
+            <a href="/#colors" class="popular-card" title="Explore Amber Colors">
+              <div class="popular-swatch" style="background: #f59e0b;"></div>
+              <div class="popular-info">
+                <span class="popular-name">Amber Gold</span>
+                <span class="popular-hex">#F59E0B</span>
+              </div>
+            </a>
+            <a href="/#colors" class="popular-card" title="Explore Coral Colors">
+              <div class="popular-swatch" style="background: #f43f5e;"></div>
+              <div class="popular-info">
+                <span class="popular-name">Rose Coral</span>
+                <span class="popular-hex">#F43F5E</span>
+              </div>
+            </a>
+            <a href="/#colors" class="popular-card" title="Explore Cyan Colors">
+              <div class="popular-swatch" style="background: #06b6d4;"></div>
+              <div class="popular-info">
+                <span class="popular-name">Electric Cyan</span>
+                <span class="popular-hex">#06B6D4</span>
+              </div>
+            </a>
+            <a href="/#colors" class="popular-card" title="Explore Indigo Colors">
+              <div class="popular-swatch" style="background: #6366f1;"></div>
+              <div class="popular-info">
+                <span class="popular-name">Deep Indigo</span>
+                <span class="popular-hex">#6366F1</span>
+              </div>
+            </a>
+          </div>
+
+          <div class="quick-tags">
+            <span class="quick-tags-label">Quick Categories:</span>
+            <a href="/#colors" class="quick-tag-pill"><span class="quick-tag-dot" style="background:#3b82f6;"></span>Blue</a>
+            <a href="/#colors" class="quick-tag-pill"><span class="quick-tag-dot" style="background:#10b981;"></span>Green</a>
+            <a href="/#colors" class="quick-tag-pill"><span class="quick-tag-dot" style="background:#ef4444;"></span>Red</a>
+            <a href="/#colors" class="quick-tag-pill"><span class="quick-tag-dot" style="background:#8b5cf6;"></span>Purple</a>
+            <a href="/#colors" class="quick-tag-pill"><span class="quick-tag-dot" style="background:#f59e0b;"></span>Yellow</a>
+            <a href="/#colors" class="quick-tag-pill"><span class="quick-tag-dot" style="background:#14b8a6;"></span>Teal</a>
+            <a href="/#colors" class="quick-tag-pill"><span class="quick-tag-dot" style="background:#f43f5e;"></span>Pink</a>
+            <a href="/#gradients" class="quick-tag-pill">🌈 Gradients</a>
+          </div>
+        </section>
+      </div>
     </main>
-    <footer class="footer">Color Library · Built by Dev Asik.</footer>
+
+    <footer class="footer">
+      <div class="footer-content-wrapper">
+        <div class="footer-copyright">© 2026 <span class="footer-brand-name">Color Library</span>. All rights reserved.</div>
+        <div class="footer-developer">Designed &amp; Developed by <a href="/about" class="footer-dev-link">Dev Asik</a></div>
+        <div class="footer-links">
+          <a href="/privacy-policy">Privacy Policy</a>
+          <span class="footer-dot">·</span>
+          <a href="/terms-of-service">Terms of Service</a>
+          <span class="footer-dot">·</span>
+          <a href="/contact">Contact</a>
+          <span class="footer-dot">·</span>
+          <a href="/about">About</a>
+        </div>
+      </div>
+    </footer>
   </div>
 </body>
 </html>
