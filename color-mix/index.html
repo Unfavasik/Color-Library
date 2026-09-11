@@ -396,19 +396,73 @@
                   <span class="mix-stage-hex-val" id="mix-stage-hex-val">135deg</span>
                 </div>
               </div>
+
+              <!-- Bottom: Quote & Quick Actions -->
+              <div class="mix-stage-bottom">
+                <div class="mix-stage-quote" id="mix-stage-quote">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 3 4 8 5-5 5 15H2L8 3Z"/></svg>
+                  <span>&ldquo;Cool tones. Higher ideas.&rdquo;</span>
+                </div>
+                <div class="mix-stage-actions">
+                  <button type="button" class="mix-stage-action-btn" id="mix-stage-shuffle" aria-label="Shuffle gradient" title="Shuffle gradient">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+                  </button>
+                  <button type="button" class="mix-stage-action-btn" id="mix-stage-copyimg" aria-label="Copy as image" title="Copy as image">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+                  </button>
+                  <button type="button" class="mix-stage-action-btn" id="mix-stage-save" aria-label="Save gradient" title="Save gradient">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 8.7c0 5.2-8.8 10-8.8 10s-8.8-4.8-8.8-10A4.7 4.7 0 0 1 12 6.2a4.7 4.7 0 0 1 8.8 2.5Z"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gradient Type & Preview Size Row -->
+          <div class="mix-type-row">
+            <div class="mix-type-pills" role="group" aria-label="Gradient type">
+              <button type="button" class="mix-type-pill active" data-gtype="linear">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 19 19 5"/><circle cx="5" cy="19" r="2" fill="currentColor" stroke="none"/><circle cx="19" cy="5" r="2" fill="currentColor" stroke="none"/></svg>
+                <span>Linear</span>
+              </button>
+              <button type="button" class="mix-type-pill" data-gtype="radial">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg>
+                <span>Radial</span>
+              </button>
+              <button type="button" class="mix-type-pill" data-gtype="conic">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 12V3M12 12l7.8 4.5"/></svg>
+                <span>Conic</span>
+              </button>
+              <button type="button" class="mix-type-pill" data-gtype="repeating">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/><path d="M7 5v4M15 10v4M11 15v4"/></svg>
+                <span>Repeating</span>
+              </button>
+            </div>
+            <div class="mix-preview-size">
+              <span class="mix-preview-size-label">Preview Size</span>
+              <div class="mix-size-btns" role="group" aria-label="Preview size">
+                <button type="button" class="mix-size-btn active" data-size="desktop" aria-label="Desktop preview" title="Desktop">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                </button>
+                <button type="button" class="mix-size-btn" data-size="tablet" aria-label="Tablet preview" title="Tablet">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+                </button>
+                <button type="button" class="mix-size-btn" data-size="mobile" aria-label="Mobile preview" title="Mobile">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+                </button>
+              </div>
             </div>
           </div>
         </section>
 
-        <!-- Controls Column matching IMG_20260910_145342.jpg -->
-        <section class="color-mix-controls-col" aria-label="Gradient Settings & CSS Code">
-          <div class="mix-control-card">
-            <!-- 1. CSS Code Section - Professional IDE Code Editor -->
+        <div class="mix-code-info-grid">
+          <section class="mix-control-card mix-css-card" aria-label="CSS Code">
             <div class="mix-css-section">
               <div class="mix-css-section-header">
-                <h3>CSS Code</h3>
+                <h3>CSS Code <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg></h3>
                 <span class="mix-css-ready-badge">Ready to use</span>
               </div>
+              <p class="mix-css-sub">Copy the code and use it in your project.</p>
 
               <!-- IDE Code Editor Window -->
               <div class="mix-code-editor" id="mix-code-editor">
@@ -456,10 +510,44 @@
                 </div>
               </div>
             </div>
+          </section>
 
+          <aside class="mix-info-card" aria-label="Gradient Info">
+            <h3 class="mix-info-title">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-5M12 8h.01"/></svg>
+              Gradient Info
+            </h3>
+            <ul class="mix-info-list">
+              <li>
+                <span class="mix-info-label"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> Type</span>
+                <b id="mix-info-type">Linear Gradient</b>
+              </li>
+              <li>
+                <span class="mix-info-label"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg> Angle</span>
+                <b id="mix-info-angle">135deg</b>
+              </li>
+              <li>
+                <span class="mix-info-label"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7s6.5 7 6.5 11.3a6.5 6.5 0 1 1-13 0C5.5 9.7 12 2.7 12 2.7Z"/></svg> Colors</span>
+                <b id="mix-info-colors">2 Colors</b>
+              </li>
+              <li>
+                <span class="mix-info-label"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> CSS Size</span>
+                <b id="mix-info-size">65 characters</b>
+              </li>
+            </ul>
+            <h4 class="mix-palette-title">Palette Preview</h4>
+            <div class="mix-palette-preview" id="mix-palette-preview" aria-label="Palette preview"></div>
+          </aside>
+        </div>
+
+        <section class="color-mix-controls-col" aria-label="Color Stops">
+          <div class="mix-control-card">
             <!-- 2. Color Stops Section -->
             <div class="mix-stops-header">
-              <h3>Color Stops</h3>
+              <div class="mix-stops-header-text">
+                <h3>Color Stops</h3>
+                <p>Add, remove or adjust colors to create your perfect gradient.</p>
+              </div>
               <div class="mix-stops-header-actions">
                 <div class="mix-mode-control" title="Choose number of colors to mix (2 to 7)">
                   <span class="mix-mode-icon">🎨</span>
@@ -493,9 +581,13 @@
                 <span class="mix-dice-icon">🎲</span>
                 <span>Random</span>
               </button>
-              <button type="button" class="mix-page-preview-btn" id="mix-page-preview-btn" title="Preview the generated color as a full page" aria-label="Open page preview">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 7h8M8 11h8M8 15h5"></path></svg>
-                <span>Page Preview</span>
+              <button type="button" class="mix-reverse-btn" id="mix-reverse-btn" title="Reverse gradient direction" aria-label="Reverse gradient">
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg>
+                <span>Reverse</span>
+              </button>
+              <button type="button" class="mix-copyimg-btn" id="mix-copyimg-btn" title="Copy gradient as image" aria-label="Copy as image">
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+                <span>Copy as Image</span>
               </button>
               <button type="button" class="mix-save-gradient-btn" id="mix-save-gradient-btn" aria-label="Save Gradient">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -505,6 +597,57 @@
               </button>
             </div>
           </div>
+        </section>
+
+        <!-- Suggested Variations -->
+        <section class="mix-variations-card" aria-label="Suggested Variations">
+          <div class="mix-variations-header">
+            <div>
+              <h3>Suggested Variations</h3>
+              <p>AI-picked variations based on your gradient.</p>
+            </div>
+            <button type="button" class="mix-generate-more-btn" id="mix-generate-more">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>
+              <span>Generate More</span>
+            </button>
+          </div>
+          <div class="mix-variations-grid" id="mix-variations-grid"></div>
+        </section>
+
+        <!-- Use in Your Project -->
+        <section class="mix-export-card" aria-label="Use in Your Project">
+          <h3 class="mix-export-title">Use in Your Project</h3>
+          <p class="mix-export-sub">Choose your preferred format and copy instantly.</p>
+          <div class="mix-export-tabs" id="mix-export-tabs" role="tablist" aria-label="Export format">
+            <button type="button" class="mix-export-tab active" data-format="css">CSS</button>
+            <button type="button" class="mix-export-tab" data-format="tailwind">Tailwind</button>
+            <button type="button" class="mix-export-tab" data-format="scss">SCSS</button>
+            <button type="button" class="mix-export-tab" data-format="sass">SASS</button>
+            <button type="button" class="mix-export-tab" data-format="less">Less</button>
+            <button type="button" class="mix-export-tab" data-format="svg">SVG</button>
+          </div>
+          <div class="mix-export-codebar">
+            <code id="mix-export-code">background: linear-gradient(135deg, #3B82F6 0%, #EC4899 100%);</code>
+            <button type="button" class="mix-export-copy" id="mix-export-copy" aria-label="Copy code">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span>Copy</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- CTA Banner -->
+        <section class="mix-cta-banner" aria-label="Explore palettes">
+          <div class="mix-cta-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3Z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15Z"/></svg>
+          </div>
+          <div class="mix-cta-text">
+            <h3>Create. Explore. Get Inspired.</h3>
+            <p>Mix colors, create gradients, and build stunning designs &mdash; all in one place.</p>
+          </div>
+          <button type="button" class="mix-cta-btn" id="mix-cta-palettes">
+            <span>Explore Palettes</span>
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
         </section>
       </div>
     </div>
@@ -595,5 +738,330 @@
 
   <script>window.COLOR_DATA = [{"name":"Red","hex":"#FF0000"},{"name":"White","hex":"#FFFFFF"},{"name":"Cyan","hex":"#00FFFF"},{"name":"Silver","hex":"#C0C0C0"},{"name":"Blue","hex":"#0000FF"},{"name":"Gray or Grey","hex":"#808080"},{"name":"DarkBlue","hex":"#00008B"},{"name":"Black","hex":"#000000"},{"name":"LightBlue","hex":"#ADD8E6"},{"name":"Orange","hex":"#FFA500"},{"name":"Purple","hex":"#800080"},{"name":"Brown","hex":"#A52A2A"},{"name":"Yellow","hex":"#FFFF00"},{"name":"Maroon","hex":"#800000"},{"name":"Lime","hex":"#00FF00"},{"name":"Green","hex":"#008000"},{"name":"Magenta","hex":"#FF00FF"},{"name":"Olive","hex":"#808000"},{"name":"Pink","hex":"#FFC0CB"},{"name":"Aquamarine","hex":"#7FFFD4"},{"name":"Black (W3C)","hex":"#000000"},{"name":"Purple Obsidian","hex":"#0D031B"},{"name":"Black Blue","hex":"#040720"},{"name":"Night","hex":"#0C090A"},{"name":"Obsidian","hex":"#1C1C1C"},{"name":"Dark Plum","hex":"#282224"},{"name":"Charcoal","hex":"#34282C"},{"name":"Oil","hex":"#3B3131"},{"name":"Jet Black","hex":"#343434"},{"name":"Stormy Gray","hex":"#3A3B3C"},{"name":"Charcoal Gray","hex":"#3C4142"},{"name":"Light Black","hex":"#454545"},{"name":"Dark Steampunk","hex":"#4D4D4F"},{"name":"Black Cat","hex":"#413839"},{"name":"Iridium","hex":"#3D3C3A"},{"name":"Black Eel","hex":"#463E3F"},{"name":"Black Cow","hex":"#4C4646"},{"name":"Gray Wolf","hex":"#504A4B"},{"name":"Vampire Gray","hex":"#565051"},{"name":"Iron Gray","hex":"#52595D"},{"name":"Gray Dolphin","hex":"#5C5858"},{"name":"Carbon Gray","hex":"#625D5D"},{"name":"Ash Gray","hex":"#666362"},{"name":"DimGray or DimGrey (W3C)","hex":"#696969"},{"name":"Nardo Gray","hex":"#686A6C"},{"name":"Cloudy Gray","hex":"#6D6968"},{"name":"Smokey Gray","hex":"#726E6D"},{"name":"Alien Gray","hex":"#736F6E"},{"name":"Sonic Silver","hex":"#757575"},{"name":"Platinum Gray","hex":"#797979"},{"name":"Granite","hex":"#837E7C"},{"name":"Gray or Grey (W3C)","hex":"#808080"},{"name":"Battleship Gray","hex":"#848482"},{"name":"Sheet Metal","hex":"#888B90"},{"name":"Dark Gainsboro","hex":"#8C8C8C"},{"name":"Gunmetal Gray","hex":"#8D918D"},{"name":"Cold Metal","hex":"#9B9A96"},{"name":"Stainless Steel Gray","hex":"#99A3A3"},{"name":"DarkGray or DarkGrey (W3C)","hex":"#A9A9A9"},{"name":"Chrome Aluminum","hex":"#A8A9AD"},{"name":"Gray Cloud","hex":"#B6B6B4"},{"name":"Metal","hex":"#B6B6B6"},{"name":"Silver (W3C)","hex":"#C0C0C0"},{"name":"Steampunk","hex":"#C9C1C1"},{"name":"Pale Silver","hex":"#C9C0BB"},{"name":"Gear Steel Gray","hex":"#C0C6C7"},{"name":"Gray Goose","hex":"#D1D0CE"},{"name":"Platinum Silver","hex":"#CECECE"},{"name":"LightGray or LightGrey (W3C)","hex":"#D3D3D3"},{"name":"Silver White","hex":"#DADBDD"},{"name":"Gainsboro (W3C)","hex":"#DCDCDC"},{"name":"Light Steel Gray","hex":"#E0E5E5"},{"name":"WhiteSmoke (W3C)","hex":"#F5F5F5"},{"name":"White Gray","hex":"#EEEEEE"},{"name":"Platinum","hex":"#E5E4E2"},{"name":"Metallic Silver","hex":"#BCC6CC"},{"name":"Blue Gray","hex":"#98AFC7"},{"name":"Roman Silver","hex":"#838996"},{"name":"LightSlateGray or LightSlateGrey (W3C)","hex":"#778899"},{"name":"SlateGray or SlateGrey (W3C)","hex":"#708090"},{"name":"Rat Gray","hex":"#6D7B8D"},{"name":"Slate Granite Gray","hex":"#657383"},{"name":"Jet Gray","hex":"#616D7E"},{"name":"Mist Blue","hex":"#646D7E"},{"name":"Dusty Blue","hex":"#6E7F80"},{"name":"Steel Gray","hex":"#71797E"},{"name":"Marble Blue","hex":"#566D7E"},{"name":"Slate Blue Gray","hex":"#737CA1"},{"name":"Light Purple Blue","hex":"#728FCE"},{"name":"Azure Blue","hex":"#4863A0"},{"name":"Monte Carlo Blue","hex":"#3D5791"},{"name":"Estoril Blue","hex":"#2F539B"},{"name":"YInMn Blue","hex":"#2E5090"},{"name":"Blue Jay","hex":"#2B547E"},{"name":"Charcoal Blue","hex":"#36454F"},{"name":"Dark Blue Gray","hex":"#29465B"},{"name":"Dark Slate","hex":"#2B3856"},{"name":"Deep Sea Blue","hex":"#123456"},{"name":"Midnight Navy","hex":"#003366"},{"name":"Night Blue","hex":"#151B54"},{"name":"MidnightBlue (W3C)","hex":"#191970"},{"name":"Navy (W3C)","hex":"#000080"},{"name":"Denim Dark Blue","hex":"#151B8D"},{"name":"DarkBlue (W3C)","hex":"#00008B"},{"name":"Lapis Blue","hex":"#15317E"},{"name":"New Midnight Blue","hex":"#0000A0"},{"name":"Earth Blue","hex":"#0000A5"},{"name":"Cobalt Blue","hex":"#0020C2"},{"name":"MediumBlue (W3C)","hex":"#0000CD"},{"name":"Blueberry Blue","hex":"#0041C2"},{"name":"Canary Blue","hex":"#2916F5"},{"name":"Blue (W3C)","hex":"#0000FF"},{"name":"Samco Blue","hex":"#0002FF"},{"name":"Bright Blue","hex":"#0909FF"},{"name":"Blue Orchid","hex":"#1F45FC"},{"name":"Sapphire Blue","hex":"#2554C7"},{"name":"Blue Eyes","hex":"#1569C7"},{"name":"Bright Navy Blue","hex":"#1974D2"},{"name":"Balloon Blue","hex":"#2B60DE"},{"name":"RoyalBlue (W3C)","hex":"#4169E1"},{"name":"Ocean Blue","hex":"#2B65EC"},{"name":"Dark Sky Blue","hex":"#0059FF"},{"name":"Blue Ribbon","hex":"#306EFF"},{"name":"Blue Dress","hex":"#157DEC"},{"name":"Neon Blue","hex":"#1589FF"},{"name":"DodgerBlue (W3C)","hex":"#1E90FF"},{"name":"Water Blue","hex":"#0E87CC"},{"name":"Glacial Blue Ice","hex":"#368BC1"},{"name":"SteelBlue (W3C)","hex":"#4682B4"},{"name":"Silk Blue","hex":"#488AC7"},{"name":"Windows Blue","hex":"#357EC7"},{"name":"Blue Ivy","hex":"#3090C7"},{"name":"Cyan Blue","hex":"#14A3C7"},{"name":"Blue Koi","hex":"#659EC7"},{"name":"Columbia Blue","hex":"#87AFC7"},{"name":"Baby Blue","hex":"#95B9C7"},{"name":"CornflowerBlue (W3C)","hex":"#6495ED"},{"name":"Sky Blue Dress","hex":"#6698FF"},{"name":"Iceberg","hex":"#56A5EC"},{"name":"Butterfly Blue","hex":"#38ACEC"},{"name":"DeepSkyBlue (W3C)","hex":"#00BFFF"},{"name":"Midday Blue","hex":"#3BB9FF"},{"name":"Crystal Blue","hex":"#5CB3FF"},{"name":"Denim Blue","hex":"#79BAEC"},{"name":"Day Sky Blue","hex":"#82CAFF"},{"name":"LightSkyBlue (W3C)","hex":"#87CEFA"},{"name":"SkyBlue (W3C)","hex":"#87CEEB"},{"name":"Jeans Blue","hex":"#A0CFEC"},{"name":"Blue Angel","hex":"#B7CEEC"},{"name":"Pastel Blue","hex":"#B4CFEC"},{"name":"Light Day Blue","hex":"#ADDFFF"},{"name":"Sea Blue","hex":"#C2DFFF"},{"name":"Heavenly Blue","hex":"#C6DEFF"},{"name":"Robin Egg Blue","hex":"#BDEDFF"},{"name":"PowderBlue (W3C)","hex":"#B0E0E6"},{"name":"Coral Blue","hex":"#AFDCEC"},{"name":"LightBlue (W3C)","hex":"#ADD8E6"},{"name":"LightSteelBlue (W3C)","hex":"#B0CFDE"},{"name":"Gulf Blue","hex":"#C9DFEC"},{"name":"Pastel Light Blue","hex":"#D5D6EA"},{"name":"Lavender Blue","hex":"#E3E4FA"},{"name":"White Blue","hex":"#DBE9FA"},{"name":"Lavender (W3C)","hex":"#E6E6FA"},{"name":"Water","hex":"#EBF4FA"},{"name":"AliceBlue (W3C)","hex":"#F0F8FF"},{"name":"GhostWhite (W3C)","hex":"#F8F8FF"},{"name":"Azure (W3C)","hex":"#F0FFFF"},{"name":"LightCyan (W3C)","hex":"#E0FFFF"},{"name":"Light Slate","hex":"#CCFFFF"},{"name":"Electric Blue","hex":"#9AFEFF"},{"name":"Tron Blue","hex":"#7DFDFE"},{"name":"Blue Zircon","hex":"#57FEFF"},{"name":"Cyan or Aqua (W3C)","hex":"#00FFFF"},{"name":"Bright Cyan","hex":"#0AFFFF"},{"name":"Neon Cyan","hex":"#4BF0FC"},{"name":"Celeste","hex":"#50EBEC"},{"name":"Blue Diamond","hex":"#4EE2EC"},{"name":"Bright Turquoise","hex":"#16E2F5"},{"name":"Blue Lagoon","hex":"#8EEBEC"},{"name":"PaleTurquoise (W3C)","hex":"#AFEEEE"},{"name":"Pale Blue Lily","hex":"#CFECEC"},{"name":"Light Teal","hex":"#B3D9D9"},{"name":"Tiffany Blue","hex":"#81D8D0"},{"name":"Blue Hosta","hex":"#77BFC7"},{"name":"Cyan Opaque","hex":"#92C7C7"},{"name":"Northern Lights Blue","hex":"#78C7C7"},{"name":"Blue Green","hex":"#7BCCB5"},{"name":"MediumAquaMarine (W3C)","hex":"#66CDAA"},{"name":"Aqua Seafoam Green","hex":"#93E9BE"},{"name":"Magic Mint","hex":"#AAF0D1"},{"name":"Light Aquamarine","hex":"#93FFE8"},{"name":"Aquamarine (W3C)","hex":"#7FFFD4"},{"name":"Bright Teal","hex":"#01F9C6"},{"name":"Turquoise (W3C)","hex":"#40E0D0"},{"name":"MediumTurquoise (W3C)","hex":"#48D1CC"},{"name":"Deep Turquoise","hex":"#48CCCD"},{"name":"Jellyfish","hex":"#46C7C7"},{"name":"Blue Turquoise","hex":"#43C6DB"},{"name":"DarkTurquoise (W3C)","hex":"#00CED1"},{"name":"Macaw Blue Green","hex":"#43BFC7"},{"name":"LightSeaGreen (W3C)","hex":"#20B2AA"},{"name":"Seafoam Green","hex":"#3EA99F"},{"name":"CadetBlue (W3C)","hex":"#5F9EA0"},{"name":"Deep Sea","hex":"#3B9C9C"},{"name":"DarkCyan (W3C)","hex":"#008B8B"},{"name":"Teal Green","hex":"#00827F"},{"name":"Teal (W3C)","hex":"#008080"},{"name":"Teal Blue","hex":"#007C80"},{"name":"Medium Teal","hex":"#045F5F"},{"name":"Dark Teal","hex":"#045D5D"},{"name":"Deep Teal","hex":"#033E3E"},{"name":"DarkSlateGray or DarkSlateGrey (W3C)","hex":"#25383C"},{"name":"Gunmetal","hex":"#2C3539"},{"name":"Blue Moss Green","hex":"#3C565B"},{"name":"Beetle Green","hex":"#4C787E"},{"name":"Grayish Turquoise","hex":"#5E7D7E"},{"name":"Greenish Blue","hex":"#307D7E"},{"name":"Aquamarine Stone","hex":"#348781"},{"name":"Sea Turtle Green","hex":"#438D80"},{"name":"Dull Sea Green","hex":"#4E8975"},{"name":"Dark Green Blue","hex":"#1F6357"},{"name":"Alpine Green","hex":"#1B5448"},{"name":"Deep Sea Green","hex":"#306754"},{"name":"Bottle Green","hex":"#006A4E"},{"name":"SeaGreen (W3C)","hex":"#2E8B57"},{"name":"Elf Green","hex":"#1B8A6B"},{"name":"Dark Mint","hex":"#31906E"},{"name":"Jade","hex":"#00A36C"},{"name":"Earth Green","hex":"#34A56F"},{"name":"Chrome Green","hex":"#1AA260"},{"name":"Mint","hex":"#3EB489"},{"name":"Emerald","hex":"#50C878"},{"name":"Isle Of Man Green","hex":"#22CE83"},{"name":"MediumSeaGreen (W3C)","hex":"#3CB371"},{"name":"Metallic Green","hex":"#7C9D8E"},{"name":"Camouflage Green","hex":"#78866B"},{"name":"Sage Green","hex":"#848B79"},{"name":"Hazel Green","hex":"#617C58"},{"name":"Venom Green","hex":"#728C00"},{"name":"OliveDrab (W3C)","hex":"#6B8E23"},{"name":"Olive (W3C)","hex":"#808000"},{"name":"Ebony","hex":"#555D50"},{"name":"DarkOliveGreen (W3C)","hex":"#556B2F"},{"name":"Military Green","hex":"#4E5B31"},{"name":"Green Leaves","hex":"#3A5F0B"},{"name":"Army Green","hex":"#4B5320"},{"name":"Fern Green","hex":"#667C26"},{"name":"Fall Forest Green","hex":"#4E9258"},{"name":"Irish Green","hex":"#08A04B"},{"name":"Pine Green","hex":"#387C44"},{"name":"Medium Forest Green","hex":"#347235"},{"name":"Racing Green","hex":"#27742C"},{"name":"Jungle Green","hex":"#347C2C"},{"name":"Cactus Green","hex":"#227442"},{"name":"ForestGreen (W3C)","hex":"#228B22"},{"name":"Green (W3C)","hex":"#008000"},{"name":"DarkGreen (W3C)","hex":"#006400"},{"name":"Deep Green","hex":"#056608"},{"name":"Deep Emerald Green","hex":"#046307"},{"name":"Hunter Green","hex":"#355E3B"},{"name":"Dark Forest Green","hex":"#254117"},{"name":"Lotus Green","hex":"#004225"},{"name":"Broccoli Green","hex":"#026C3D"},{"name":"Seaweed Green","hex":"#437C17"},{"name":"Shamrock Green","hex":"#347C17"},{"name":"Green Onion","hex":"#6AA121"},{"name":"Moss Green","hex":"#8A9A5B"},{"name":"Grass Green","hex":"#3F9B0B"},{"name":"Green Pepper","hex":"#4AA02C"},{"name":"Dark Lime Green","hex":"#41A317"},{"name":"Parrot Green","hex":"#12AD2B"},{"name":"Clover Green","hex":"#3EA055"},{"name":"Dinosaur Green","hex":"#73A16C"},{"name":"Green Snake","hex":"#6CBB3C"},{"name":"Alien Green","hex":"#6CC417"},{"name":"Green Apple","hex":"#4CC417"},{"name":"LimeGreen (W3C)","hex":"#32CD32"},{"name":"Pea Green","hex":"#52D017"},{"name":"Kelly Green","hex":"#4CC552"},{"name":"Zombie Green","hex":"#54C571"},{"name":"Green Peas","hex":"#89C35C"},{"name":"Dollar Bill Green","hex":"#85BB65"},{"name":"Frog Green","hex":"#99C68E"},{"name":"Turquoise Green","hex":"#A0D6B4"},{"name":"DarkSeaGreen (W3C)","hex":"#8FBC8F"},{"name":"Basil Green","hex":"#829F82"},{"name":"Gray Green","hex":"#A2AD9C"},{"name":"Light Olive Green","hex":"#B8BC86"},{"name":"Iguana Green","hex":"#9CB071"},{"name":"Citron Green","hex":"#8FB31D"},{"name":"Acid Green","hex":"#B0BF1A"},{"name":"Avocado Green","hex":"#B2C248"},{"name":"Pistachio Green","hex":"#9DC209"},{"name":"Salad Green","hex":"#A1C935"},{"name":"YellowGreen (W3C)","hex":"#9ACD32"},{"name":"Pastel Green","hex":"#77DD77"},{"name":"Hummingbird Green","hex":"#7FE817"},{"name":"Nebula Green","hex":"#59E817"},{"name":"Stoplight Go Green","hex":"#57E964"},{"name":"Neon Green","hex":"#16F529"},{"name":"Jade Green","hex":"#5EFB6E"},{"name":"SpringGreen (W3C)","hex":"#00FF7F"},{"name":"Ocean Green","hex":"#00FF80"},{"name":"Lime Mint Green","hex":"#36F57F"},{"name":"MediumSpringGreen (W3C)","hex":"#00FA9A"},{"name":"Aqua Green","hex":"#12E193"},{"name":"Emerald Green","hex":"#5FFB17"},{"name":"Lime (W3C)","hex":"#00FF00"},{"name":"LawnGreen (W3C)","hex":"#7CFC00"},{"name":"Bright Green","hex":"#66FF00"},{"name":"Chartreuse (W3C)","hex":"#7FFF00"},{"name":"Yellow Lawn Green","hex":"#87F717"},{"name":"Aloe Vera Green","hex":"#98F516"},{"name":"Dull Green Yellow","hex":"#B1FB17"},{"name":"Lemon Green","hex":"#ADF802"},{"name":"GreenYellow (W3C)","hex":"#ADFF2F"},{"name":"Chameleon Green","hex":"#BDF516"},{"name":"Neon Yellow Green","hex":"#DAEE01"},{"name":"Yellow Green Grosbeak","hex":"#E2F516"},{"name":"Tea Green","hex":"#CCFB5D"},{"name":"Slime Green","hex":"#BCE954"},{"name":"Algae Green","hex":"#64E986"},{"name":"LightGreen (W3C)","hex":"#90EE90"},{"name":"Dragon Green","hex":"#6AFB92"},{"name":"PaleGreen (W3C)","hex":"#98FB98"},{"name":"Mint Green","hex":"#98FF98"},{"name":"Green Thumb","hex":"#B5EAAA"},{"name":"Organic Brown","hex":"#E3F9A6"},{"name":"Light Jade","hex":"#C3FDB8"},{"name":"Light Mint Green","hex":"#C2E5D3"},{"name":"Light Rose Green","hex":"#DBF9DB"},{"name":"Chrome White","hex":"#E8F1D4"},{"name":"HoneyDew (W3C)","hex":"#F0FFF0"},{"name":"MintCream (W3C)","hex":"#F5FFFA"},{"name":"LemonChiffon (W3C)","hex":"#FFFACD"},{"name":"Parchment","hex":"#FFFFC2"},{"name":"Cream","hex":"#FFFFCC"},{"name":"Cream White","hex":"#FFFDD0"},{"name":"LightGoldenRodYellow (W3C)","hex":"#FAFAD2"},{"name":"LightYellow (W3C)","hex":"#FFFFE0"},{"name":"Beige (W3C)","hex":"#F5F5DC"},{"name":"White Yellow","hex":"#F2F0DF"},{"name":"Cornsilk (W3C)","hex":"#FFF8DC"},{"name":"Blonde","hex":"#FBF6D9"},{"name":"AntiqueWhite (W3C)","hex":"#FAEBD7"},{"name":"Light Beige","hex":"#FFF0DB"},{"name":"PapayaWhip (W3C)","hex":"#FFEFD5"},{"name":"Champagne","hex":"#F7E7CE"},{"name":"BlanchedAlmond (W3C)","hex":"#FFEBCD"},{"name":"Bisque (W3C)","hex":"#FFE4C4"},{"name":"Wheat (W3C)","hex":"#F5DEB3"},{"name":"Moccasin (W3C)","hex":"#FFE4B5"},{"name":"Peach","hex":"#FFE5B4"},{"name":"Light Orange","hex":"#FED8B1"},{"name":"PeachPuff (W3C)","hex":"#FFDAB9"},{"name":"Coral Peach","hex":"#FBD5AB"},{"name":"NavajoWhite (W3C)","hex":"#FFDEAD"},{"name":"Golden Blonde","hex":"#FBE7A1"},{"name":"Golden Silk","hex":"#F3E3C3"},{"name":"Dark Blonde","hex":"#F0E2B6"},{"name":"Light Gold","hex":"#F1E5AC"},{"name":"Vanilla","hex":"#F3E5AB"},{"name":"Tan Brown","hex":"#ECE5B6"},{"name":"Dirty White","hex":"#E8E4C9"},{"name":"PaleGoldenRod (W3C)","hex":"#EEE8AA"},{"name":"Khaki (W3C)","hex":"#F0E68C"},{"name":"Cardboard Brown","hex":"#EDDA74"},{"name":"Harvest Gold","hex":"#EDE275"},{"name":"Sun Yellow","hex":"#FFE87C"},{"name":"Corn Yellow","hex":"#FFF380"},{"name":"Pastel Yellow","hex":"#FAF884"},{"name":"Neon Yellow","hex":"#FFFF33"},{"name":"Yellow (W3C)","hex":"#FFFF00"},{"name":"Lemon Yellow","hex":"#FEF250"},{"name":"Canary Yellow","hex":"#FFEF00"},{"name":"Banana Yellow","hex":"#F5E216"},{"name":"Mustard Yellow","hex":"#FFDB58"},{"name":"Golden Yellow","hex":"#FFDF00"},{"name":"Bold Yellow","hex":"#F9DB24"},{"name":"Safety Yellow","hex":"#EED202"},{"name":"Rubber Ducky Yellow","hex":"#FFD801"},{"name":"Gold (W3C)","hex":"#FFD700"},{"name":"Bright Gold","hex":"#FDD017"},{"name":"Chrome Gold","hex":"#FFCE44"},{"name":"Golden Brown","hex":"#EAC117"},{"name":"Deep Yellow","hex":"#F6BE00"},{"name":"Macaroni and Cheese","hex":"#F2BB66"},{"name":"Amber","hex":"#FFBF00"},{"name":"Saffron","hex":"#FBB917"},{"name":"Neon Gold","hex":"#FDBD01"},{"name":"Beer","hex":"#FBB117"},{"name":"Yellow Orange or Orange Yellow","hex":"#FFAE42"},{"name":"Cantaloupe","hex":"#FFA62F"},{"name":"Cheese Orange","hex":"#FFA600"},{"name":"Orange (W3C)","hex":"#FFA500"},{"name":"Brown Sand","hex":"#EE9A4D"},{"name":"SandyBrown (W3C)","hex":"#F4A460"},{"name":"Brown Sugar","hex":"#E2A76F"},{"name":"Camel Brown","hex":"#C19A6B"},{"name":"Deer Brown","hex":"#E6BF83"},{"name":"BurlyWood (W3C)","hex":"#DEB887"},{"name":"Tan (W3C)","hex":"#D2B48C"},{"name":"Light French Beige","hex":"#C8AD7F"},{"name":"Sand","hex":"#C2B280"},{"name":"Soft Hazel","hex":"#C6BA8B"},{"name":"Sage","hex":"#BCB88A"},{"name":"Fall Leaf Brown","hex":"#C8B560"},{"name":"Ginger Brown","hex":"#C9BE62"},{"name":"Bronze Gold","hex":"#C9AE5D"},{"name":"DarkKhaki (W3C)","hex":"#BDB76B"},{"name":"Olive Green","hex":"#BAB86C"},{"name":"Brass","hex":"#B5A642"},{"name":"Austin Yellow","hex":"#AD9535"},{"name":"Cookie Brown","hex":"#C7A317"},{"name":"Metallic Gold","hex":"#D4AF37"},{"name":"Mustard","hex":"#E1AD01"},{"name":"Bee Yellow","hex":"#E9AB17"},{"name":"Marigold","hex":"#EBA832"},{"name":"School Bus Yellow","hex":"#E8A317"},{"name":"GoldenRod (W3C)","hex":"#DAA520"},{"name":"Orange Gold","hex":"#D4A017"},{"name":"Champagne Gold","hex":"#D29F51"},{"name":"Caramel","hex":"#C68E17"},{"name":"DarkGoldenRod (W3C)","hex":"#B8860B"},{"name":"Cinnamon","hex":"#C58917"},{"name":"Peru (W3C)","hex":"#CD853F"},{"name":"Bronze","hex":"#CD7F32"},{"name":"Pumpkin Pie","hex":"#CA762B"},{"name":"Tiger Orange","hex":"#C88141"},{"name":"Copper","hex":"#B87333"},{"name":"Dark Gold","hex":"#AA6C39"},{"name":"Metallic Bronze","hex":"#A97142"},{"name":"Dark Almond","hex":"#AB784E"},{"name":"Wood","hex":"#966F33"},{"name":"Khaki Brown","hex":"#906E3E"},{"name":"Oak Brown","hex":"#806517"},{"name":"Antique Bronze","hex":"#665D1E"},{"name":"Hazel","hex":"#8E7618"},{"name":"Dark Yellow","hex":"#8B8000"},{"name":"Dark Moccasin","hex":"#827839"},{"name":"Khaki Green","hex":"#8A865D"},{"name":"Millennium Jade","hex":"#93917C"},{"name":"Dark Beige","hex":"#9F8C76"},{"name":"Bullet Shell","hex":"#AF9B60"},{"name":"Army Brown","hex":"#827B60"},{"name":"Sandstone","hex":"#786D5F"},{"name":"Ash Brown","hex":"#675B58"},{"name":"Taupe","hex":"#483C32"},{"name":"Dark Grayish Olive","hex":"#4A412A"},{"name":"Dark Hazel Brown","hex":"#473810"},{"name":"Mocha","hex":"#493D26"},{"name":"Milk Chocolate","hex":"#513B1C"},{"name":"Western Charcoal","hex":"#49413F"},{"name":"Gray Brown","hex":"#3D3635"},{"name":"Cocoa Brown","hex":"#35281E"},{"name":"Dark Coffee","hex":"#3B2F2F"},{"name":"Old Burgundy","hex":"#43302E"},{"name":"Red Brown","hex":"#622F22"},{"name":"Bakers Brown","hex":"#5C3317"},{"name":"Pullman Brown","hex":"#644117"},{"name":"Dark Brown","hex":"#654321"},{"name":"Sepia Brown","hex":"#704214"},{"name":"Dark Bronze","hex":"#804A00"},{"name":"Coffee","hex":"#6F4E37"},{"name":"Brown Bear","hex":"#835C3B"},{"name":"Red Dirt","hex":"#7F5217"},{"name":"Sepia","hex":"#7F462C"},{"name":"Sienna (W3C)","hex":"#A0522D"},{"name":"SaddleBrown (W3C)","hex":"#8B4513"},{"name":"Dark Sienna","hex":"#8A4117"},{"name":"Sangria","hex":"#7E3817"},{"name":"Blood Red","hex":"#7E3517"},{"name":"Chestnut","hex":"#954535"},{"name":"Dark Terracotta","hex":"#A14D3A"},{"name":"Coral Brown","hex":"#9E4638"},{"name":"Deep Amber","hex":"#A05544"},{"name":"Chestnut Red","hex":"#C34A2C"},{"name":"Ginger Red","hex":"#B83C08"},{"name":"Mahogany","hex":"#C04000"},{"name":"Red Gold","hex":"#EB5406"},{"name":"Red Fox","hex":"#C35817"},{"name":"Ginger","hex":"#B06500"},{"name":"Dark Bisque","hex":"#B86500"},{"name":"Light Brown","hex":"#B5651D"},{"name":"Petra Gold","hex":"#B76734"},{"name":"Brown Rust","hex":"#A55D35"},{"name":"Rust","hex":"#C36241"},{"name":"Copper Red","hex":"#CB6D51"},{"name":"Orange Salmon","hex":"#C47451"},{"name":"Chocolate (W3C)","hex":"#D2691E"},{"name":"Sedona","hex":"#CC6600"},{"name":"Papaya Orange","hex":"#E56717"},{"name":"Halloween Orange","hex":"#E66C2C"},{"name":"Neon Orange","hex":"#FF6700"},{"name":"Bright Orange","hex":"#FF5F1F"},{"name":"Fluro Orange","hex":"#FE632A"},{"name":"Pumpkin Orange","hex":"#F87217"},{"name":"Safety Orange","hex":"#FF7900"},{"name":"Carrot Orange","hex":"#F88017"},{"name":"DarkOrange (W3C)","hex":"#FF8C00"},{"name":"Construction Cone Orange","hex":"#F87431"},{"name":"Indian Saffron","hex":"#FF7722"},{"name":"Sunrise Orange","hex":"#E67451"},{"name":"Terracotta","hex":"#E3735E"},{"name":"Mango Orange","hex":"#FF8040"},{"name":"Coral (W3C)","hex":"#FF7F50"},{"name":"Basket Ball Orange","hex":"#F88158"},{"name":"Light Salmon Rose","hex":"#F9966B"},{"name":"LightSalmon (W3C)","hex":"#FFA07A"},{"name":"Pink Orange","hex":"#F89880"},{"name":"DarkSalmon (W3C)","hex":"#E9967A"},{"name":"Tangerine","hex":"#E78A61"},{"name":"Light Copper","hex":"#DA8A67"},{"name":"Salmon Pink","hex":"#FF8674"},{"name":"Salmon (W3C)","hex":"#FA8072"},{"name":"Peach Pink","hex":"#F98B88"},{"name":"LightCoral (W3C)","hex":"#F08080"},{"name":"Pastel Red","hex":"#F67280"},{"name":"Pink Coral","hex":"#E77471"},{"name":"Bean Red","hex":"#F75D59"},{"name":"Valentine Red","hex":"#E55451"},{"name":"IndianRed (W3C)","hex":"#CD5C5C"},{"name":"Tomato (W3C)","hex":"#FF6347"},{"name":"Shocking Orange","hex":"#E55B3C"},{"name":"OrangeRed (W3C)","hex":"#FF4500"},{"name":"Coral Red","hex":"#FF4040"},{"name":"Red (W3C)","hex":"#FF0000"},{"name":"Neon Red","hex":"#FD1C03"},{"name":"Scarlet Red","hex":"#FF2400"},{"name":"Ruby Red","hex":"#F62217"},{"name":"Ferrari Red","hex":"#F70D1A"},{"name":"Fire Engine Red","hex":"#F62817"},{"name":"Lava Red","hex":"#E42217"},{"name":"Love Red","hex":"#E41B17"},{"name":"Grapefruit","hex":"#DC381F"},{"name":"Strawberry Red","hex":"#C83F49"},{"name":"Cherry Red","hex":"#C24641"},{"name":"Chilli Pepper","hex":"#C11B17"},{"name":"FireBrick (W3C)","hex":"#B22222"},{"name":"Tomato Sauce Red","hex":"#B21807"},{"name":"Brown (W3C)","hex":"#A52A2A"},{"name":"Carbon Red","hex":"#A70D2A"},{"name":"Cranberry","hex":"#9F000F"},{"name":"Saffron Red","hex":"#931314"},{"name":"Carmine Red","hex":"#960018"},{"name":"Crimson Red","hex":"#990000"},{"name":"Red Wine or Wine Red","hex":"#990012"},{"name":"DarkRed (W3C)","hex":"#8B0000"},{"name":"Maroon Red","hex":"#8F0B0B"},{"name":"Maroon (W3C)","hex":"#800000"},{"name":"Burgundy","hex":"#8C001A"},{"name":"Vermilion","hex":"#7E191B"},{"name":"Deep Red","hex":"#800517"},{"name":"Dark Burgundy","hex":"#800020"},{"name":"Garnet Red","hex":"#733635"},{"name":"Maroon Brown","hex":"#6A2617"},{"name":"Red Blood","hex":"#660000"},{"name":"Blood Night","hex":"#551606"},{"name":"Dark Scarlet","hex":"#560319"},{"name":"Chocolate Brown","hex":"#3F000F"},{"name":"Black Bean","hex":"#3D0C02"},{"name":"Dark Maroon","hex":"#2F0909"},{"name":"Midnight","hex":"#2B1B17"},{"name":"Purple Lily","hex":"#550A35"},{"name":"Purple Maroon","hex":"#810541"},{"name":"Plum Pie","hex":"#7D0541"},{"name":"Plum Velvet","hex":"#7D0552"},{"name":"Dark Raspberry","hex":"#872657"},{"name":"Velvet Maroon","hex":"#7E354D"},{"name":"Rosy-Finch","hex":"#7F4E52"},{"name":"Dull Purple","hex":"#7F525D"},{"name":"Puce","hex":"#7F5A58"},{"name":"Rose Dust","hex":"#997070"},{"name":"Pastel Brown","hex":"#B1907F"},{"name":"Rosy Pink","hex":"#B38481"},{"name":"RosyBrown (W3C)","hex":"#BC8F8F"},{"name":"Khaki Rose","hex":"#C5908E"},{"name":"Lipstick Pink","hex":"#C48793"},{"name":"Dusky Pink","hex":"#CC7A8B"},{"name":"Pink Brown","hex":"#C48189"},{"name":"Old Rose","hex":"#C08081"},{"name":"Dusty Pink","hex":"#D58A94"},{"name":"Pink Daisy","hex":"#E799A3"},{"name":"Rose Pink or Pink Rose","hex":"#E7A1B0"},{"name":"Rose","hex":"#E8ADAA"},{"name":"Dusty Rose","hex":"#C9A9A6"},{"name":"Silver Pink","hex":"#C4AEAD"},{"name":"Gold Pink","hex":"#E6C7C2"},{"name":"Rose Gold","hex":"#ECC5C0"},{"name":"Deep Peach","hex":"#FFCBA4"},{"name":"Pastel Orange","hex":"#F8B88B"},{"name":"Desert Sand","hex":"#EDC9AF"},{"name":"Unbleached Silk","hex":"#FFDDCA"},{"name":"Pig Pink","hex":"#FDD7E4"},{"name":"Pale Pink","hex":"#F2D4D7"},{"name":"Blush","hex":"#FFE6E8"},{"name":"MistyRose (W3C)","hex":"#FFE4E1"},{"name":"Pink Bubble Gum","hex":"#FFDFDD"},{"name":"Light Rose","hex":"#FBCFCD"},{"name":"Light Red","hex":"#FFCCCB"},{"name":"Rose Quartz","hex":"#F7CAC9"},{"name":"Warm Pink","hex":"#F6C6BD"},{"name":"Deep Rose","hex":"#FBBBB9"},{"name":"Pink (W3C)","hex":"#FFC0CB"},{"name":"LightPink (W3C)","hex":"#FFB6C1"},{"name":"Soft Pink","hex":"#FFB8BF"},{"name":"Powder Pink","hex":"#FFB2D0"},{"name":"Donut Pink","hex":"#FAAFBE"},{"name":"Baby Pink","hex":"#FAAFBA"},{"name":"Flamingo Pink","hex":"#F9A7B0"},{"name":"Pastel Pink","hex":"#FEA3AA"},{"name":"Baker-Miller Pink","hex":"#FF91AF"},{"name":"Cadillac Pink","hex":"#E38AAE"},{"name":"Carnation Pink","hex":"#F778A1"},{"name":"Pastel Rose","hex":"#E5788F"},{"name":"Blush Red","hex":"#E56E94"},{"name":"PaleVioletRed (W3C)","hex":"#DB7093"},{"name":"Purple Pink","hex":"#D16587"},{"name":"Tulip Pink","hex":"#C25A7C"},{"name":"Bashful Pink","hex":"#C25283"},{"name":"Dark Pink","hex":"#E75480"},{"name":"Dark Hot Pink","hex":"#F660AB"},{"name":"HotPink (W3C)","hex":"#FF69B4"},{"name":"Watermelon Pink","hex":"#FC6C85"},{"name":"Violet Red","hex":"#F6358A"},{"name":"Hot Deep Pink","hex":"#F52887"},{"name":"Bright Pink","hex":"#FF007F"},{"name":"Red Magenta","hex":"#FF0080"},{"name":"DeepPink (W3C)","hex":"#FF1493"},{"name":"Neon Pink","hex":"#F535AA"},{"name":"Chrome Pink","hex":"#FF33AA"},{"name":"Neon Hot Pink","hex":"#FD349C"},{"name":"Pink Cupcake","hex":"#E45E9D"},{"name":"Royal Pink","hex":"#E759AC"},{"name":"Dimorphotheca Magenta","hex":"#E3319D"},{"name":"Barbie Pink","hex":"#DA1884"},{"name":"Pink Lemonade","hex":"#E4287C"},{"name":"Red Pink","hex":"#FA2A55"},{"name":"Raspberry","hex":"#E30B5D"},{"name":"Crimson (W3C)","hex":"#DC143C"},{"name":"Bright Maroon","hex":"#C32148"},{"name":"Rose Red","hex":"#C21E56"},{"name":"Rogue Pink","hex":"#C12869"},{"name":"Burnt Pink","hex":"#C12267"},{"name":"Pink Violet","hex":"#CA226B"},{"name":"Magenta Pink","hex":"#CC338B"},{"name":"MediumVioletRed (W3C)","hex":"#C71585"},{"name":"Dark Carnation Pink","hex":"#C12283"},{"name":"Light Maroon","hex":"#A24857"},{"name":"Raspberry Purple","hex":"#B3446C"},{"name":"Pink Plum","hex":"#B93B8F"},{"name":"Orchid (W3C)","hex":"#DA70D6"},{"name":"Deep Mauve","hex":"#DF73D4"},{"name":"Violet (W3C)","hex":"#EE82EE"},{"name":"Fuchsia Pink","hex":"#FF77FF"},{"name":"Bright Neon Pink","hex":"#F433FF"},{"name":"Magenta or Fuchsia (W3C)","hex":"#FF00FF"},{"name":"Crimson Purple","hex":"#E238EC"},{"name":"Heliotrope Purple","hex":"#D462FF"},{"name":"Tyrian Purple","hex":"#C45AEC"},{"name":"MediumOrchid (W3C)","hex":"#BA55D3"},{"name":"Purple Flower","hex":"#A74AC7"},{"name":"Orchid Purple","hex":"#B048B5"},{"name":"Rich Lilac","hex":"#B666D2"},{"name":"Pastel Violet","hex":"#D291BC"},{"name":"Rosy","hex":"#A17188"},{"name":"Mauve Taupe","hex":"#915F6D"},{"name":"Viola Purple","hex":"#7E587E"},{"name":"Eggplant","hex":"#614051"},{"name":"Plum Purple","hex":"#583759"},{"name":"Grape","hex":"#5E5A80"},{"name":"Purple Navy","hex":"#4E5180"},{"name":"SlateBlue (W3C)","hex":"#6A5ACD"},{"name":"Blue Lotus","hex":"#6960EC"},{"name":"Blurple","hex":"#5865F2"},{"name":"Light Slate Blue","hex":"#736AFF"},{"name":"MediumSlateBlue (W3C)","hex":"#7B68EE"},{"name":"Periwinkle Purple","hex":"#7575CF"},{"name":"Very Peri","hex":"#6667AB"},{"name":"Dark Lavender","hex":"#734F96"},{"name":"Bright Grape","hex":"#6F2DA8"},{"name":"Bright Purple","hex":"#6A0DAD"},{"name":"Purple Amethyst","hex":"#6C2DC7"},{"name":"Blue Magenta","hex":"#822EFF"},{"name":"Dark Blurple","hex":"#5539CC"},{"name":"Deep Periwinkle","hex":"#5453A6"},{"name":"DarkSlateBlue (W3C)","hex":"#483D8B"},{"name":"Purple Haze","hex":"#4E387E"},{"name":"Purple Iris","hex":"#571B7E"},{"name":"Dark Purple","hex":"#4B0150"},{"name":"Deep Purple","hex":"#36013F"},{"name":"Midnight Purple","hex":"#2E1A47"},{"name":"Purple Monster","hex":"#461B7E"},{"name":"Indigo (W3C)","hex":"#4B0082"},{"name":"Blue Whale","hex":"#342D7E"},{"name":"RebeccaPurple (W3C)","hex":"#663399"},{"name":"Purple Jam","hex":"#6A287E"},{"name":"DarkMagenta (W3C)","hex":"#8B008B"},{"name":"Purple (W3C)","hex":"#800080"},{"name":"French Lilac","hex":"#86608E"},{"name":"DarkOrchid (W3C)","hex":"#9932CC"},{"name":"DarkViolet (W3C)","hex":"#9400D3"},{"name":"Purple Violet","hex":"#8D38C9"},{"name":"Jasmine Purple","hex":"#A23BEC"},{"name":"Purple Daffodil","hex":"#B041FF"},{"name":"Clematis Violet","hex":"#842DCE"},{"name":"BlueViolet (W3C)","hex":"#8A2BE2"},{"name":"Purple Sage Bush","hex":"#7A5DC7"},{"name":"Lovely Purple","hex":"#7F38EC"},{"name":"Neon Purple","hex":"#9D00FF"},{"name":"Purple Plum","hex":"#8E35EF"},{"name":"Aztech Purple","hex":"#893BFF"},{"name":"MediumPurple (W3C)","hex":"#9370DB"},{"name":"Light Purple","hex":"#8467D7"},{"name":"Crocus Purple","hex":"#9172EC"},{"name":"Purple Mimosa","hex":"#9E7BFF"},{"name":"Pastel Indigo","hex":"#8686AF"},{"name":"Lavender Purple","hex":"#967BB6"},{"name":"Rose Purple","hex":"#B09FCA"},{"name":"Viola","hex":"#C8C4DF"},{"name":"Periwinkle","hex":"#CCCCFF"},{"name":"Pale Lilac","hex":"#DCD0FF"},{"name":"Lilac","hex":"#C8A2C8"},{"name":"Mauve","hex":"#E0B0FF"},{"name":"Bright Lilac","hex":"#D891EF"},{"name":"Purple Dragon","hex":"#C38EC7"},{"name":"Plum (W3C)","hex":"#DDA0DD"},{"name":"Blush Pink","hex":"#E6A9EC"},{"name":"Pastel Purple","hex":"#F2A2E8"},{"name":"Blossom Pink","hex":"#F9B7FF"},{"name":"Wisteria Purple","hex":"#C6AEC7"},{"name":"Purple Thistle","hex":"#D2B9D3"},{"name":"Thistle (W3C)","hex":"#D8BFD8"},{"name":"Purple White","hex":"#DFD3E3"},{"name":"Periwinkle Pink","hex":"#E9CFEC"},{"name":"Cotton Candy","hex":"#FCDFFF"},{"name":"Lavender Pinocchio","hex":"#EBDDE2"},{"name":"Dark White","hex":"#E1D9D1"},{"name":"Ash White","hex":"#E9E4D4"},{"name":"Warm White","hex":"#EFEBD8"},{"name":"White Chocolate","hex":"#EDE6D6"},{"name":"Creamy White","hex":"#F0E9D6"},{"name":"Off White","hex":"#F8F0E3"},{"name":"Soft Ivory","hex":"#FAF0DD"},{"name":"Cosmic Latte","hex":"#FFF8E7"},{"name":"Pearl White","hex":"#F8F6F0"},{"name":"Red White","hex":"#F3E8EA"},{"name":"LavenderBlush (W3C)","hex":"#FFF0F5"},{"name":"Pearl","hex":"#FDEEF4"},{"name":"Egg Shell","hex":"#FFF9E3"},{"name":"OldLace (W3C)","hex":"#FEF0E3"},{"name":"White Ice","hex":"#EAEEE9"},{"name":"Linen (W3C)","hex":"#FAF0E6"},{"name":"SeaShell (W3C)","hex":"#FFF5EE"},{"name":"Bone White","hex":"#F9F6EE"},{"name":"Rice","hex":"#FAF5EF"},{"name":"FloralWhite (W3C)","hex":"#FFFAF0"},{"name":"Ivory (W3C)","hex":"#FFFFF0"},{"name":"White Gold","hex":"#FFFFF4"},{"name":"Light White","hex":"#FFFFF7"},{"name":"Cotton","hex":"#FBFBF9"},{"name":"Snow (W3C)","hex":"#FFFAFA"},{"name":"Milk White","hex":"#FEFCFF"},{"name":"Half White","hex":"#FFFEFA"},{"name":"White (W3C)","hex":"#FFFFFF"}];</script>
   <script src="/ch.js"></script>
+  <script>
+  (function () {
+    const $ = (s) => document.querySelector(s);
+    const stage = $('#mix-gradient-stage');
+    if (!stage) return;
+
+    let gType = 'linear';
+    let exportFormat = 'css';
+    let lastLinear = '';
+    let lastAppliedBg = '';
+    let lastName = '';
+    let quoteIdx = -1;
+    const QUOTES = [
+      '\u201CCool tones. Higher ideas.\u201D',
+      '\u201CTwo shades, one story.\u201D',
+      '\u201CSoft light, bold feelings.\u201D',
+      '\u201CWhere colors learn to blend.\u201D',
+      '\u201CGradient state of mind.\u201D'
+    ];
+
+    function colorToHex(c) {
+      c = c.trim();
+      if (c.startsWith('#')) return c.toUpperCase();
+      const m = c.match(/rgba?\(([^)]+)\)/);
+      if (m) {
+        const parts = m[1].split(',').map(parseFloat);
+        return rgbToHex(parts[0], parts[1], parts[2]);
+      }
+      return '#000000';
+    }
+    function parseStops(css) {
+      const out = [];
+      const re = /(#[0-9A-Fa-f]{3,8}|rgba?\([^)]+\))\s+(\d+(?:\.\d+)?)%/g;
+      let m;
+      while ((m = re.exec(css))) out.push({ color: colorToHex(m[1]), pos: parseFloat(m[2]) });
+      return out;
+    }
+    function getAngle(css) {
+      const m = css.match(/linear-gradient\(([\d.]+)deg/);
+      return m ? parseFloat(m[1]) : 135;
+    }
+    function hexToRgb(hex) {
+      const h = hex.replace('#', '');
+      return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
+    }
+    function rgbToHex(r, g, b) {
+      return '#' + [r, g, b].map(v => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, '0')).join('').toUpperCase();
+    }
+    function sampleStops(stops, t) {
+      const s = [...stops].sort((a, b) => a.pos - b.pos);
+      if (t <= s[0].pos / 100) return s[0].color;
+      if (t >= s[s.length - 1].pos / 100) return s[s.length - 1].color;
+      for (let i = 0; i < s.length - 1; i++) {
+        const a = s[i], b = s[i + 1];
+        if (t >= a.pos / 100 && t <= b.pos / 100) {
+          const k = (t - a.pos / 100) / Math.max(0.0001, (b.pos - a.pos) / 100);
+          const ca = hexToRgb(a.color), cb = hexToRgb(b.color);
+          return rgbToHex(ca[0] + (cb[0] - ca[0]) * k, ca[1] + (cb[1] - ca[1]) * k, ca[2] + (cb[2] - ca[2]) * k);
+        }
+      }
+      return s[0].color;
+    }
+    function shiftHue(hex, deg, lighten) {
+      let [r, g, b] = hexToRgb(hex).map(v => v / 255);
+      const max = Math.max(r, g, b), min = Math.min(r, g, b);
+      let h = 0, s = 0; const l = (max + min) / 2;
+      if (max !== min) {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        if (max === r) h = ((g - b) / d + (g < b ? 6 : 0));
+        else if (max === g) h = (b - r) / d + 2;
+        else h = (r - g) / d + 4;
+        h /= 6;
+      }
+      h = (h + deg / 360 + 1) % 1;
+      const l2 = Math.max(0.15, Math.min(0.9, l + (lighten || 0)));
+      const q = l2 < 0.5 ? l2 * (1 + s) : l2 + s - l2 * s;
+      const p = 2 * l2 - q;
+      const hue2rgb = (t) => {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1 / 6) return p + (q - p) * 6 * t;
+        if (t < 1 / 2) return q;
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+        return p;
+      };
+      let r2, g2, b2;
+      if (s === 0) { r2 = g2 = b2 = l2; }
+      else {
+        r2 = hue2rgb(h + 1 / 3); g2 = hue2rgb(h); b2 = hue2rgb(h - 1 / 3);
+      }
+      return rgbToHex(r2 * 255, g2 * 255, b2 * 255);
+    }
+    function transformBg(css) {
+      if (gType === 'linear' || !css.includes('linear-gradient')) return css;
+      const angle = getAngle(css);
+      if (gType === 'repeating') return css.replace('linear-gradient(', 'repeating-linear-gradient(');
+      if (gType === 'conic') return css.replace(/linear-gradient\(\s*[\d.]+deg\s*,/, 'conic-gradient(from ' + angle + 'deg,');
+      return css.replace(/linear-gradient\(\s*[\d.]+deg\s*,/, 'radial-gradient(circle at 50% 50%,');
+    }
+    function oneLineCss(css) {
+      const stops = parseStops(css);
+      const part = stops.map(s => s.color + ' ' + s.pos + '%').join(', ');
+      return 'linear-gradient(' + getAngle(css) + 'deg, ' + part + ')';
+    }
+    function setText(sel, txt) { const el = $(sel); if (el) el.textContent = txt; }
+
+    function buildExport(format, stops, angle) {
+      const part = stops.map(s => s.color + ' ' + s.pos + '%').join(', ');
+      const lin = 'linear-gradient(' + angle + 'deg, ' + part + ')';
+      switch (format) {
+        case 'tailwind': return 'bg-[' + lin.replace(/\s+/g, '_') + ']';
+        case 'scss': return '$gradient: ' + lin + ';';
+        case 'sass': return '$gradient: ' + lin;
+        case 'less': return '@gradient: ' + lin + ';';
+        case 'svg': {
+          const st = stops.map(s => '<stop offset="' + s.pos + '%" stop-color="' + s.color + '"/>').join('');
+          return '<linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">' + st + '</linearGradient>';
+        }
+        default: return 'background: ' + lin + ';';
+      }
+    }
+
+    function renderExport(stops, angle) {
+      const codeEl = $('#mix-export-code');
+      if (codeEl) codeEl.textContent = buildExport(exportFormat, stops, angle);
+    }
+
+    function syncInfo() {
+      if (!lastLinear) return;
+      const stops = parseStops(lastLinear);
+      if (!stops.length) return;
+      const angle = getAngle(lastLinear);
+      const typeNames = { linear: 'Linear Gradient', radial: 'Radial Gradient', conic: 'Conic Gradient', repeating: 'Repeating Gradient' };
+      setText('#mix-info-type', typeNames[gType]);
+      setText('#mix-info-angle', angle + 'deg');
+      setText('#mix-info-colors', stops.length + ' Colors');
+      setText('#mix-info-size', oneLineCss(lastLinear).length + ' characters');
+      const pal = $('#mix-palette-preview');
+      if (pal) {
+        pal.innerHTML = '';
+        for (let i = 0; i < 5; i++) {
+          const d = document.createElement('span');
+          d.style.background = sampleStops(stops, i / 4);
+          pal.appendChild(d);
+        }
+      }
+      renderExport(stops, angle);
+    }
+
+    // Track gradient updates coming from ch.js and re-apply the chosen type
+    const obs = new MutationObserver(() => {
+      const bg = stage.style.background || '';
+      if (!bg || bg === lastAppliedBg) return;
+      if (bg.includes('linear-gradient')) lastLinear = bg;
+      const transformed = transformBg(bg);
+      lastAppliedBg = transformed;
+      if (transformed !== bg) stage.style.background = transformed;
+      const nameEl = $('#mix-stage-color-name');
+      const name = nameEl ? nameEl.textContent : '';
+      if (name && name !== lastName) {
+        lastName = name;
+        quoteIdx = (quoteIdx + 1) % QUOTES.length;
+        const q = $('#mix-stage-quote span');
+        if (q) q.textContent = QUOTES[quoteIdx];
+      }
+      syncInfo();
+    });
+    obs.observe(stage, { attributes: true, attributeFilter: ['style'] });
+
+    // Gradient type pills
+    document.querySelectorAll('.mix-type-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        gType = pill.dataset.gtype;
+        document.querySelectorAll('.mix-type-pill').forEach(p => p.classList.toggle('active', p === pill));
+        if (lastLinear) {
+          lastAppliedBg = '';
+          stage.style.background = transformBg(lastLinear);
+        }
+        syncInfo();
+      });
+    });
+
+    // Preview size
+    const sizeMap = { desktop: '', tablet: '640px', mobile: '390px' };
+    document.querySelectorAll('.mix-size-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.mix-size-btn').forEach(b => b.classList.toggle('active', b === btn));
+        const card = document.querySelector('.mix-single-result-card');
+        if (card) {
+          card.style.maxWidth = sizeMap[btn.dataset.size];
+          card.style.margin = sizeMap[btn.dataset.size] ? '0 auto' : '';
+          card.style.transition = 'max-width .45s cubic-bezier(.22, 1.2, .36, 1)';
+        }
+      });
+    });
+
+    // Stage quick actions
+    const shuffleBtn = $('#mix-stage-shuffle');
+    if (shuffleBtn) shuffleBtn.addEventListener('click', () => { const b = $('#mix-random-base-btn'); if (b) b.click(); });
+    const saveBtn = $('#mix-stage-save');
+    if (saveBtn) saveBtn.addEventListener('click', () => { const b = $('#mix-save-gradient-btn'); if (b) b.click(); });
+
+    function copyAsImage() {
+      if (!lastLinear) return;
+      const stops = parseStops(lastLinear);
+      const angle = getAngle(lastLinear);
+      const c = document.createElement('canvas');
+      c.width = 1200; c.height = 630;
+      const ctx = c.getContext('2d');
+      const rad = (angle - 90) * Math.PI / 180;
+      const grad = ctx.createLinearGradient(600 - Math.cos(rad) * 600, 315 - Math.sin(rad) * 315, 600 + Math.cos(rad) * 600, 315 + Math.sin(rad) * 315);
+      stops.forEach(s => grad.addColorStop(Math.min(1, Math.max(0, s.pos / 100)), s.color));
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 1200, 630);
+      c.toBlob(async (blob) => {
+        if (!blob) return;
+        try {
+          await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+          if (window.showToast) showToast('Gradient image copied');
+        } catch (e) {
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = 'gradient.png';
+          a.click();
+          if (window.showToast) showToast('Gradient image downloaded');
+        }
+      });
+    }
+    const stageCopyBtn = $('#mix-stage-copyimg');
+    if (stageCopyBtn) stageCopyBtn.addEventListener('click', copyAsImage);
+    const copyImgBtn = $('#mix-copyimg-btn');
+    if (copyImgBtn) copyImgBtn.addEventListener('click', copyAsImage);
+
+    // Reverse stops
+    const reverseBtn = $('#mix-reverse-btn');
+    if (reverseBtn) reverseBtn.addEventListener('click', () => {
+      const list = $('#mix-stops-list');
+      if (!list) return;
+      const inputs = [...list.querySelectorAll('.mix-stop-hex-input')];
+      const vals = inputs.map(i => i.value).reverse();
+      inputs.forEach((input, i) => {
+        input.value = vals[i];
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+    });
+
+    // Suggested variations
+    const NAMES = ['Arctic Dawn', 'Frosted Ocean', 'Steel Horizon', 'Midnight Fog', 'Desert Dusk', 'Neon Tide', 'Stone Wash', 'Velvet Hour', 'Glacier Mist', 'Ember Line'];
+    let nameOffset = 0;
+    function renderVariations() {
+      if (!lastLinear) return;
+      const stops = parseStops(lastLinear);
+      const grid = $('#mix-variations-grid');
+      if (!grid || !stops.length) return;
+      const shifts = [
+        { h: -35, l: 0.06 },
+        { h: 25, l: 0.1 },
+        { h: 150, l: -0.04 },
+        { h: -110, l: -0.08 }
+      ];
+      grid.innerHTML = '';
+      shifts.forEach((sh, i) => {
+        const vStops = stops.map(s => ({ color: shiftHue(s.color, sh.h, sh.l), pos: s.pos }));
+        const part = vStops.map(s => s.color + ' ' + s.pos + '%').join(', ');
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'mix-variation-item';
+        card.setAttribute('aria-label', 'Apply variation ' + NAMES[(nameOffset + i) % NAMES.length]);
+        card.innerHTML =
+          '<div class="mix-variation-preview" style="background:linear-gradient(135deg,' + part + ')"></div>' +
+          '<div class="mix-variation-body"><strong>' + NAMES[(nameOffset + i) % NAMES.length] + '</strong>' +
+          '<div class="mix-variation-dots"><span style="background:' + vStops[0].color + '"></span><span style="background:' + vStops[vStops.length - 1].color + '"></span></div></div>';
+        card.addEventListener('click', () => {
+          const list = $('#mix-stops-list');
+          if (!list) return;
+          const inputs = [...list.querySelectorAll('.mix-stop-hex-input')];
+          if (inputs.length !== vStops.length) return;
+          inputs.forEach((input, k) => {
+            input.value = vStops[k].color;
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+          });
+        });
+        grid.appendChild(card);
+      });
+      nameOffset = (nameOffset + 4) % NAMES.length;
+    }
+    const genBtn = $('#mix-generate-more');
+    if (genBtn) genBtn.addEventListener('click', renderVariations);
+
+    // Export tabs
+    document.querySelectorAll('.mix-export-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        exportFormat = tab.dataset.format;
+        document.querySelectorAll('.mix-export-tab').forEach(t => t.classList.toggle('active', t === tab));
+        if (lastLinear) renderExport(parseStops(lastLinear), getAngle(lastLinear));
+      });
+    });
+    const exportCopy = $('#mix-export-copy');
+    if (exportCopy) exportCopy.addEventListener('click', async () => {
+      const code = $('#mix-export-code');
+      if (!code) return;
+      try { await navigator.clipboard.writeText(code.textContent); } catch (e) {}
+      if (window.showToast) showToast('Copied to clipboard');
+    });
+
+    // CTA
+    const ctaBtn = $('#mix-cta-palettes');
+    if (ctaBtn) ctaBtn.addEventListener('click', () => {
+      if (typeof openCuratedPalettes === 'function') openCuratedPalettes();
+    });
+
+    // Initial paint (ch.js may have already set the stage)
+    if (stage.style.background && !lastLinear) {
+      lastLinear = stage.style.background;
+      lastAppliedBg = transformBg(lastLinear);
+      if (lastAppliedBg !== lastLinear) stage.style.background = lastAppliedBg;
+      syncInfo();
+    }
+    renderVariations();
+    const initObs = new MutationObserver(() => { if (lastLinear) { renderVariations(); initObs.disconnect(); } });
+    initObs.observe(stage, { attributes: true, attributeFilter: ['style'] });
+    setTimeout(() => { if (!lastLinear && stage.style.background) { lastLinear = stage.style.background; syncInfo(); renderVariations(); } initObs.disconnect(); }, 1500);
+  })();
+  </script>
 </body>
 </html>
