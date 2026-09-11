@@ -4105,6 +4105,28 @@ body:has(#home-view) .footer {
   overflow: hidden;
   background: #F2F2EE;
 }
+#home-view .hero-bg {
+  position: absolute;
+  inset: -6%;
+  z-index: 0;
+  background:
+    linear-gradient(100deg, rgba(242, 242, 238, .85) 0%, rgba(242, 242, 238, .55) 48%, rgba(242, 242, 238, .3) 100%),
+    url("/assets/hero-bg.webp") center / cover no-repeat;
+  opacity: 0;
+  animation:
+    hero-fade 1.4s ease .1s forwards,
+    hero-drift 28s ease-in-out 1.5s infinite alternate;
+  pointer-events: none;
+}
+#home-view .hero-inner { position: relative; z-index: 1; }
+@keyframes hero-fade {
+  from { opacity: 0; transform: scale(1.05); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes hero-drift {
+  from { transform: scale(1) translate3d(0, 0, 0); }
+  to { transform: scale(1.07) translate3d(1.6%, -1.4%, 0); }
+}
 #home-view .hero::before,
 #home-view .hero::after { display: none; }
 #home-view .hero-inner {
@@ -4434,6 +4456,11 @@ body:has(#home-view) .footer {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  #home-view .hero-bg {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
   #home-view .hero-copy > *,
   #home-view .picker-card,
   #home-view .feature-card,
