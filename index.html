@@ -139,9 +139,10 @@
           <label class="global-search" aria-label="Search colors">
             <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
             <input id="global-search" type="search" placeholder="Search colors, codes, names..." autocomplete="off" />
-            <kbd>Ctrl K</kbd>
+            <kbd>⌘K</kbd>
           </label>
-
+          <button class="icon-button" type="button" aria-label="Toggle color theme">☾</button>
+          <button class="signin-button" type="button">Sign In</button>
         </div>
       </div>
     </header>
@@ -195,14 +196,38 @@
         </div>
       </section>
 
-      <section class="feature-strip" aria-label="Color tools">
-        <a class="feature-card" href="#tools"><span class="feature-icon" style="--feature-color:#2d7ae9;--feature-bg:#eaf3ff"><svg viewBox="0 0 24 24" fill="none"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m4.5 7.5 7.5 4 7.5-4M12 12v9" stroke="currentColor" stroke-width="1.8"/></svg></span><span><h3>Color Picker</h3><p>Pick any color &amp; get all codes instantly</p></span><span class="feature-arrow">›</span></a>
-        <a class="feature-card" href="#tools"><span class="feature-icon" style="--feature-color:#1caf4b;--feature-bg:#e9faef"><svg viewBox="0 0 24 24" fill="none"><path d="M4 8h15M15 4l4 4-4 4M20 16H5m4-4-4 4 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><h3>Converter</h3><p>Convert between HEX, RGB, HSL &amp; more</p></span><span class="feature-arrow">›</span></a>
-        <a class="feature-card" href="/color-mix" id="feature-color-mix"><span class="feature-icon" style="--feature-color:#8b5cf6;--feature-bg:#f5f3ff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/></svg></span><span><h3>Color Mix</h3><p>Create beautiful random color combinations</p></span><span class="feature-arrow">›</span></a>
-        <a class="feature-card" href="#palettes" id="feature-palettes"><span class="feature-icon" style="--feature-color:#9850de;--feature-bg:#f3eafe"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M4 10h16M4 15h16M10 4v16M15 4v16" stroke="currentColor" stroke-width="1.5"/></svg></span><span><h3>Color Palette</h3><p>Discover beautiful color palettes</p></span><span class="feature-arrow">›</span></a>
-        <a class="feature-card" href="#gradients"><span class="feature-icon" style="--feature-color:#f59b09;--feature-bg:#fff5df"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3c3.7 5.1 7 8.6 7 12a7 7 0 1 1-14 0c0-3.4 3.3-6.9 7-12Z" stroke="currentColor" stroke-width="1.8"/><path d="M9 17.5c.7.8 1.6 1.2 2.7 1.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><span><h3>Gradients</h3><p>Explore stunning CSS gradients</p></span><span class="feature-arrow">›</span></a>
-        <a class="feature-card" href="#colors"><span class="feature-icon" style="--feature-color:#e42275;--feature-bg:#fdeaf3"><svg viewBox="0 0 24 24" fill="none"><path d="M12 4a8 8 0 0 0-8 8c0 2 1.2 3 3 3h1.2c.9 0 1.5.7 1.5 1.5S10.4 19 12 19a8 8 0 0 0 0-15Z" stroke="currentColor" stroke-width="1.8"/><circle cx="8" cy="11" r="1" fill="currentColor"/><circle cx="12" cy="8" r="1" fill="currentColor"/><circle cx="16" cy="9" r="1" fill="currentColor"/></svg></span><span><h3>Color Chart</h3><p>Browse all HTML color codes</p></span><span class="feature-arrow">›</span></a>
-        <a class="feature-card" href="#saved"><span class="feature-icon" style="--feature-color:#1ea69b;--feature-bg:#e7f8f6"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4h12v16l-6-3-6 3V4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span><span><h3>Saved Colors</h3><p>Save and organize your favorite colors</p></span><span class="feature-arrow">›</span></a>
+      <section class="tools-section" id="tools-grid" aria-label="Color tools">
+        <div class="section-heading"><div><h2>Everything You Need in One Place</h2><p>Powerful tools to work with colors. Simple, fast and free.</p></div><a href="#tools" class="section-link">View All Tools <span>→</span></a></div>
+        <div class="feature-strip">
+          <a class="feature-card" href="#tools"><span class="feature-icon" style="--feature-color:#287be8;--feature-bg:#e7f1ff"><span class="tool-glyph">◈</span></span><span><h3>Color Picker</h3><p>Pick any color &amp; get all codes instantly</p></span><span class="feature-arrow">›</span></a>
+          <a class="feature-card" href="#palettes"><span class="feature-icon" style="--feature-color:#8b5cf6;--feature-bg:#f0eaff"><span class="tool-glyph">▦</span></span><span><h3>Color Palette</h3><p>Discover beautiful color palettes</p></span><span class="feature-arrow">›</span></a>
+          <a class="feature-card" href="/color-mix" id="feature-color-mix"><span class="feature-icon" style="--feature-color:#ef3b8f;--feature-bg:#ffe8f2"><span class="tool-glyph">✣</span></span><span><h3>Color Mix</h3><p>Create random color combinations</p></span><span class="feature-arrow">›</span></a>
+          <a class="feature-card" href="#gradients"><span class="feature-icon" style="--feature-color:#f59b09;--feature-bg:#fff2d8"><span class="tool-glyph">◉</span></span><span><h3>Gradients</h3><p>Explore stunning CSS gradients</p></span><span class="feature-arrow">›</span></a>
+          <a class="feature-card" href="#colors"><span class="feature-icon" style="--feature-color:#1caf4b;--feature-bg:#e2faeb"><span class="tool-glyph">↔</span></span><span><h3>Color Converter</h3><p>Convert between HEX, RGB, HSL &amp; more</p></span><span class="feature-arrow">›</span></a>
+          <a class="feature-card" href="#colors"><span class="feature-icon" style="--feature-color:#e42275;--feature-bg:#ffe8f1"><span class="tool-glyph">▦</span></span><span><h3>Color Chart</h3><p>Browse all HTML color codes</p></span><span class="feature-arrow">›</span></a>
+          <a class="feature-card" href="#saved"><span class="feature-icon" style="--feature-color:#1ea69b;--feature-bg:#e2f8f5"><span class="tool-glyph">♡</span></span><span><h3>Saved Colors</h3><p>Save &amp; organize your favorite colors</p></span><span class="feature-arrow">›</span></a>
+          <a class="feature-card" href="#colors"><span class="feature-icon" style="--feature-color:#704be8;--feature-bg:#eeeaff"><span class="tool-glyph">◐</span></span><span><h3>Contrast Checker</h3><p>Check color contrast &amp; accessibility</p></span><span class="feature-arrow">›</span></a>
+        </div>
+      </section>
+
+      <section class="showcase-section" id="palettes">
+        <div class="section-heading"><div><h2>Trending Color Palettes</h2><p>Beautiful hand-picked palettes for your next project.</p></div><button class="section-link" type="button" id="feature-palettes">View All <span>→</span></button></div>
+        <div class="palette-row">
+          <article class="mini-card"><div class="palette-dots"><i style="background:#ffad59"></i><i style="background:#ff705d"></i><i style="background:#ec2d72"></i><i style="background:#7937de"></i><i style="background:#3e27c9"></i></div><strong>Sunset Glow</strong><small>5 colors <span>♡</span></small></article>
+          <article class="mini-card"><div class="palette-dots"><i style="background:#74b7f1"></i><i style="background:#2a98d4"></i><i style="background:#007ac2"></i><i style="background:#12c2c2"></i><i style="background:#28cbd0"></i></div><strong>Ocean Breeze</strong><small>5 colors <span>♡</span></small></article>
+          <article class="mini-card"><div class="palette-dots"><i style="background:#83ca92"></i><i style="background:#42a56b"></i><i style="background:#138d69"></i><i style="background:#087a67"></i><i style="background:#086653"></i></div><strong>Forest Calm</strong><small>5 colors <span>♡</span></small></article>
+          <article class="mini-card"><div class="palette-dots"><i style="background:#ae53ef"></i><i style="background:#8033df"></i><i style="background:#6426cf"></i><i style="background:#5120b7"></i><i style="background:#41169d"></i></div><strong>Royal Purple</strong><small>5 colors <span>♡</span></small></article>
+        </div>
+      </section>
+
+      <section class="showcase-section gradients-section" id="gradients">
+        <div class="section-heading"><div><h2>Popular Gradients</h2><p>Stunning gradients ready to use in your designs.</p></div><button class="section-link" type="button">View All <span>→</span></button></div>
+        <div class="gradient-row">
+          <article class="gradient-card"><div style="background:linear-gradient(110deg,#ff5264,#ffbf75)"></div><strong>Sunset</strong><small>#FF7F5E → #FEB47B <span>▣</span></small></article>
+          <article class="gradient-card"><div style="background:linear-gradient(110deg,#2193b0,#6dd5ed)"></div><strong>Ocean</strong><small>#2193B0 → #6DD5ED <span>▣</span></small></article>
+          <article class="gradient-card"><div style="background:linear-gradient(110deg,#667eea,#764ba2)"></div><strong>Royal</strong><small>#667EEA → #764BA2 <span>▣</span></small></article>
+          <article class="gradient-card"><div style="background:linear-gradient(110deg,#11998e,#38ef7d)"></div><strong>Forest</strong><small>#11998E → #38EF7D <span>▣</span></small></article>
+        </div>
       </section>
 
       <!-- Google AdSense Responsive Display Ad Slot -->
