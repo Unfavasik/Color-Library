@@ -16,6 +16,7 @@ fs.mkdirSync(DIST_DIR, { recursive: true });
 // 2. Core application assets to copy from root
 const coreFiles = [
   'index.html',
+  '404.html',
   'htmcolor.html',
   'privacy-policy.html',
   'terms-of-service.html',
