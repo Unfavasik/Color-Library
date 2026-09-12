@@ -1,11 +1,50 @@
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 
 const ROOT_DIR = process.cwd();
 const DIST_DIR = path.join(ROOT_DIR, 'dist');
 const PUBLIC_DIR = path.join(ROOT_DIR, 'public');
 
+function hashFile(filePath) {
+  if (!fs.existsSync(filePath)) return '';
+  const content = fs.readFileSync(filePath);
+  return crypto.createHash('md5').update(content).digest('hex').slice(0, 8);
+}
+
+const CSS_HASH = hashFile(path.join(ROOT_DIR, 'ch.css'));
+const JS_HASH = hashFile(path.join(ROOT_DIR, 'ch.js'));
+
+function applyCacheBusting(htmlContent) {
+  let updated = htmlContent;
+  if (CSS_HASH) {
+    updated = updated.replace(/href\s*=\s*(["'])(\/?ch\.css)(?:\?[^"']*)?\1/g, `href=$1$2?v=${CSS_HASH}$1`);
+  }
+  if (JS_HASH) {
+    updated = updated.replace(/src\s*=\s*(["'])(\/?ch\.js)(?:\?[^"']*)?\1/g, `src=$1$2?v=${JS_HASH}$1`);
+  }
+  return updated;
+}
+
+function cacheBustHtmlFilesIn(dir) {
+  if (!fs.existsSync(dir)) return;
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      cacheBustHtmlFilesIn(fullPath);
+    } else if (entry.isFile() && entry.name.endsWith('.html')) {
+      const original = fs.readFileSync(fullPath, 'utf8');
+      const updated = applyCacheBusting(original);
+      if (updated !== original) {
+        fs.writeFileSync(fullPath, updated, 'utf8');
+      }
+    }
+  }
+}
+
 console.log('📦 Building Color Library for production (Vercel & static hosting)...');
+console.log(`🏷️  Cache-busting hashes: ch.css -> ${CSS_HASH}, ch.js -> ${JS_HASH}`);
 
 // 1. Clean and re-create dist/ directory
 if (fs.existsSync(DIST_DIR)) {
@@ -77,6 +116,9 @@ if (fs.existsSync(PUBLIC_DIR)) {
     }
   }
 }
+
+// 3b. Cache-bust ch.css and ch.js across all HTML files in dist/
+cacheBustHtmlFilesIn(DIST_DIR);
 
 // 4. Verify critical files in dist/
 const requiredFiles = [
