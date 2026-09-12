@@ -4035,7 +4035,7 @@ body { background:#f7f9ff; }
 .hero { background:radial-gradient(circle at 86% 22%,rgba(255,178,220,.54),transparent 28%),radial-gradient(circle at 62% 86%,rgba(155,211,255,.45),transparent 32%),linear-gradient(125deg,#f6fbff 0%,#f0f5ff 54%,#fff1fa 100%); }
 .hero::before { width:540px; height:540px; right:-145px; top:-120px; background:rgba(255,170,206,.2); filter:blur(24px); }
 .hero::after { width:430px; height:430px; right:265px; bottom:-205px; background:rgba(165,194,255,.24); filter:blur(30px); }
-.hero-inner { max-width:1480px; min-height:0; padding:58px 54px 28px; display:grid; grid-template-columns:minmax(0,1fr) minmax(440px,.88fr); gap:38px 58px; align-items:center; }
+.hero-inner { max-width:1480px; min-height:0; padding:58px 54px 28px; display:grid; grid-template-columns:1fr; gap:32px; align-items:center; }
 .hero-copy { padding-left:0; }
 .eyebrow { display:inline-flex; align-items:center; gap:7px; margin:0 0 14px; padding:6px 12px; border:1px solid #e4e7f0; border-radius:999px; background:rgba(255,255,255,.72); color:#556179; font-size:12px; font-weight:700; letter-spacing:0; }
 .eyebrow-dot { color:#f1a52a; }
