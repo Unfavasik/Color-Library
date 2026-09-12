@@ -673,6 +673,25 @@ on('#favorite-toggle', 'click', () => {
   toggleFavorite(state.selected, colorName);
 });
 on('#theme-toggle', 'click', () => showToast('Light mode is active in this preview'));
+on('#mobile-menu-toggle', 'click', () => {
+  const toggle = $('#mobile-menu-toggle');
+  const panel = $('#mobile-nav-panel');
+  if (!toggle || !panel) return;
+  const isOpen = panel.classList.toggle('is-open');
+  toggle.classList.toggle('is-open', isOpen);
+  toggle.setAttribute('aria-expanded', String(isOpen));
+  panel.setAttribute('aria-hidden', String(!isOpen));
+});
+$$('#mobile-nav-panel a').forEach((link) => link.addEventListener('click', () => {
+  const toggle = $('#mobile-menu-toggle');
+  const panel = $('#mobile-nav-panel');
+  if (toggle && panel) {
+    toggle.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    panel.classList.remove('is-open');
+    panel.setAttribute('aria-hidden', 'true');
+  }
+}));
 document.addEventListener('keydown', (event) => { if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); const gs = $('#global-search'); if (gs) gs.focus(); } });
 
 // Recently Viewed event listeners

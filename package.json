@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
-    "start": "node server.ts",
+    "start": "tsx server.ts",
     "build": "node build.js",
-    "preview": "node server.ts",
+    "preview": "tsx server.ts",
     "lint": "node --check build.js && node --check ch.js",
     "test": "npm run lint && node build.js"
   },

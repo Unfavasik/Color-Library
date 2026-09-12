@@ -120,9 +120,9 @@
             <span>Colors</span>
             <svg class="nav-chevron" viewBox="0 0 16 16" fill="none"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a class="nav-link" href="#recently-viewed" id="nav-recent" data-nav="recent">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <span>Recent</span>
+          <a class="nav-link" href="#palettes" data-nav="palettes">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 10h16M4 15h16M10 4v16M15 4v16"/></svg>
+            <span>Palettes</span>
           </a>
           <a class="nav-link" href="#tools" data-nav="tools">
             <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
@@ -141,18 +141,23 @@
             <input id="global-search" type="search" placeholder="Search colors, codes, names..." autocomplete="off" />
             <kbd>Ctrl K</kbd>
           </label>
-
+          <button class="header-theme" type="button" aria-label="Toggle theme">☾</button>
+          <button class="signin-button" type="button">Sign In</button>
+          <button class="mobile-menu-toggle" id="mobile-menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false"><span></span><span></span><span></span></button>
         </div>
       </div>
     </header>
+    <div class="mobile-nav-panel" id="mobile-nav-panel" aria-hidden="true">
+      <a href="#top">Home</a><a href="#colors">Colors</a><a href="#palettes">Palettes</a><a href="#tools">Tools</a><a href="#more">More</a>
+    </div>
 
     <div id="home-view">
       <main id="top">
       <section class="hero">
         <div class="hero-inner">
           <div class="hero-copy">
-            <p class="eyebrow">Explore. Copy. Use.</p>
-            <h1>All the <span class="gradient-text">Colors</span> &amp; Codes<br />You Need</h1>
+            <p class="eyebrow"><span class="eyebrow-dot">✦</span> A Modern Color Toolkit</p>
+            <h1>Explore. Copy. Use.<br />All the <span class="gradient-text">Colors</span> &amp; Codes<br />You Need</h1>
             <p class="lead">Find HTML color codes, HEX, RGB, HSL values, color names and beautiful palettes for your next project.</p>
             <div class="hero-search-row">
               <label class="hero-search">
@@ -163,9 +168,12 @@
                 <svg viewBox="0 0 24 24" fill="none"><path d="m14.5 5.5 4 4M5 19l3.3-.8L18.9 7.6a2.8 2.8 0 0 0-4-4L4.3 15.2 5 19Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 12 8.4 8.4" stroke="currentColor" stroke-width="1.8"/></svg>
               </button>
             </div>
-            <div class="popular"><span class="popular-label">Popular:</span><button class="popular-pill" data-popular="Blue">Blue</button><button class="popular-pill green" data-popular="Green">Green</button><button class="popular-pill red" data-popular="Red">Red</button><button class="popular-pill purple" data-popular="Purple">Purple</button><button class="view-all" id="view-all">View all →</button></div>
+            <div class="hero-cta-row"><a class="hero-primary-cta" href="#colors">Explore Colors <span>→</span></a><a class="hero-secondary-cta" href="#palettes">View Palettes</a></div>
+            <div class="hero-stats"><span><b>⌂</b><strong>10K+</strong><small>Color Shades</small></span><span><b>▦</b><strong>50+</strong><small>Tools &amp; Utilities</small></span><span><b>♡</b><strong>100%</strong><small>Free to Use</small></span></div>
           </div>
-
+          <div class="hero-art" aria-hidden="true"><div class="art-note">Beautiful<br />Colors for<br />a Brighter Idea <span>↘</span></div><div class="art-stack"><div class="art-layer layer-back"></div><div class="art-layer layer-mid"></div><div class="art-layer layer-front"></div></div><div class="art-chip chip-top"><i></i><b>#FF6B6B</b><small>Coral Red</small></div><div class="art-chip chip-bottom"><i></i><b>#4F46E5</b><small>Indigo</small></div></div>
+          <div class="hero-wide-search"><svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input type="search" placeholder="Search color by name or hex code..." aria-label="Search color by name or hex code" /><button type="button" onclick="document.getElementById('colors').scrollIntoView({behavior:'smooth'})">→</button></div>
+          <div class="wide-popular"><span>Popular:</span><button class="popular-pill" data-popular="Blue">Blue</button><button class="popular-pill green" data-popular="Green">Green</button><button class="popular-pill red" data-popular="Red">Red</button><button class="popular-pill purple" data-popular="Purple">Purple</button><button class="popular-pill orange" data-popular="Orange">Orange</button><button class="popular-pill pink" data-popular="Pink">Pink</button><button class="popular-pill gray" data-popular="Gray">Gray</button><button class="view-all" id="view-all">View all →</button></div>
           <div class="picker-card" id="tools">
             <div class="picker-left">
               <div class="color-stage" id="color-stage" aria-label="Color picker preview"></div>
