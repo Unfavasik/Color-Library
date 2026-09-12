@@ -185,7 +185,17 @@ function toggleFavorite(hex, name = '') {
 function filteredColors() {
   const query = state.query.trim().toLowerCase();
   let list = colors.filter((color) => {
-    const matchesQuery = !query || color.name.toLowerCase().includes(query) || color.hex.toLowerCase().includes(query);
+    const rgb = hexToRgb(color.hex) || [];
+    const hsl = getHsl(color.hex);
+    const searchable = [
+      color.name,
+      color.hex,
+      `rgb(${rgb.join(', ')})`,
+      rgb.join(', '),
+      `hsl(${hsl[0]}, ${hsl[1]}%, ${hsl[2]}%)`,
+      `${hsl[0]}, ${hsl[1]}%, ${hsl[2]}%`
+    ].join(' ').toLowerCase();
+    const matchesQuery = !query || searchable.includes(query);
     if (!matchesQuery) return false;
     if (state.category === 'All') return true;
     if (state.category === 'Saved') return state.favorites.has(color.hex.toUpperCase());
@@ -537,6 +547,8 @@ function setQuery(value) {
   if (heroSearch) heroSearch.value = value;
   const globalSearch = $('#global-search');
   if (globalSearch) globalSearch.value = value;
+  const wideSearch = document.querySelector('.hero-wide-search input');
+  if (wideSearch) wideSearch.value = value;
   renderGrid();
 }
 function updatePicker(hex) {
@@ -619,6 +631,13 @@ on('#color-grid', 'click', (event) => {
 on('#sort-select', 'change', (event) => { state.sort = event.target.value; renderGrid(); });
 on('#hero-search', 'input', (event) => setQuery(event.target.value));
 on('#global-search', 'input', (event) => setQuery(event.target.value));
+on('.hero-wide-search input', 'input', (event) => setQuery(event.target.value));
+on('.hero-wide-search input', 'keydown', (event) => {
+  if (event.key === 'Enter') {
+    const target = $('#colors');
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  }
+});
 $$('[data-popular]').forEach((button) => button.addEventListener('click', () => { setQuery(button.dataset.popular); const target = $('#colors'); if (target) target.scrollIntoView({ behavior: 'smooth' }); }));
 const savedFeatureBtn = $('a[href="#saved"]');
 if (savedFeatureBtn) {
