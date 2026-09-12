@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard · ColorNest</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --sidebar: #0d1526; --sidebar-hover: #16213a; --sidebar-active: #1e2b4d;
+      --ink: #0f172a; --muted: #64748b; --border: #e8ecf3;
+      --bg: #f6f7fb; --card: #ffffff;
+      --purple: #7c3aed; --pink: #ec4899; --green: #22c55e;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg); color: var(--ink); min-height: 100vh;
+    }
+    .layout { display: flex; min-height: 100vh; }
+
+    /* ---------- Sidebar ---------- */
+    .sidebar {
+      width: 244px; flex: none; background: var(--sidebar); color: #cbd5e1;
+      display: flex; flex-direction: column; padding: 18px 14px;
+      position: sticky; top: 0; height: 100vh; overflow-y: auto;
+    }
+    .side-brand { display: flex; align-items: center; gap: 11px; padding: 4px 8px 18px; }
+    .side-logo {
+      width: 42px; height: 42px; border-radius: 12px; flex: none;
+      background: conic-gradient(from 200deg, #ef4444, #f97316, #facc15, #22c55e, #06b6d4, #3b82f6, #8b5cf6, #ec4899, #ef4444);
+    }
+    .side-brand b { display: block; font-size: 15.5px; font-weight: 800; color: #fff; letter-spacing: -.01em; }
+    .side-brand span { font-size: 11.5px; color: #7c8db0; font-weight: 600; }
+    .side-nav { display: grid; gap: 3px; }
+    .side-item {
+      display: flex; align-items: center; gap: 11px; padding: 10px 12px;
+      border-radius: 10px; font-size: 13.5px; font-weight: 600; color: #aab6d3;
+      text-decoration: none; cursor: pointer; border: 0; background: transparent;
+      font-family: inherit; width: 100%; text-align: left;
+    }
+    .side-item svg { width: 17px; height: 17px; flex: none; }
+    .side-item:hover { background: var(--sidebar-hover); color: #fff; }
+    .side-item.active { background: linear-gradient(135deg, var(--purple), #6d28d9); color: #fff; box-shadow: 0 6px 16px rgba(124, 58, 237, .35); }
+    .side-item .chev { margin-left: auto; width: 13px; height: 13px; opacity: .6; }
+    .side-promo {
+      margin-top: auto; border-radius: 16px; padding: 16px 14px; color: #fff;
+      background: linear-gradient(135deg, #7c3aed, #ec4899);
+      box-shadow: 0 12px 28px rgba(124, 58, 237, .4);
+    }
+    .side-promo b { display: block; font-size: 14px; font-weight: 800; line-height: 1.35; }
+    .side-promo span { display: block; font-size: 11px; opacity: .85; margin-top: 6px; font-weight: 600; }
+
+    /* ---------- Main ---------- */
+    .main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+    .topbar {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--card); border-bottom: 1px solid var(--border);
+      padding: 12px 24px; position: sticky; top: 0; z-index: 20;
+    }
+    .search {
+      flex: 1; max-width: 560px; display: flex; align-items: center; gap: 10px;
+      background: #f1f4f9; border-radius: 12px; padding: 10px 14px;
+    }
+    .search svg { width: 16px; height: 16px; color: var(--muted); flex: none; }
+    .search input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font-size: 13.5px; font-weight: 600; color: var(--ink); font-family: inherit; }
+    .search kbd { font-size: 11px; font-weight: 700; color: var(--muted); background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 2px 7px; }
+    .top-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+    .icon-pill {
+      position: relative; width: 38px; height: 38px; border-radius: 11px; border: 1px solid var(--border);
+      background: #fff; display: grid; place-items: center; cursor: pointer; color: var(--ink);
+    }
+    .icon-pill svg { width: 17px; height: 17px; }
+    .badge {
+      position: absolute; top: -5px; right: -5px; min-width: 17px; height: 17px;
+      border-radius: 9px; background: #ef4444; color: #fff; font-size: 10px; font-weight: 800;
+      display: grid; place-items: center; padding: 0 4px; border: 2px solid #fff;
+    }
+    .profile { display: flex; align-items: center; gap: 10px; padding: 5px 10px 5px 5px; border: 1px solid var(--border); border-radius: 12px; background: #fff; cursor: pointer; }
+    .avatar { width: 32px; height: 32px; border-radius: 10px; object-fit: cover; }
+    .profile b { display: block; font-size: 12.5px; font-weight: 800; }
+    .profile .role { font-size: 10.5px; font-weight: 700; color: var(--purple); background: #f3e8ff; border-radius: 6px; padding: 1px 7px; display: inline-block; margin-top: 2px; }
+
+    .content { padding: 22px 24px 30px; display: grid; gap: 18px; }
+
+    /* Welcome row */
+    .welcome { display: flex; align-items: flex-start; gap: 18px; flex-wrap: wrap; }
+    .welcome h1 { font-size: 26px; font-weight: 800; letter-spacing: -.02em; }
+    .welcome p { font-size: 13.5px; color: var(--muted); font-weight: 600; margin-top: 4px; }
+    .quote { margin-left: auto; text-align: right; font-size: 13px; font-style: italic; color: #7c3aed; font-weight: 700; line-height: 1.5; }
+    .date-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 12px 18px; display: flex; align-items: center; gap: 12px;
+    }
+    .date-card svg { width: 20px; height: 20px; color: var(--purple); }
+    .date-card b { display: block; font-size: 13px; font-weight: 800; }
+    .date-card span { font-size: 11.5px; color: var(--muted); font-weight: 600; }
+
+    /* Stat cards */
+    .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+    .stat {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 16px; display: flex; gap: 12px; align-items: flex-start;
+    }
+    .stat-ico { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; flex: none; }
+    .stat-ico svg { width: 20px; height: 20px; }
+    .stat b { display: block; font-size: 19px; font-weight: 800; letter-spacing: -.01em; }
+    .stat .lbl { font-size: 12px; color: var(--muted); font-weight: 700; }
+    .stat .up { font-size: 11.5px; color: var(--green); font-weight: 700; margin-top: 5px; display: block; }
+
+    /* Grid rows */
+    .row-2 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; }
+    .row-3 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; }
+    .panel { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; }
+    .panel-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .panel-head h3 { font-size: 14.5px; font-weight: 800; }
+    .panel-head .p-ico { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; background: #f3e8ff; color: var(--purple); }
+    .panel-head .p-ico svg { width: 15px; height: 15px; }
+    .panel-head select {
+      margin-left: auto; border: 1px solid var(--border); border-radius: 9px;
+      padding: 6px 10px; font-size: 12px; font-weight: 700; color: var(--ink);
+      background: #fff; font-family: inherit; cursor: pointer;
+    }
+    .view-all { margin-left: auto; font-size: 12px; font-weight: 800; color: var(--purple); text-decoration: none; }
+
+    /* Activity */
+    .activity { display: grid; gap: 4px; }
+    .act { display: flex; gap: 12px; align-items: flex-start; padding: 9px 6px; border-radius: 10px; }
+    .act:hover { background: #f8fafc; }
+    .act-ico { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; flex: none; }
+    .act-ico svg { width: 15px; height: 15px; }
+    .act b { display: block; font-size: 12.5px; font-weight: 800; }
+    .act span { font-size: 11.5px; color: var(--muted); font-weight: 600; }
+
+    /* Table */
+    .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin-bottom: 4px; }
+    .tab {
+      border: 0; background: transparent; font-family: inherit; cursor: pointer;
+      font-size: 13px; font-weight: 700; color: var(--muted); padding: 10px 14px;
+      border-bottom: 2.5px solid transparent; margin-bottom: -1px;
+    }
+    .tab.active { color: var(--purple); border-bottom-color: var(--purple); }
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 800; padding: 10px 10px; border-bottom: 1px solid var(--border); }
+    td { padding: 11px 10px; font-size: 13px; font-weight: 600; border-bottom: 1px solid #f1f4f9; }
+    tr:last-child td { border-bottom: 0; }
+    .sw { width: 30px; height: 30px; border-radius: 9px; display: inline-block; border: 1px solid var(--border); vertical-align: middle; }
+    .pill { font-size: 11px; font-weight: 800; border-radius: 999px; padding: 4px 11px; display: inline-flex; align-items: center; gap: 5px; }
+    .pill svg { width: 11px; height: 11px; }
+    .pill.pub { background: #dcfce7; color: #16a34a; }
+    .pill.feat { background: #dbeafe; color: #2563eb; }
+    .row-actions { display: flex; gap: 8px; }
+    .mini-btn { width: 30px; height: 30px; border-radius: 9px; border: 1px solid var(--border); background: #fff; display: grid; place-items: center; cursor: pointer; color: var(--muted); }
+    .mini-btn svg { width: 13px; height: 13px; }
+    .mini-btn.del { color: #ef4444; background: #fef2f2; border-color: #fecaca; }
+
+    /* System status */
+    .sys { display: grid; gap: 8px; }
+    .sys-row { display: flex; align-items: center; gap: 11px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 12px; }
+    .sys-ico { width: 32px; height: 32px; border-radius: 9px; background: #f1f5f9; display: grid; place-items: center; color: var(--ink); flex: none; }
+    .sys-ico svg { width: 15px; height: 15px; }
+    .sys-row b { font-size: 12.5px; font-weight: 800; }
+    .sys-ok { margin-left: auto; font-size: 11.5px; font-weight: 800; color: var(--green); display: flex; align-items: center; gap: 6px; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+
+    /* Quick actions */
+    .qa-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .qa {
+      border: 1px solid var(--border); border-radius: 14px; background: #fff;
+      display: grid; place-items: center; gap: 8px; padding: 16px 10px; cursor: pointer;
+      font-family: inherit; font-size: 12px; font-weight: 800; color: var(--ink);
+    }
+    .qa-ico { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; }
+    .qa-ico svg { width: 18px; height: 18px; }
+    .banner {
+      border-radius: 18px; padding: 22px 24px; color: #fff;
+      background: linear-gradient(120deg, #7c3aed, #a855f7 45%, #ec4899);
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      box-shadow: 0 16px 36px rgba(168, 85, 247, .35);
+    }
+    .banner svg { width: 30px; height: 30px; flex: none; }
+    .banner b { display: block; font-size: 17px; font-weight: 800; }
+    .banner span { font-size: 12.5px; opacity: .9; font-weight: 600; }
+    .banner a {
+      margin-left: auto; background: #fff; color: var(--purple); text-decoration: none;
+      font-size: 12.5px; font-weight: 800; border-radius: 999px; padding: 10px 18px;
+      display: inline-flex; align-items: center; gap: 7px;
+    }
+
+    @media (max-width: 1100px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .row-2, .row-3 { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="side-brand">
+        <span class="side-logo" aria-hidden="true"></span>
+        <span><b>ColorNest</b><span>Admin Panel</span></span>
+      </div>
+      <nav class="side-nav" id="side-nav"></nav>
+      <div class="side-promo">
+        <b>Keep Creating<br />A More Colorful World</b>
+        <span>— Admin Panel v1.0</span>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="text" placeholder="Search anything... (colors, users, feedback, etc.)" aria-label="Search" />
+          <kbd>Ctrl K</kbd>
+        </div>
+        <div class="top-right">
+          <button class="icon-pill" type="button" aria-label="Notifications">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+            <span class="badge">3</span>
+          </button>
+          <button class="icon-pill" type="button" aria-label="Toggle dark mode">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          </button>
+          <button class="profile" type="button" id="profile-btn">
+            <img class="avatar" src="/public/team/asik.png" alt="Asik Ikbal" />
+            <span><b>Asik Ikbal</b><span class="role">Super Admin</span></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="welcome">
+          <div>
+            <h1>Welcome Back, Asik! <span aria-hidden="true">👋</span></h1>
+            <p>Here's what's happening with your ColorNest today.</p>
+          </div>
+          <p class="quote">"Small tools. Big creativity.<br />A more colorful world."</p>
+          <div class="date-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            <span><b id="today-date">Friday, 12 Sep 2026</b><span>Make today colorful!</span></span>
+          </div>
+        </div>
+
+        <section class="stats" aria-label="Statistics">
+          <div class="stat">
+            <span class="stat-ico" style="background:#f3e8ff;color:#7c3aed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18"/></svg></span>
+            <span><b>2,765</b><span class="lbl">Total Colors</span><span class="up">↑ +12 this week</span></span>
+          </div>
+          <div class="stat">
+            <span class="stat-ico" style="background:#e0f2fe;color:#0284c7"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg></span>
+            <span><b>2,000+</b><span class="lbl">Gradients</span><span class="up">↑ +28 this week</span></span>
+          </div>
+          <div class="stat">
+            <span class="stat-ico" style="background:#ffedd5;color:#ea580c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
+            <span><b>320</b><span class="lbl">Palettes</span><span class="up">↑ +6 this week</span></span>
+          </div>
+          <div class="stat">
+            <span class="stat-ico" style="background:#ede9fe;color:#7c3aed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3"/><path d="M2 21c0-3.5 3-5.5 7-5.5s7 2 7 5.5"/><circle cx="17" cy="8" r="2.5"/><path d="M17.5 15.5c2.8.4 4.5 2 4.5 4.5"/></svg></span>
+            <span><b>1,482</b><span class="lbl">Registered Users</span><span class="up">↑ +52 this week</span></span>
+          </div>
+          <div class="stat">
+            <span class="stat-ico" style="background:#dcfce7;color:#16a34a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 20V14M12 20V8M19 20V4"/></svg></span>
+            <span><b>12.4K</b><span class="lbl">Total Views</span><span class="up">↑ +18% this week</span></span>
+          </div>
+        </section>
+
+        <div class="row-2">
+          <section class="panel" aria-label="Visitors Overview">
+            <div class="panel-head">
+              <span class="p-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 20V14M12 20V8M19 20V4"/></svg></span>
+              <h3>Visitors Overview</h3>
+              <select aria-label="Range"><option>Last 7 Days</option><option>Last 30 Days</option><option>This Year</option></select>
+            </div>
+            <svg viewBox="0 0 560 230" width="100%" role="img" aria-label="Visitors line chart for the last 7 days">
+              <defs>
+                <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#7c3aed" stop-opacity=".22"/>
+                  <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <g stroke="#eef1f6" stroke-width="1">
+                <line x1="40" y1="30" x2="540" y2="30"/><line x1="40" y1="70" x2="540" y2="70"/>
+                <line x1="40" y1="110" x2="540" y2="110"/><line x1="40" y1="150" x2="540" y2="150"/>
+                <line x1="40" y1="190" x2="540" y2="190"/>
+              </g>
+              <g font-size="10" fill="#94a3b8" font-weight="600" text-anchor="end">
+                <text x="34" y="34">2.0K</text><text x="34" y="74">1.5K</text><text x="34" y="114">1.0K</text><text x="34" y="154">500</text><text x="34" y="194">0</text>
+              </g>
+              <path d="M60 170 L135 145 L210 125 L285 95 L360 105 L435 90 L510 72 L510 190 L60 190 Z" fill="url(#area)"/>
+              <polyline points="60,170 135,145 210,125 285,95 360,105 435,90 510,72" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <g fill="#fff" stroke="#7c3aed" stroke-width="2.5">
+                <circle cx="60" cy="170" r="4"/><circle cx="135" cy="145" r="4"/><circle cx="210" cy="125" r="4"/>
+                <circle cx="285" cy="95" r="4"/><circle cx="360" cy="105" r="4"/><circle cx="435" cy="90" r="4"/>
+                <circle cx="510" cy="72" r="5.5"/>
+              </g>
+              <g font-size="10" fill="#94a3b8" font-weight="600" text-anchor="middle">
+                <text x="60" y="212">Sep 6</text><text x="135" y="212">Sep 7</text><text x="210" y="212">Sep 8</text>
+                <text x="285" y="212">Sep 9</text><text x="360" y="212">Sep 10</text><text x="435" y="212">Sep 11</text><text x="510" y="212">Sep 12</text>
+              </g>
+              <g>
+                <rect x="440" y="28" width="96" height="34" rx="8" fill="#0f172a"/>
+                <text x="488" y="43" font-size="11" fill="#fff" font-weight="800" text-anchor="middle">1,482</text>
+                <text x="488" y="55" font-size="9" fill="#a5b4fc" font-weight="600" text-anchor="middle">Visitors</text>
+              </g>
+            </svg>
+          </section>
+
+          <section class="panel" aria-label="Top Categories">
+            <div class="panel-head">
+              <span class="p-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 20V14M12 20V8M19 20V4"/></svg></span>
+              <h3>Top Categories</h3>
+            </div>
+            <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+              <svg viewBox="0 0 160 160" width="150" height="150" role="img" aria-label="Category donut chart">
+                <g transform="rotate(-90 80 80)" fill="none" stroke-width="22" stroke-linecap="butt">
+                  <circle cx="80" cy="80" r="60" stroke="#8b5cf6" stroke-dasharray="105.5 272.3" stroke-dashoffset="0"/>
+                  <circle cx="80" cy="80" r="60" stroke="#ec4899" stroke-dasharray="82.9 294.9" stroke-dashoffset="-105.5"/>
+                  <circle cx="80" cy="80" r="60" stroke="#14b8a6" stroke-dasharray="56.5 321.3" stroke-dashoffset="-188.4"/>
+                  <circle cx="80" cy="80" r="60" stroke="#22c55e" stroke-dasharray="45.2 332.6" stroke-dashoffset="-244.9"/>
+                  <circle cx="80" cy="80" r="60" stroke="#f97316" stroke-dasharray="37.7 340.1" stroke-dashoffset="-290.1"/>
+                  <circle cx="80" cy="80" r="60" stroke="#3b82f6" stroke-dasharray="30.2 347.6" stroke-dashoffset="-327.8"/>
+                  <circle cx="80" cy="80" r="60" stroke="#94a3b8" stroke-dasharray="18.8 359" stroke-dashoffset="-358"/>
+                </g>
+                <text x="80" y="76" text-anchor="middle" font-size="19" font-weight="800" fill="#0f172a">2,765</text>
+                <text x="80" y="94" text-anchor="middle" font-size="11" font-weight="700" fill="#64748b">Colors</text>
+              </svg>
+              <div class="activity" style="flex:1;min-width:150px">
+                <div class="act"><span class="dot" style="background:#8b5cf6;margin-top:5px"></span><span style="flex:1"><b style="font-weight:700">UI Colors</b></span><b style="font-size:12px">28%</b></div>
+                <div class="act"><span class="dot" style="background:#ec4899;margin-top:5px"></span><span style="flex:1"><b style="font-weight:700">Gradients</b></span><b style="font-size:12px">22%</b></div>
+                <div class="act"><span class="dot" style="background:#14b8a6;margin-top:5px"></span><span style="flex:1"><b style="font-weight:700">Pastel</b></span><b style="font-size:12px">15%</b></div>
+                <div class="act"><span class="dot" style="background:#22c55e;margin-top:5px"></span><span style="flex:1"><b style="font-weight:700">Neon</b></span><b style="font-size:12px">12%</b></div>
+                <div class="act"><span class="dot" style="background:#f97316;margin-top:5px"></span><span style="flex:1"><b style="font-weight:700">Material</b></span><b style="font-size:12px">10%</b></div>
+                <div class="act"><span class="dot" style="background:#3b82f6;margin-top:5px"></span><span style="flex:1"><b style="font-weight:700">Nature</b></span><b style="font-size:12px">8%</b></div>
+                <div class="act"><span class="dot" style="background:#94a3b8;margin-top:5px"></span><span style="flex:1"><b style="font-weight:700">Others</b></span><b style="font-size:12px">5%</b></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="row-3">
+          <section class="panel" aria-label="Recent content">
+            <div style="display:flex;align-items:center">
+              <div class="tabs" style="margin-bottom:0;border-bottom:0">
+                <button class="tab active" type="button">Recent Colors</button>
+                <button class="tab" type="button">Recent Gradients</button>
+                <button class="tab" type="button">Recent Palettes</button>
+              </div>
+              <a class="view-all" href="#">View All</a>
+            </div>
+            <div style="overflow-x:auto">
+              <table>
+                <thead><tr><th>#</th><th>Preview</th><th>Name</th><th>Hex</th><th>Category</th><th>Added On</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td><span class="sw" style="background:#FF6B6B"></span></td><td>Coral Red</td><td>#FF6B6B</td><td>Warm</td><td>12 Sep 2026</td><td><span class="pill pub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17l-6.1 3.6 1.4-6.8L2.2 9.1l6.9-.8z"/></svg>Published</span></td><td><span class="row-actions"><button class="mini-btn" type="button" aria-label="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg></button><button class="mini-btn del" type="button" aria-label="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></svg></button></span></td></tr>
+                  <tr><td>2</td><td><span class="sw" style="background:#3B82F6"></span></td><td>Ocean Blue</td><td>#3B82F6</td><td>Nature</td><td>12 Sep 2026</td><td><span class="pill pub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17l-6.1 3.6 1.4-6.8L2.2 9.1l6.9-.8z"/></svg>Published</span></td><td><span class="row-actions"><button class="mini-btn" type="button" aria-label="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg></button><button class="mini-btn del" type="button" aria-label="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></svg></button></span></td></tr>
+                  <tr><td>3</td><td><span class="sw" style="background:#10B981"></span></td><td>Mint Green</td><td>#10B981</td><td>Nature</td><td>11 Sep 2026</td><td><span class="pill pub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17l-6.1 3.6 1.4-6.8L2.2 9.1l6.9-.8z"/></svg>Published</span></td><td><span class="row-actions"><button class="mini-btn" type="button" aria-label="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg></button><button class="mini-btn del" type="button" aria-label="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></svg></button></span></td></tr>
+                  <tr><td>4</td><td><span class="sw" style="background:#8B5CF6"></span></td><td>Royal Purple</td><td>#8B5CF6</td><td>UI</td><td>11 Sep 2026</td><td><span class="pill pub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17l-6.1 3.6 1.4-6.8L2.2 9.1l6.9-.8z"/></svg>Published</span></td><td><span class="row-actions"><button class="mini-btn" type="button" aria-label="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg></button><button class="mini-btn del" type="button" aria-label="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></svg></button></span></td></tr>
+                  <tr><td>5</td><td><span class="sw" style="background:#F59E0B"></span></td><td>Sunset Orange</td><td>#F59E0B</td><td>Warm</td><td>10 Sep 2026</td><td><span class="pill feat"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17l-6.1 3.6 1.4-6.8L2.2 9.1l6.9-.8z"/></svg>Featured</span></td><td><span class="row-actions"><button class="mini-btn" type="button" aria-label="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg></button><button class="mini-btn del" type="button" aria-label="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></svg></button></span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <div style="display:grid;gap:16px;align-content:start">
+            <section class="panel" aria-label="Recent Activity">
+              <div class="panel-head">
+                <span class="p-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.01a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.01a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.01a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+                <h3>Recent Activity</h3>
+                <a class="view-all" href="#">View All</a>
+              </div>
+              <div class="activity">
+                <div class="act"><span class="act-ico" style="background:#fee2e2;color:#ef4444"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18"/></svg></span><span><b>New color added</b><span>#FF6B6B · 2 minutes ago</span></span></div>
+                <div class="act"><span class="act-ico" style="background:#dbeafe;color:#2563eb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/></svg></span><span><b>New user registered</b><span>user123@example.com · 15 minutes ago</span></span></div>
+                <div class="act"><span class="act-ico" style="background:#fce7f3;color:#ec4899"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.7-10-9.3C.5 8 2.5 4.5 6 4.5c2.1 0 3.6 1.1 6 3.6 2.4-2.5 3.9-3.6 6-3.6 3.5 0 5.5 3.5 4 7.2C19.5 16.3 12 21 12 21z"/></svg></span><span><b>New feedback received</b><span>"Great tool!" · 32 minutes ago</span></span></div>
+                <div class="act"><span class="act-ico" style="background:#e0e7ff;color:#4f46e5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 20V14M12 20V8M19 20V4"/></svg></span><span><b>Gradient updated</b><span>Sunset Vibes · 1 hour ago</span></span></div>
+                <div class="act"><span class="act-ico" style="background:#ffedd5;color:#ea580c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H7l-3 3z"/><path d="M8 9h8M8 12h5"/></svg></span><span><b>Contact message</b><span>New message from rahul@example.com · 2 hours ago</span></span></div>
+              </div>
+            </section>
+
+            <section class="panel" aria-label="System Status">
+              <div class="panel-head">
+                <span class="p-ico" style="background:#dcfce7;color:#16a34a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></span>
+                <h3>System Status</h3>
+                <span style="margin-left:auto;font-size:11px;font-weight:700;color:#16a34a;display:flex;align-items:center;gap:6px"><span class="dot"></span>All Systems Operational</span>
+              </div>
+              <div class="sys">
+                <div class="sys-row"><span class="sys-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8"/></svg></span><b>Website</b><span class="sys-ok"><span class="dot"></span>Operational</span></div>
+                <div class="sys-row"><span class="sys-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span><b>Database</b><span class="sys-ok"><span class="dot"></span>Operational</span></div>
+                <div class="sys-row"><span class="sys-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span><b>Storage</b><span class="sys-ok"><span class="dot"></span>Operational</span></div>
+                <div class="sys-row"><span class="sys-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></span><b>API</b><span class="sys-ok"><span class="dot"></span>Operational</span></div>
+                <div class="sys-row"><span class="sys-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18"/></svg></span><b>Admin Panel</b><span class="sys-ok"><span class="dot"></span>Operational</span></div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <div class="row-2" style="grid-template-columns:1fr 1fr 1.2fr">
+          <section class="panel" aria-label="Quick Actions">
+            <div class="panel-head">
+              <span class="p-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.01a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.01a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.01a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+              <h3>Quick Actions</h3>
+            </div>
+            <div class="qa-grid">
+              <button class="qa" type="button"><span class="qa-ico" style="background:#fff7ed;color:#ea580c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>Add Color</button>
+              <button class="qa" type="button"><span class="qa-ico" style="background:#e0f2fe;color:#0284c7"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5"/></svg></span>Add Gradient</button>
+              <button class="qa" type="button"><span class="qa-ico" style="background:#fce7f3;color:#ec4899"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>Create Palette</button>
+              <button class="qa" type="button"><span class="qa-ico" style="background:#ede9fe;color:#7c3aed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3"/><path d="M2 21c0-3.5 3-5.5 7-5.5s7 2 7 5.5"/><circle cx="17" cy="8" r="2.5"/><path d="M17.5 15.5c2.8.4 4.5 2 4.5 4.5"/></svg></span>Manage Users</button>
+            </div>
+          </section>
+
+          <section class="panel" aria-label="Tools and Utilities">
+            <div class="panel-head">
+              <span class="p-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></span>
+              <h3>Tools &amp; Utilities</h3>
+            </div>
+            <div class="qa-grid">
+              <button class="qa" type="button"><span class="qa-ico" style="background:#dbeafe;color:#2563eb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg></span>Import Colors</button>
+              <button class="qa" type="button"><span class="qa-ico" style="background:#dcfce7;color:#16a34a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg></span>Export Database</button>
+              <button class="qa" type="button"><span class="qa-ico" style="background:#fef3c7;color:#d97706"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg></span>Clear Cache</button>
+              <button class="qa" type="button" onclick="window.open('/','_blank')"><span class="qa-ico" style="background:#ede9fe;color:#7c3aed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg></span>View Site</button>
+            </div>
+          </section>
+
+          <section class="banner" aria-label="Create Explore Inspire">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>
+            <span><b>Create. Explore. Inspire.</b><span>Keep building a more colorful world.</span></span>
+            <a href="/">Visit Website →</a>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // Auth guard
+    try {
+      if (!sessionStorage.getItem("cn-admin-auth")) window.location.replace("/login");
+    } catch (e) { window.location.replace("/login"); }
+
+    // Sidebar
+    var NAV = [
+      { label: "Dashboard", active: true, icon: '<path d="M3 9.5 12 3l9 6.5V21h-6v-6H9v6H3z"/>' },
+      { label: "Colors", chev: true, icon: '<circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18"/>' },
+      { label: "Gradients", chev: true, icon: '<path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5"/>' },
+      { label: "Palettes", chev: true, icon: '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>' },
+      { label: "Color Mix", icon: '<path d="M8 3h8l-4 6 4 6H8l4-6z"/><path d="M12 15v6"/>' },
+      { label: "Users", chev: true, icon: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/>' },
+      { label: "Feedback", chev: true, icon: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>' },
+      { label: "Contact Messages", chev: true, icon: '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6L22 7"/>' },
+      { label: "Analytics", chev: true, icon: '<path d="M5 20V14M12 20V8M19 20V4"/>' },
+      { label: "SEO Manager", icon: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>' },
+      { label: "Site Settings", chev: true, icon: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>' },
+      { label: "Advertisements", icon: '<rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h8"/>' },
+      { label: "Admin & Roles", chev: true, icon: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/>' },
+      { label: "Activity Logs", icon: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>' }
+    ];
+    var nav = document.getElementById("side-nav");
+    NAV.forEach(function (item) {
+      var a = document.createElement("a");
+      a.className = "side-item" + (item.active ? " active" : "");
+      a.href = "#";
+      a.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + item.icon + '</svg>' + item.label +
+        (item.chev ? '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>' : '');
+      a.addEventListener("click", function (e) { e.preventDefault(); });
+      nav.appendChild(a);
+    });
+
+    // Live date
+    var d = new Date();
+    var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    document.getElementById("today-date").textContent =
+      days[d.getDay()] + ", " + String(d.getDate()).padStart(2, "0") + " " + months[d.getMonth()] + " " + d.getFullYear();
+
+    // Logout via profile menu
+    document.getElementById("profile-btn").addEventListener("click", function () {
+      if (confirm("Log out of the admin panel?")) {
+        try { sessionStorage.removeItem("cn-admin-auth"); } catch (e) {}
+        window.location.href = "/login";
+      }
+    });
+  </script>
+</body>
+</html>

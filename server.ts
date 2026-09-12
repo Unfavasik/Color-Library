@@ -13,8 +13,19 @@ const cleanRoutes: Record<string, string> = {
   "/terms-of-service": "terms-of-service/index.html",
   "/contact": "contact/index.html",
   "/about": "about/index.html",
+  "/team": "team/index.html",
+  "/admin": "login/index.html",
+  "/admin/dashboard": "admin/dashboard/index.html",
+  "/login": "login/index.html",
+  "/signup": "signup/index.html",
+  "/feedback": "feedback/index.html",
   "/color-mix": "color-mix/index.html",
   "/color-preview": "color-preview/index.html",
+  "/gradient-preview": "gradient-preview/index.html",
+  "/landing": "landing/index.html",
+  "/gradients": "gradients/index.html",
+  "/saved": "saved/index.html",
+  "/colors": "colors/index.html",
   "/404": "404/index.html"
 };
 

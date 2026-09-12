@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <script>try{if(localStorage.getItem("cl-theme")==="dark")document.documentElement.classList.add("dark")}catch(e){}</script>
+  <meta name="author" content="Dev Asik, web developer and creator of ColorNest" />
+  <meta name="keywords" content="colornest team, about team, color app creators" />
+  <meta name="robots" content="index, follow" />
+
+  <title>Team — ColorNest</title>
+  <meta name="description" content="Meet the ColorNest team — a small group of creators, developers and dreamers building ColorNest with love." />
+  <meta name="theme-color" content="#7c3aed" />
+  <link rel="canonical" href="https://color-library.pages.dev/team" />
+
+  <!-- Favicons & App Manifest -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://color-library.pages.dev/team" />
+  <meta property="og:title" content="Team — ColorNest" />
+  <meta property="og:description" content="Meet the ColorNest team — creators, developers and dreamers building ColorNest with love." />
+  <meta property="og:image" content="https://color-library.pages.dev/public/og-image.webp" />
+  <meta property="og:image:secure_url" content="https://color-library.pages.dev/public/og-image.webp" />
+  <meta property="og:image:type" content="image/webp" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="ColorNest Team" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://color-library.pages.dev/team" />
+  <meta name="twitter:title" content="Team — ColorNest" />
+  <meta name="twitter:description" content="Meet the ColorNest team — creators, developers and dreamers building ColorNest with love." />
+  <meta name="twitter:image" content="https://color-library.pages.dev/public/og-image.webp" />
+  <meta name="twitter:image:alt" content="ColorNest Team" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --text: #111827;
+      --heading: #1e1b4b;
+      --muted: #6b7280;
+      --border: #eef0f4;
+      --tile: #f3f4f6;
+      --primary: #7c3aed;
+      --card-shadow: 0 1px 2px rgba(17,24,39,.04), 0 4px 14px rgba(17,24,39,.05);
+    }
+    html.dark {
+      --bg: #0b0b14;
+      --surface: #14141f;
+      --text: #f3f4f6;
+      --heading: #eef2ff;
+      --muted: #9ca3af;
+      --border: #232332;
+      --tile: #1d1d2b;
+      --card-shadow: 0 1px 2px rgba(0,0,0,.4), 0 6px 18px rgba(0,0,0,.35);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      transition: background .25s ease, color .25s ease;
+    }
+    a { text-decoration: none; color: inherit; }
+    button { font-family: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
+
+    .app {
+      max-width: 480px; margin: 0 auto; min-height: 100dvh;
+      background: var(--bg); position: relative; overflow: hidden;
+      padding-bottom: 40px;
+    }
+    @media (min-width: 520px) {
+      body { background: linear-gradient(160deg, #dcd4f5 0%, #efe6f6 50%, #d9e4f8 100%); }
+      .app { box-shadow: 0 0 0 1px rgba(255,255,255,.6), 0 24px 80px rgba(76,29,149,.18); }
+    }
+
+    /* Soft pastel blobs behind the hero */
+    .blob { position: absolute; border-radius: 50%; filter: blur(2px); pointer-events: none; }
+    .blob-1 { width: 200px; height: 200px; top: -50px; left: -70px; background: radial-gradient(circle at 35% 35%, #c7d2fe, #e0e7ff 70%); opacity: .8; }
+    .blob-2 { width: 150px; height: 150px; top: 20px; right: -50px; background: radial-gradient(circle at 40% 40%, #bfdbfe, #dbeafe 70%); opacity: .8; }
+    .blob-3 { width: 120px; height: 120px; top: 320px; right: -40px; background: radial-gradient(circle at 40% 40%, #fbcfe8, #fce7f3 70%); opacity: .7; }
+    html.dark .blob-1 { background: radial-gradient(circle at 35% 35%, #312e81, #1e1b4b 70%); opacity: .5; }
+    html.dark .blob-2 { background: radial-gradient(circle at 40% 40%, #1e3a8a, #172554 70%); opacity: .5; }
+    html.dark .blob-3 { background: radial-gradient(circle at 40% 40%, #831843, #500724 70%); opacity: .45; }
+
+    /* ---------- Top bar ---------- */
+    .topbar {
+      position: sticky; top: 0; z-index: 20;
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 16px;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .back-btn {
+      width: 38px; height: 38px; border-radius: 12px;
+      display: grid; place-items: center;
+      background: var(--tile); color: var(--text);
+      transition: transform .15s ease;
+    }
+    .back-btn:hover { transform: translateX(-2px); }
+    .back-btn svg { width: 20px; height: 20px; }
+    .topbar h1 { font-size: 20px; font-weight: 800; color: var(--heading); letter-spacing: -.01em; }
+
+    .inner { position: relative; z-index: 1; padding: 0 20px; }
+
+    /* ---------- Hero ---------- */
+    .hero { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0 6px; }
+    .hero-txt { flex: 1; min-width: 0; }
+    .hero-brand { display: flex; align-items: center; gap: 12px; }
+    .app-icon {
+      width: 64px; height: 64px; flex: none;
+      border-radius: 18px;
+      background: conic-gradient(from 200deg, #ef4444, #f97316, #facc15, #22c55e, #06b6d4, #3b82f6, #8b5cf6, #ec4899, #ef4444);
+      box-shadow: 0 10px 24px rgba(139,92,246,.35), inset 0 -3px 8px rgba(255,255,255,.25);
+    }
+    .hero-brand h2 { font-size: 24px; font-weight: 800; color: var(--heading); letter-spacing: -.02em; }
+    .cn-grad {
+      background: linear-gradient(90deg, #ec4899, #f97316, #eab308, #22c55e, #06b6d4, #8b5cf6);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: transparent;
+    }
+    .hero-brand .tagline { font-size: 13.5px; font-weight: 600; color: var(--muted); margin-top: 2px; }
+    .hero-title {
+      margin-top: 16px; font-size: 30px; font-weight: 800; letter-spacing: -.02em; line-height: 1.15;
+      background: linear-gradient(90deg, #2563eb, #7c3aed, #db2777);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: transparent;
+    }
+    .hero-txt .desc { margin-top: 8px; padding-right: 44px; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+    .note-wrap { position: relative; flex: none; width: 96px; height: 96px; margin-top: -4px; }
+    .note-text {
+      position: absolute; inset: 0; display: grid; place-items: center;
+      font-size: 11px; font-weight: 700; font-style: italic; line-height: 1.4;
+      color: var(--primary); text-align: center; transform: rotate(-6deg);
+    }
+    .note-heart { position: absolute; right: 2px; bottom: 6px; width: 16px; height: 16px; fill: #ec4899; }
+
+    /* ---------- Founder card ---------- */
+    .founder-card {
+      margin-top: 22px; padding: 18px;
+      border-radius: 22px; background: var(--surface);
+      box-shadow: var(--card-shadow);
+      display: flex; gap: 14px; position: relative;
+    }
+    .avatar {
+      width: 84px; height: 84px; flex: none; border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 6px 16px rgba(17,24,39,.15);
+    }
+    .founder-info { flex: 1; min-width: 0; }
+    .founder-info h3 { font-size: 19px; font-weight: 800; color: var(--heading); letter-spacing: -.01em; }
+    .role-badge {
+      display: inline-block; margin-top: 6px; padding: 5px 12px;
+      border-radius: 999px; font-size: 11.5px; font-weight: 700;
+      background: #ede9fe; color: #7c3aed;
+    }
+    html.dark .role-badge { background: #2e1065; color: #c4b5fd; }
+    .founder-info .bio { margin-top: 8px; font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+    .socials { display: flex; gap: 14px; margin-top: 12px; }
+    .socials a { color: var(--muted); transition: color .15s ease, transform .15s ease; }
+    .socials a:hover { color: var(--primary); transform: translateY(-2px); }
+    .socials svg { width: 18px; height: 18px; }
+    .quote-bubble {
+      position: absolute; right: -6px; top: -18px;
+      max-width: 150px; padding: 10px 12px;
+      border-radius: 14px 14px 14px 4px;
+      background: #fce7f3; color: #be185d;
+      font-size: 10.5px; font-weight: 700; font-style: italic; line-height: 1.4;
+      box-shadow: 0 4px 12px rgba(190,24,93,.15);
+    }
+    html.dark .quote-bubble { background: #431437; color: #f9a8d4; }
+
+    /* ---------- Member grid ---------- */
+    .member-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+      margin-top: 14px;
+    }
+    .member-card {
+      padding: 16px 14px;
+      border-radius: 20px; background: var(--surface);
+      box-shadow: var(--card-shadow);
+      display: flex; flex-direction: column; align-items: flex-start;
+    }
+    .member-card .avatar { width: 64px; height: 64px; }
+    .member-card h3 { margin-top: 10px; font-size: 15.5px; font-weight: 800; color: var(--heading); }
+    .member-card .role-badge { margin-top: 6px; font-size: 10.5px; padding: 4px 10px; }
+    .member-card .bio { margin-top: 8px; font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .member-card .socials { margin-top: 10px; gap: 12px; }
+    .member-card .socials svg { width: 15px; height: 15px; }
+    .mascot-extra {
+      display: flex; align-items: center; gap: 6px;
+      margin-top: 10px; font-size: 11px; font-weight: 700; color: #db2777;
+    }
+    .mascot-extra svg { width: 13px; height: 13px; fill: #ec4899; }
+
+    /* ---------- Collaborate card ---------- */
+    .collab-card {
+      margin-top: 14px; padding: 16px;
+      border-radius: 20px; background: var(--surface);
+      box-shadow: var(--card-shadow);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .collab-ico {
+      width: 46px; height: 46px; flex: none; border-radius: 14px;
+      display: grid; place-items: center;
+      background: #ede9fe; color: #7c3aed;
+    }
+    html.dark .collab-ico { background: #2e1065; color: #c4b5fd; }
+    .collab-ico svg { width: 22px; height: 22px; }
+    .collab-txt { flex: 1; min-width: 0; }
+    .collab-txt b { display: block; font-size: 13.5px; color: var(--heading); }
+    .collab-txt p { margin-top: 2px; font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+    .collab-btn {
+      flex: none; display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 14px; border-radius: 12px;
+      background: linear-gradient(120deg, #7c3aed, #a855f7, #ec4899);
+      color: #fff; font-size: 12.5px; font-weight: 700;
+      box-shadow: 0 6px 16px rgba(139,92,246,.35);
+      transition: transform .15s ease;
+    }
+    .collab-btn:hover { transform: translateY(-2px); }
+    .collab-btn svg { width: 14px; height: 14px; }
+
+    /* ---------- Quote footer ---------- */
+    .quote-card {
+      margin-top: 22px; padding: 22px 20px;
+      border-radius: 22px; background: var(--surface);
+      box-shadow: var(--card-shadow);
+      text-align: center;
+    }
+    .quote-card .qmark { width: 30px; height: 30px; fill: #7c3aed; }
+    .quote-card p {
+      margin-top: 8px; font-size: 15.5px; font-weight: 700; font-style: italic;
+      color: var(--primary); line-height: 1.5;
+    }
+    .quote-card span { display: block; margin-top: 8px; font-size: 12.5px; font-weight: 600; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <header class="topbar">
+      <button class="back-btn" type="button" onclick="history.back()" aria-label="Go back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <h1>Team</h1>
+    </header>
+
+    <main class="inner">
+      <section class="hero">
+        <div class="hero-txt">
+          <div class="hero-brand">
+            <div class="app-icon" role="img" aria-label="ColorNest app icon"></div>
+            <div>
+              <h2>Color<span class="cn-grad">Nest</span></h2>
+              <p class="tagline">Colors for Creators</p>
+            </div>
+          </div>
+          <h3 class="hero-title">Meet the Team</h3>
+          <p class="desc">A small group of creators, developers and dreamers building ColorNest with love.</p>
+        </div>
+        <div class="note-wrap" aria-hidden="true">
+          <span class="note-text">Small Team, Big Colors, Infinite Possibilities</span>
+          <svg class="note-heart" viewBox="0 0 24 24"><path d="M19 14c1.5-1.5 3-3.3 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3.4 1-4.5 2.5C10.9 4 9.3 3 7.5 3A5.5 5.5 0 0 0 2 8.5c0 2.2 1.5 4 3 5.5l7 7z"/></svg>
+        </div>
+      </section>
+
+      <section class="founder-card">
+        <img class="avatar" src="/public/team/asik.png" alt="Asik Ikbal" width="84" height="84" />
+        <div class="founder-info">
+          <h3>Asik Ikbal</h3>
+          <span class="role-badge">Founder &amp; Developer</span>
+          <p class="bio">Building tools that make creativity simpler for everyone.</p>
+          <div class="socials">
+            <a href="https://github.com/" aria-label="Asik Ikbal on GitHub" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.14c0 .3.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+            </a>
+            <a href="https://x.com/" aria-label="Asik Ikbal on X" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93zm-1.29 19.5h2.04L6.49 3.24H4.3l13.31 17.41z"/></svg>
+            </a>
+            <a href="https://linkedin.com/" aria-label="Asik Ikbal on LinkedIn" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+            </a>
+            <a href="mailto:hello@colornest.app" aria-label="Email Asik Ikbal">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="quote-bubble" aria-hidden="true">"Better colors for a brighter creative world."</div>
+      </section>
+
+      <div class="member-grid">
+        <section class="member-card">
+          <img class="avatar" src="/public/team/sumaiya.png" alt="Sumaiya" width="64" height="64" />
+          <h3>Sumaiya</h3>
+          <span class="role-badge">UI/UX Designer</span>
+          <p class="bio">Designing clean and beautiful experiences.</p>
+          <div class="socials">
+            <a href="https://dribbble.com/" aria-label="Sumaiya on Dribbble" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M4.5 9c5 .8 9.5.3 13-2.5M3.5 14c5.5-1 10 .5 13 5M14 3.5c-2.5 4-4 9-4.5 16"/></svg>
+            </a>
+            <a href="https://instagram.com/" aria-label="Sumaiya on Instagram" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg>
+            </a>
+            <a href="https://x.com/" aria-label="Sumaiya on X" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93zm-1.29 19.5h2.04L6.49 3.24H4.3l13.31 17.41z"/></svg>
+            </a>
+          </div>
+        </section>
+
+        <section class="member-card">
+          <img class="avatar" src="/public/team/ayan.png" alt="Ayan" width="64" height="64" />
+          <h3>Ayan</h3>
+          <span class="role-badge">Frontend Developer</span>
+          <p class="bio">Turning ideas into smooth experiences.</p>
+          <div class="socials">
+            <a href="https://github.com/" aria-label="Ayan on GitHub" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.14c0 .3.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+            </a>
+            <a href="https://x.com/" aria-label="Ayan on X" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93zm-1.29 19.5h2.04L6.49 3.24H4.3l13.31 17.41z"/></svg>
+            </a>
+            <a href="https://linkedin.com/" aria-label="Ayan on LinkedIn" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+            </a>
+          </div>
+        </section>
+
+        <section class="member-card">
+          <img class="avatar" src="/public/team/rafi.png" alt="Rafi" width="64" height="64" />
+          <h3>Rafi</h3>
+          <span class="role-badge">Backend Developer</span>
+          <p class="bio">Keeping everything fast and secure.</p>
+          <div class="socials">
+            <a href="https://github.com/" aria-label="Rafi on GitHub" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.14c0 .3.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+            </a>
+            <a href="https://docker.com/" aria-label="Rafi on Docker" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.98 11.08h2.12a.19.19 0 0 0 .19-.19V8.79a.19.19 0 0 0-.19-.19h-2.12a.18.18 0 0 0-.18.18v2.1c0 .11.08.2.18.2m-2.95-5.43h2.12a.19.19 0 0 0 .18-.19V3.37a.19.19 0 0 0-.18-.19h-2.12a.18.18 0 0 0-.19.18v2.1c0 .11.09.19.19.19m0 2.71h2.12a.19.19 0 0 0 .18-.18V6.08a.19.19 0 0 0-.18-.19h-2.12a.18.18 0 0 0-.19.18v2.1c0 .11.09.19.19.19m-2.93 0h2.12a.19.19 0 0 0 .18-.18V6.08a.18.18 0 0 0-.18-.19H8.1a.18.18 0 0 0-.18.18v2.1c0 .11.08.19.18.19m-2.96 0h2.11a.18.18 0 0 0 .19-.18V6.08a.19.19 0 0 0-.19-.19H5.14a.18.18 0 0 0-.19.18v2.1c0 .11.08.19.19.19m5.89 2.72h2.12a.19.19 0 0 0 .18-.19V8.79a.19.19 0 0 0-.18-.19h-2.12a.18.18 0 0 0-.19.18v2.1c0 .11.09.2.19.2m-2.93 0h2.12a.18.18 0 0 0 .18-.19V8.79a.18.18 0 0 0-.18-.19H8.1a.18.18 0 0 0-.18.18v2.1c0 .11.08.2.18.2m-2.96 0h2.11a.18.18 0 0 0 .19-.19V8.79a.19.19 0 0 0-.19-.19H5.14a.18.18 0 0 0-.19.18v2.1c0 .11.08.2.19.2m-2.92 0h2.12a.18.18 0 0 0 .18-.19V8.79a.18.18 0 0 0-.18-.19H2.22a.18.18 0 0 0-.19.18v2.1c0 .11.08.2.19.2m21.54-1.19c-.06-.05-.67-.51-1.95-.51-.34 0-.68.03-1.01.09a3.77 3.77 0 0 0-1.72-2.57l-.34-.2-.23.33a4.6 4.6 0 0 0-.6 1.43c-.24.97-.1 1.88.4 2.66a4.7 4.7 0 0 1-1.75.42H.76a.75.75 0 0 0-.76.75 11.38 11.38 0 0 0 .7 4.06 6.03 6.03 0 0 0 2.39 3.12c1.19.73 3.13 1.14 5.32 1.14.99 0 1.98-.09 2.95-.27a12.25 12.25 0 0 0 3.85-1.4 10.56 10.56 0 0 0 2.62-2.15c.63-.75 1.19-1.63 1.63-2.63h.15c1.37 0 2.21-.55 2.68-1 .3-.29.55-.65.71-1.07l.1-.28z"/></svg>
+            </a>
+            <a href="https://cloud.google.com/" aria-label="Rafi on Google Cloud" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 .42-8.98 6 6 0 0 0-11.7 1.6A4 4 0 0 0 7 19.5h10.5z"/></svg>
+            </a>
+          </div>
+        </section>
+
+        <section class="member-card">
+          <img class="avatar" src="/public/team/mochi.png" alt="Mochi the cat" width="64" height="64" />
+          <h3>Mochi</h3>
+          <span class="role-badge">Team Mascot</span>
+          <p class="bio">Provides emotional support 24/7.</p>
+          <div class="mascot-extra">
+            <svg viewBox="0 0 24 24"><path d="M19 14c1.5-1.5 3-3.3 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3.4 1-4.5 2.5C10.9 4 9.3 3 7.5 3A5.5 5.5 0 0 0 2 8.5c0 2.2 1.5 4 3 5.5l7 7z"/></svg>
+            Chief Happiness Officer
+          </div>
+        </section>
+      </div>
+
+      <section class="collab-card">
+        <span class="collab-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3"/><path d="M2 21c0-3.5 3-5.5 7-5.5s7 2 7 5.5"/><circle cx="17" cy="8" r="2.5"/><path d="M17.5 15.5c2.8.4 4.5 2 4.5 4.5"/></svg>
+        </span>
+        <div class="collab-txt">
+          <b>We're always open to collaborate!</b>
+          <p>If you have ideas, suggestions or want to work with us, feel free to reach out.</p>
+        </div>
+        <a class="collab-btn" href="/feedback">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          Contact Us
+        </a>
+      </section>
+
+      <section class="quote-card">
+        <svg class="qmark" viewBox="0 0 24 24"><path d="M10 8c-3 1-5 3.5-5 7v3h6v-6H8c0-2 1-3 3-4l-1-2zm9 0c-3 1-5 3.5-5 7v3h6v-6h-3c0-2 1-3 3-4l-1-2z"/></svg>
+        <p>"A more colorful world is a more creative world."</p>
+        <span>— ColorNest Team</span>
+      </section>
+    </main>
+  </div>
+
+</body>
+</html>

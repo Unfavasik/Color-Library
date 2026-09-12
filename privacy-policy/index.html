@@ -2,11 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Privacy Policy — Color Library</title>
-  <meta name="description" content="Official Privacy Policy for Color Library. Learn how we protect user privacy, store preferences strictly in client-side local storage, and provide a secure color utility platform." />
-  <meta name="theme-color" content="#2563eb" />
-  <link rel="canonical" href="https://color-library.pages.dev/privacy-policy">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <script>try{if(localStorage.getItem("cl-theme")==="dark")document.documentElement.classList.add("dark")}catch(e){}</script>
+  <meta name="author" content="Dev Asik, web developer and creator of Color Library" />
+  <meta name="keywords" content="colour library privacy policy, privacy, data protection, color app privacy" />
+  <meta name="robots" content="index, follow" />
+
+  <title>Privacy Policy — ColorNest</title>
+  <meta name="description" content="Official Privacy Policy for ColorNest. Learn how we collect, use, and protect your information when you use ColorNest." />
+  <meta name="theme-color" content="#7c3aed" />
+  <link rel="canonical" href="https://color-library.pages.dev/privacy-policy" />
 
   <!-- Favicons & App Manifest -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -17,158 +22,448 @@
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://color-library.pages.dev/privacy-policy" />
-  <meta property="og:title" content="Privacy Policy — Color Library" />
-  <meta property="og:description" content="Official Privacy Policy for Color Library. Learn how we protect user privacy, store preferences strictly in client-side local storage, and provide a secure color utility platform." />
+  <meta property="og:title" content="Privacy Policy — ColorNest" />
+  <meta property="og:description" content="Learn how we collect, use, and protect your information when you use ColorNest." />
   <meta property="og:image" content="https://color-library.pages.dev/public/og-image.webp" />
   <meta property="og:image:secure_url" content="https://color-library.pages.dev/public/og-image.webp" />
   <meta property="og:image:type" content="image/webp" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Color Library Privacy Policy" />
+  <meta property="og:image:alt" content="ColorNest Privacy Policy" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://color-library.pages.dev/privacy-policy" />
-  <meta name="twitter:title" content="Privacy Policy — Color Library" />
-  <meta name="twitter:description" content="Official Privacy Policy for Color Library. Learn how we protect user privacy, store preferences strictly in client-side local storage, and provide a secure color utility platform." />
+  <meta name="twitter:title" content="Privacy Policy — ColorNest" />
+  <meta name="twitter:description" content="Learn how we collect, use, and protect your information when you use ColorNest." />
   <meta name="twitter:image" content="https://color-library.pages.dev/public/og-image.webp" />
-  <meta name="twitter:image:alt" content="Color Library Privacy Policy" />
+  <meta name="twitter:image:alt" content="ColorNest Privacy Policy" />
 
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8084415154795131"
      crossorigin="anonymous"></script>
 
-  <link rel="stylesheet" href="/ch.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --text: #111827;
+      --heading: #1e1b4b;
+      --muted: #6b7280;
+      --border: #eef0f4;
+      --tile: #f3f4f6;
+      --primary: #7c3aed;
+      --card-shadow: 0 1px 2px rgba(17,24,39,.04), 0 4px 14px rgba(17,24,39,.05);
+    }
+    html.dark {
+      --bg: #0b0b14;
+      --surface: #14141f;
+      --text: #f3f4f6;
+      --heading: #eef2ff;
+      --muted: #9ca3af;
+      --border: #232332;
+      --tile: #1d1d2b;
+      --card-shadow: 0 1px 2px rgba(0,0,0,.4), 0 6px 18px rgba(0,0,0,.35);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      transition: background .25s ease, color .25s ease;
+    }
+    a { text-decoration: none; color: inherit; }
+    button { font-family: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
+
+    .app {
+      max-width: 480px; margin: 0 auto; min-height: 100dvh;
+      background: var(--bg); position: relative; overflow: hidden;
+      padding-bottom: 40px;
+    }
+    @media (min-width: 520px) {
+      body { background: linear-gradient(160deg, #dcd4f5 0%, #efe6f6 50%, #d9e4f8 100%); }
+      .app { box-shadow: 0 0 0 1px rgba(255,255,255,.6), 0 24px 80px rgba(76,29,149,.18); }
+    }
+
+    /* Soft pastel blobs behind the hero */
+    .blob { position: absolute; border-radius: 50%; filter: blur(2px); pointer-events: none; }
+    .blob-1 { width: 200px; height: 200px; top: -50px; left: -70px; background: radial-gradient(circle at 35% 35%, #c7d2fe, #e0e7ff 70%); opacity: .8; }
+    .blob-2 { width: 150px; height: 150px; top: 20px; right: -50px; background: radial-gradient(circle at 40% 40%, #bfdbfe, #dbeafe 70%); opacity: .8; }
+    .blob-3 { width: 120px; height: 120px; top: 320px; right: -40px; background: radial-gradient(circle at 40% 40%, #fbcfe8, #fce7f3 70%); opacity: .7; }
+    html.dark .blob-1 { background: radial-gradient(circle at 35% 35%, #312e81, #1e1b4b 70%); opacity: .5; }
+    html.dark .blob-2 { background: radial-gradient(circle at 40% 40%, #1e3a8a, #172554 70%); opacity: .5; }
+    html.dark .blob-3 { background: radial-gradient(circle at 40% 40%, #831843, #500724 70%); opacity: .45; }
+
+    /* ---------- Top bar ---------- */
+    .topbar {
+      position: sticky; top: 0; z-index: 20;
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 16px;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .back-btn {
+      width: 38px; height: 38px; border-radius: 12px;
+      display: grid; place-items: center;
+      background: var(--tile); color: var(--text);
+      transition: transform .15s ease;
+    }
+    .back-btn:hover { transform: translateX(-2px); }
+    .back-btn svg { width: 20px; height: 20px; }
+    .topbar h1 { font-size: 20px; font-weight: 800; color: var(--heading); letter-spacing: -.01em; }
+
+    .inner { position: relative; z-index: 1; padding: 0 20px; }
+
+    /* ---------- Hero ---------- */
+    .hero { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0 6px; }
+    .hero-txt { flex: 1; min-width: 0; }
+    .hero-brand { display: flex; align-items: center; gap: 12px; }
+    .app-icon {
+      width: 64px; height: 64px; flex: none;
+      border-radius: 18px;
+      background: conic-gradient(from 200deg, #ef4444, #f97316, #facc15, #22c55e, #06b6d4, #3b82f6, #8b5cf6, #ec4899, #ef4444);
+      box-shadow: 0 10px 24px rgba(139,92,246,.35), inset 0 -3px 8px rgba(255,255,255,.25);
+    }
+    .hero-brand h2 { font-size: 24px; font-weight: 800; color: var(--heading); letter-spacing: -.02em; }
+    .cn-grad {
+      background: linear-gradient(90deg, #ec4899, #f97316, #eab308, #22c55e, #06b6d4, #8b5cf6);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: transparent;
+    }
+    .hero-brand .tagline { font-size: 13.5px; font-weight: 600; color: var(--muted); margin-top: 2px; }
+    .hero-txt .lead { margin-top: 14px; font-size: 15px; font-weight: 700; color: var(--heading); }
+    .hero-txt .desc { margin-top: 6px; padding-right: 44px; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+    .shield-wrap { position: relative; flex: none; width: 96px; height: 96px; margin-top: -4px; }
+    .shield-wrap svg { width: 100%; height: 100%; }
+    .shield-note {
+      position: absolute; right: -10px; bottom: -34px;
+      font-size: 11px; font-weight: 700; font-style: italic;
+      color: var(--primary); transform: rotate(-8deg); white-space: nowrap;
+    }
+    .updated-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 18px; padding: 9px 16px;
+      border-radius: 999px; font-size: 13px; font-weight: 700;
+      background: #ede9fe; color: #6d28d9;
+    }
+    html.dark .updated-pill { background: #2e1065; color: #c4b5fd; }
+    .updated-pill svg { width: 15px; height: 15px; }
+
+    /* ---------- Accordion ---------- */
+    .acc-list { display: flex; flex-direction: column; gap: 12px; margin-top: 22px; }
+    .acc {
+      border-radius: 20px; padding: 16px;
+      box-shadow: var(--card-shadow);
+    }
+    .acc.blue   { background: #e0e7ff; }
+    .acc.green  { background: #dcfce7; }
+    .acc.pink   { background: #fce7f3; }
+    .acc.amber  { background: #fef3c7; }
+    .acc.indigo { background: #e0e7ff; }
+    .acc.violet { background: #ede9fe; }
+    .acc.rose   { background: #ffe4e6; }
+    html.dark .acc.blue   { background: #1e2a5e; }
+    html.dark .acc.green  { background: #14321f; }
+    html.dark .acc.pink   { background: #431437; }
+    html.dark .acc.amber  { background: #3f2d0a; }
+    html.dark .acc.indigo { background: #1e2a5e; }
+    html.dark .acc.violet { background: #2e1065; }
+    html.dark .acc.rose   { background: #4c1220; }
+
+    .acc-head {
+      display: flex; align-items: center; gap: 12px;
+      width: 100%; text-align: left;
+    }
+    .acc-ico {
+      width: 46px; height: 46px; flex: none; border-radius: 14px;
+      display: grid; place-items: center;
+      background: rgba(255,255,255,.75);
+      box-shadow: 0 2px 8px rgba(17,24,39,.08);
+    }
+    html.dark .acc-ico { background: rgba(255,255,255,.08); }
+    .acc-ico svg { width: 22px; height: 22px; }
+    .acc.blue .acc-ico   { color: #2563eb; }
+    .acc.green .acc-ico  { color: #16a34a; }
+    .acc.pink .acc-ico   { color: #db2777; }
+    .acc.amber .acc-ico  { color: #d97706; }
+    .acc.indigo .acc-ico { color: #4f46e5; }
+    .acc.violet .acc-ico { color: #7c3aed; }
+    .acc.rose .acc-ico   { color: #e11d48; }
+
+    .acc-title-wrap { flex: 1; min-width: 0; }
+    .acc-title-wrap h3 { font-size: 15.5px; font-weight: 800; color: var(--heading); letter-spacing: -.01em; }
+    .acc-title-wrap p { margin-top: 3px; font-size: 12.5px; color: var(--muted); line-height: 1.45; }
+    .acc-chev { flex: none; width: 20px; height: 20px; color: var(--muted); transition: transform .3s ease; }
+    .acc.open .acc-chev { transform: rotate(180deg); }
+
+    .acc-body {
+      display: grid; grid-template-rows: 0fr;
+      transition: grid-template-rows .35s ease;
+    }
+    .acc.open .acc-body { grid-template-rows: 1fr; }
+    .acc-body-inner { overflow: hidden; }
+    .acc-body p {
+      margin: 12px 2px 0; font-size: 13.5px; line-height: 1.65; color: var(--text);
+    }
+    .acc-body p + p { margin-top: 8px; }
+    .acc-body ul { margin: 8px 2px 0 20px; font-size: 13.5px; line-height: 1.7; color: var(--text); }
+    .acc-body .contact-card {
+      margin-top: 12px; padding: 12px 14px;
+      border-radius: 14px; background: rgba(255,255,255,.7);
+      font-size: 13px;
+    }
+    html.dark .acc-body .contact-card { background: rgba(255,255,255,.06); }
+    .contact-card b { display: block; font-size: 13.5px; color: var(--heading); }
+    .contact-card a { color: var(--primary); font-weight: 700; }
+
+    /* ---------- Footer card ---------- */
+    .footer-card {
+      margin-top: 26px; padding: 22px 20px;
+      border-radius: 22px;
+      background: linear-gradient(120deg, #7c3aed, #a855f7, #ec4899);
+      color: #fff; text-align: center;
+      box-shadow: 0 14px 34px rgba(139,92,246,.35);
+      position: relative; overflow: hidden;
+    }
+    .footer-card .heart { width: 26px; height: 26px; fill: #fff; margin-bottom: 8px; }
+    .footer-card h3 { font-size: 18px; font-weight: 800; letter-spacing: -.01em; }
+    .footer-card p { margin-top: 4px; font-size: 13px; opacity: .92; }
+    .footer-note {
+      position: absolute; right: 14px; top: 14px;
+      font-size: 11px; font-weight: 700; font-style: italic;
+      opacity: .9; transform: rotate(-6deg); white-space: nowrap;
+    }
+  </style>
 </head>
 <body>
-  <div class="app-shell">
-    <header class="site-header">
-      <div class="header-inner">
-        <a class="brand" href="/" aria-label="Color Library home">
-          <img src="/color-library.png" alt="Color Library" class="brand-mark" />
-        </a>
-        <nav class="primary-nav" aria-label="Primary navigation">
-          <a href="/">Home</a>
-          <a href="/#colors">Colors <svg class="nav-chevron" viewBox="0 0 16 16" fill="none"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a href="/#recently-viewed" id="nav-recent">Recent</a>
-          <a href="/#tools">Tools <svg class="nav-chevron" viewBox="0 0 16 16" fill="none"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a href="#more" id="more-link">More <svg class="nav-chevron" viewBox="0 0 16 16" fill="none"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </nav>
-        <div class="header-actions">
-          <label class="global-search" aria-label="Search colors">
-            <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-            <input id="global-search" type="search" placeholder="Search colors, codes, names..." autocomplete="off" />
-            <kbd>Ctrl K</kbd>
-          </label>
-        </div>
-      </div>
+  <div class="app">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <header class="topbar">
+      <button class="back-btn" type="button" onclick="history.back()" aria-label="Go back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <h1>Privacy Policy</h1>
     </header>
 
-    <main class="page-view active" id="page-view">
-      <div class="page-content" id="page-content-body">
-        <a href="/" class="page-back-btn" id="page-back-btn" aria-label="Back to Home">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-          Back to Home
-        </a>
-        <h1>Privacy Policy</h1>
-        <div class="page-date">Last updated: September 2, 2026</div>
-        <h2>1. Introduction</h2>
-        <p>Welcome to Color Library. We are committed to protecting your privacy and ensuring you have a secure, transparent experience while exploring color palettes, CSS gradients, and HTML color codes.</p>
-        <h2>2. Information We Collect</h2>
-        <p>Color Library does not require user registration or account creation. We do not collect personally identifiable information (PII) such as your name, email address, or phone number.</p>
-        <h2>3. How We Use Information</h2>
-        <p>Since we do not collect personal information, no user data is shared, sold, or rented to third parties. Any interactions remain strictly confidential and client-side.</p>
-        <h2>4. Cookies and Local Storage</h2>
-        <p>We use browser local storage solely to save your favorite color selections and UI preferences locally on your device. This data never leaves your browser and can be cleared at any time through your browser settings.</p>
-        <h2>5. Analytics and Third-Party Services</h2>
-        <p>We do not utilize intrusive tracking cookies or external analytics platforms that monitor your personal browsing habits.</p>
-        <h2>6. Data Security</h2>
-        <p>Because your saved favorites and preferences are stored exclusively on your local device, no user data is transmitted or stored on external database servers.</p>
-        <h2>7. Children's Privacy</h2>
-        <p>Color Library is safe for users of all ages. We do not knowingly collect any data from children under the age of 13.</p>
-        <h2>8. Your Rights</h2>
-        <p>You retain full control over your local data. You may clear your browser storage at any time to remove all saved favorites and preferences instantly.</p>
-        <h2>9. Changes to This Privacy Policy</h2>
-        <p>We may update this Privacy Policy from time to time to reflect improvements in our platform. Any modifications will be posted directly on this page.</p>
-        <h2>10. Contact Us</h2>
-        <p>If you have any questions or concerns regarding our privacy practices, please feel free to reach out via our <a href="/contact">Contact / Feedback</a> form.</p>
-        <div class="page-bottom-nav">
-          <a href="/" class="page-back-btn" aria-label="Back to Home">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-            Back to Home
-          </a>
+    <main class="inner">
+      <section class="hero">
+        <div class="hero-txt">
+          <div class="hero-brand">
+            <div class="app-icon" role="img" aria-label="ColorNest app icon"></div>
+            <div>
+              <h2>Color<span class="cn-grad">Nest</span></h2>
+              <p class="tagline">Colors for Creators</p>
+            </div>
+          </div>
+          <p class="lead">Your privacy matters to us.</p>
+          <p class="desc">This Privacy Policy explains how we collect, use, and protect your information when you use ColorNest.</p>
         </div>
+        <div class="shield-wrap" aria-hidden="true">
+          <svg viewBox="0 0 96 96" fill="none">
+            <circle cx="70" cy="22" r="18" fill="#dbeafe"/>
+            <path d="M48 12l26 9v20c0 17-11 30-26 37C33 71 22 58 22 41V21l26-9z" fill="url(#shieldGrad)"/>
+            <path d="M48 18l20 7v16c0 13-8.5 23.5-20 29-11.5-5.5-20-16-20-29V25l20-7z" fill="url(#shieldGrad2)" opacity=".9"/>
+            <rect x="40" y="42" width="16" height="13" rx="3" fill="#fff"/>
+            <path d="M43 42v-4a5 5 0 0 1 10 0v4" stroke="#fff" stroke-width="3" fill="none"/>
+            <circle cx="48" cy="48" r="2.4" fill="#7c3aed"/>
+            <defs>
+              <linearGradient id="shieldGrad" x1="22" y1="12" x2="74" y2="78"><stop stop-color="#818cf8"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
+              <linearGradient id="shieldGrad2" x1="28" y1="18" x2="68" y2="70"><stop stop-color="#a5b4fc"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient>
+            </defs>
+          </svg>
+          <span class="shield-note">Safe, Simple, Transparent</span>
+        </div>
+      </section>
+
+      <div class="updated-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Last updated: January 1, 2025
+      </div>
+
+      <div class="acc-list">
+        <section class="acc blue">
+          <button class="acc-head" type="button" aria-expanded="false">
+            <span class="acc-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+            </span>
+            <span class="acc-title-wrap">
+              <h3>1. Information We Collect</h3>
+              <p>We collect minimal information, only what's needed to improve your experience.</p>
+            </span>
+            <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>ColorNest uses only the information needed to provide and improve our services.</p>
+              <p>Depending on the features you use, we may collect your name, email address, saved colors, palettes, gradients, and account preferences.</p>
+              <p>We do not collect unnecessary personal information.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="acc green">
+          <button class="acc-head" type="button" aria-expanded="false">
+            <span class="acc-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </span>
+            <span class="acc-title-wrap">
+              <h3>2. How We Use Your Information</h3>
+              <p>We use information to provide, improve, and personalize ColorNest.</p>
+            </span>
+            <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>We use your information to provide, maintain, and improve ColorNest. Your information may be used to:</p>
+              <ul>
+                <li>Save your favorite colors and gradients</li>
+                <li>Sync your account across devices</li>
+                <li>Improve app performance</li>
+                <li>Provide personalized features</li>
+                <li>Respond to support requests</li>
+              </ul>
+              <p>We do not sell your personal information.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="acc pink">
+          <button class="acc-head" type="button" aria-expanded="false">
+            <span class="acc-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+            </span>
+            <span class="acc-title-wrap">
+              <h3>3. Data Storage &amp; Security</h3>
+              <p>Your data is stored securely and we take reasonable measures to protect it.</p>
+            </span>
+            <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>We take reasonable technical and organizational measures to protect your information from unauthorized access, loss, or misuse.</p>
+              <p>Account information and saved content may be stored using secure cloud services.</p>
+              <p>While we work to protect your data, no internet service can guarantee 100% security.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="acc amber">
+          <button class="acc-head" type="button" aria-expanded="false">
+            <span class="acc-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3"/><path d="M2 21c0-3.5 3-5.5 7-5.5s7 2 7 5.5"/><circle cx="17" cy="8" r="2.5"/><path d="M17.5 15.5c2.8.4 4.5 2 4.5 4.5"/></svg>
+            </span>
+            <span class="acc-title-wrap">
+              <h3>4. Third-Party Services</h3>
+              <p>We may use trusted third-party services (like analytics) to improve the app.</p>
+            </span>
+            <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>ColorNest may use trusted third-party services for features such as authentication, cloud storage, analytics, hosting, and performance monitoring.</p>
+              <p>These services may process limited information according to their own privacy policies and security practices.</p>
+              <p>We only use third-party services that are necessary to operate or improve the app.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="acc indigo">
+          <button class="acc-head" type="button" aria-expanded="false">
+            <span class="acc-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+            </span>
+            <span class="acc-title-wrap">
+              <h3>5. Your Rights</h3>
+              <p>You can manage or request deletion of your data anytime.</p>
+            </span>
+            <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>You have control over your personal information. Depending on applicable law, you may have the right to:</p>
+              <ul>
+                <li>Access your information</li>
+                <li>Update incorrect information</li>
+                <li>Request deletion of your account</li>
+                <li>Request deletion of saved data</li>
+                <li>Withdraw certain permissions</li>
+              </ul>
+              <p>To request assistance, contact us through the Contact Us section.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="acc violet">
+          <button class="acc-head" type="button" aria-expanded="false">
+            <span class="acc-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg>
+            </span>
+            <span class="acc-title-wrap">
+              <h3>6. Changes to This Policy</h3>
+              <p>We may update this policy from time to time. We will notify you of significant changes.</p>
+            </span>
+            <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>We may update this Privacy Policy when our services, features, or legal requirements change.</p>
+              <p>When important changes are made, we will update the "Last Updated" date and may provide additional notice where appropriate.</p>
+              <p>We recommend checking this page occasionally to stay informed.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="acc rose">
+          <button class="acc-head" type="button" aria-expanded="false">
+            <span class="acc-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
+            </span>
+            <span class="acc-title-wrap">
+              <h3>7. Contact Us</h3>
+              <p>If you have any questions about this Privacy Policy, feel free to contact us.</p>
+            </span>
+            <svg class="acc-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p>If you have questions, concerns, or requests regarding this Privacy Policy, you can contact the ColorNest team.</p>
+              <div class="contact-card">
+                <b>Privacy Support</b>
+                <a href="mailto:privacy@yourdomain.com">privacy@yourdomain.com</a>
+              </div>
+              <p>We'll do our best to respond to privacy-related requests as soon as reasonably possible.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="footer-card">
+        <span class="footer-note">Create Brighter Together</span>
+        <svg class="heart" viewBox="0 0 24 24"><path d="M19 14c1.5-1.5 3-3.3 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3.4 1-4.5 2.5C10.9 4 9.3 3 7.5 3A5.5 5.5 0 0 0 2 8.5c0 2.2 1.5 4 3 5.5l7 7z"/></svg>
+        <h3>We respect your privacy</h3>
+        <p>Thank you for being a part of ColorNest.</p>
       </div>
     </main>
-
-    <footer class="footer">
-      <div class="footer-content-wrapper">
-        <div class="footer-copyright">© 2026 <span class="footer-brand-name">Color Library</span>. All rights reserved.</div>
-        <div class="footer-developer">Designed &amp; Developed by <a href="#developer" class="footer-dev-link">Dev Asik</a></div>
-        <div class="footer-links">
-          <a href="/privacy-policy">Privacy Policy</a>
-          <span class="footer-dot">·</span>
-          <a href="/terms-of-service">Terms of Service</a>
-          <span class="footer-dot">·</span>
-          <a href="/contact">Contact</a>
-          <span class="footer-dot">·</span>
-          <a href="/about">About</a>
-        </div>
-      </div>
-    </footer>
-    <div class="toast" id="toast" role="status" aria-live="polite">Copied to clipboard</div>
   </div>
 
-  <div class="more-overlay" id="more-overlay" role="dialog" aria-modal="true" aria-label="More menu">
-    <div class="more-sheet">
-      <div class="more-sheet-header">
-        <h3>More</h3>
-        <button class="more-close-btn" id="more-close-btn" aria-label="Close menu">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-      </div>
-      <div class="more-menu-list">
-        <a class="more-menu-item" href="/privacy-policy">
-          <span class="more-item-icon">🔒</span>
-          <span class="more-item-label">Privacy Policy</span>
-          <svg class="more-item-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </a>
-        <a class="more-menu-item" href="/terms-of-service">
-          <span class="more-item-icon">📄</span>
-          <span class="more-item-label">Terms of Service</span>
-          <svg class="more-item-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </a>
-        <button class="more-menu-item" data-page="developer">
-          <span class="more-item-icon">👨‍💻</span>
-          <span class="more-item-label">Developer Details</span>
-          <svg class="more-item-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </button>
-        <a class="more-menu-item" href="/about">
-          <span class="more-item-icon">ℹ️</span>
-          <span class="more-item-label">About Color Library</span>
-          <svg class="more-item-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </a>
-        <a class="more-menu-item" href="/contact">
-          <span class="more-item-icon">📩</span>
-          <span class="more-item-label">Contact / Feedback</span>
-          <svg class="more-item-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <div class="content-modal-overlay" id="content-modal-overlay" role="dialog" aria-modal="true">
-    <div class="content-modal-card">
-      <div class="content-modal-header">
-        <h3 id="content-modal-title">Title</h3>
-        <button class="content-modal-close" id="content-modal-close" aria-label="Close modal">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-      </div>
-      <div class="content-modal-body" id="content-modal-body"></div>
-    </div>
-  </div>
-
-  <script src="/ch.js" defer></script>
+  <script>
+    document.querySelectorAll(".acc-head").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var acc = btn.closest(".acc");
+        var isOpen = acc.classList.toggle("open");
+        btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+    });
+  </script>
 </body>
 </html>

@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <script>try{if(localStorage.getItem("cl-theme")==="dark")document.documentElement.classList.add("dark")}catch(e){}</script>
+  <meta name="author" content="Dev Asik, web developer and creator of Color Library" />
+  <meta name="keywords" content="saved colors, saved gradients, saved palettes, color library, favorites, bookmarks" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+  <title>Saved — ColorNest</title>
+  <meta name="description" content="Your saved colors, gradients, palettes and mixes all in one place. Search, filter and copy your favorite color combinations." />
+  <meta name="theme-color" content="#7c3aed" />
+  <link rel="canonical" href="https://color-library.pages.dev/saved" />
+
+  <!-- Favicons & App Manifest -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --text: #111827;
+      --heading: #1e1b4b;
+      --muted: #6b7280;
+      --border: #eef0f4;
+      --card-shadow: 0 1px 2px rgba(17, 24, 39, 0.04), 0 4px 14px rgba(17, 24, 39, 0.05);
+      --primary: #7c3aed;
+      --tile: #f3f4f6;
+      --nav-h: 68px;
+    }
+    html.dark {
+      --bg: #0b0b14;
+      --surface: #14141f;
+      --text: #f3f4f6;
+      --heading: #eef2ff;
+      --muted: #9ca3af;
+      --border: #232332;
+      --card-shadow: 0 1px 2px rgba(0,0,0,.4), 0 6px 18px rgba(0,0,0,.35);
+      --tile: #1d1d2b;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      transition: background .25s ease, color .25s ease;
+    }
+    a { text-decoration: none; color: inherit; }
+    button { font-family: inherit; cursor: pointer; border: 0; background: none; }
+
+    .app {
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100dvh;
+      background: var(--bg);
+      padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px) + 12px);
+      position: relative;
+    }
+    @media (min-width: 520px) {
+      body { background: linear-gradient(160deg, #dcd4f5 0%, #efe6f6 50%, #d9e4f8 100%); }
+      .app { box-shadow: 0 0 0 1px rgba(255,255,255,.6), 0 24px 80px rgba(76, 29, 149, .18); }
+    }
+
+    /* ---------- Header ---------- */
+    .site-header {
+      position: sticky; top: 0; z-index: 40;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .header-inner {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 16px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .brand-mark {
+      width: 40px; height: 40px; flex: none;
+      background: linear-gradient(135deg, #f472b6 0%, #a855f7 45%, #3b82f6 100%);
+      border-radius: 46% 54% 58% 42% / 52% 44% 56% 48%;
+      box-shadow: inset 0 -3px 6px rgba(255,255,255,.45), 0 4px 10px rgba(168,85,247,.35);
+    }
+    .brand-name { font-size: 17px; font-weight: 800; color: var(--heading); line-height: 1.2; letter-spacing: -.01em; }
+    .brand-tag { font-size: 11.5px; color: var(--muted); line-height: 1.2; }
+    .header-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+    .icon-btn {
+      width: 38px; height: 38px; border-radius: 12px;
+      display: grid; place-items: center;
+      background: var(--tile); color: var(--text);
+      transition: transform .15s ease, background .2s ease;
+    }
+    .icon-btn:hover { transform: translateY(-1px); }
+    .icon-btn svg { width: 19px; height: 19px; }
+
+    /* ---------- Page head ---------- */
+    .page-head {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 18px 16px 0;
+    }
+    .page-head h1 {
+      font-size: clamp(30px, 9vw, 40px);
+      font-weight: 800; letter-spacing: -.03em; line-height: 1.05;
+      background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 45%, #ec4899 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: transparent;
+    }
+    .page-head .sub {
+      margin-top: 6px;
+      font-size: 13.5px; color: var(--muted);
+      max-width: 30ch; line-height: 1.5;
+    }
+    .count-card {
+      margin-left: auto; flex: none;
+      background: linear-gradient(120deg, #fde8ef 0%, #fce7f3 100%);
+      border-radius: 16px;
+      padding: 12px 14px;
+      display: flex; align-items: center; gap: 9px;
+      box-shadow: var(--card-shadow);
+    }
+    html.dark .count-card { background: linear-gradient(120deg, #3d1d2c 0%, #331a2b 100%); }
+    .count-card .heart-ico {
+      width: 30px; height: 30px; color: #ef4444;
+      display: grid; place-items: center;
+    }
+    .count-card .heart-ico svg { width: 26px; height: 26px; }
+    .count-card b { display: block; font-size: 19px; font-weight: 800; color: var(--heading); line-height: 1.1; }
+    .count-card span { display: block; font-size: 10.5px; color: var(--muted); line-height: 1.2; }
+
+    /* ---------- Filter chips ---------- */
+    .filter-row {
+      display: flex; gap: 8px;
+      padding: 16px 16px 0;
+      overflow-x: auto; scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .filter-row::-webkit-scrollbar { display: none; }
+    .f-chip {
+      flex: none;
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--tile); color: var(--text);
+      font-size: 13px; font-weight: 700;
+      padding: 11px 16px; border-radius: 999px;
+      transition: background .2s ease, color .2s ease, transform .15s ease;
+    }
+    .f-chip svg { width: 15px; height: 15px; }
+    .f-chip:hover { transform: translateY(-1px); }
+    .f-chip.active {
+      background: linear-gradient(120deg, #7c3aed 0%, #8b5cf6 100%);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, .35);
+    }
+
+    /* ---------- Search row ---------- */
+    .search-row {
+      display: flex; gap: 8px;
+      padding: 14px 16px 0;
+    }
+    .search-box {
+      flex: 1; min-width: 0;
+      display: flex; align-items: center; gap: 6px;
+      background: var(--tile);
+      border-radius: 14px;
+      padding: 0 11px;
+      height: 46px;
+    }
+    .search-box svg { width: 15px; height: 15px; color: var(--muted); flex: none; }
+    .search-box input {
+      flex: 1; min-width: 0; border: 0; outline: 0; background: none;
+      font-family: inherit; font-size: 11px; color: var(--text);
+    }
+    .search-box input::placeholder { color: var(--muted); }
+    .sort-btn {
+      flex: none;
+      display: inline-flex; align-items: center; gap: 4px;
+      background: var(--tile); color: var(--text);
+      font-size: 11.5px; font-weight: 700;
+      padding: 0 8px; height: 46px; border-radius: 14px;
+      transition: transform .15s ease;
+    }
+    .sort-btn:hover { transform: translateY(-1px); }
+    .sort-btn svg { width: 13px; height: 13px; }
+    .view-toggle { display: flex; gap: 5px; flex: none; }
+    .view-btn {
+      width: 35px; height: 46px; border-radius: 14px;
+      display: grid; place-items: center;
+      background: var(--tile); color: var(--muted);
+      transition: background .2s ease, color .2s ease;
+    }
+    .view-btn svg { width: 17px; height: 17px; }
+    .view-btn.active {
+      background: linear-gradient(120deg, #7c3aed 0%, #8b5cf6 100%);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, .35);
+    }
+
+    /* ---------- Grid ---------- */
+    .grid {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
+      padding: 16px 14px 0;
+    }
+    .grid.list-view { grid-template-columns: minmax(0, 1fr); }
+    .empty {
+      grid-column: 1 / -1;
+      text-align: center; color: var(--muted);
+      font-size: 13.5px; padding: 40px 0;
+    }
+
+    .item-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      display: flex; flex-direction: column;
+      min-width: 0;
+    }
+    .item-preview {
+      position: relative;
+      height: 108px;
+      display: flex; align-items: flex-start;
+      padding: 10px;
+    }
+    .list-view .item-preview { height: 84px; }
+    .item-preview.palette-bg { background: #f3e8ff; }
+    html.dark .item-preview.palette-bg { background: #2a2140; }
+    .type-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(17, 24, 39, .32);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: #fff;
+      font-size: 11px; font-weight: 700;
+      padding: 6px 11px; border-radius: 999px;
+      white-space: nowrap;
+    }
+    .type-badge svg { width: 12px; height: 12px; }
+    .like-btn {
+      margin-left: auto;
+      width: 32px; height: 32px; flex: none;
+      display: grid; place-items: center;
+      color: #fff;
+      filter: drop-shadow(0 1px 3px rgba(17,24,39,.35));
+      transition: transform .15s ease;
+    }
+    .like-btn:hover { transform: scale(1.12); }
+    .like-btn svg { width: 21px; height: 21px; }
+    .like-btn.liked svg path { fill: #ef4444; stroke: #ef4444; }
+    .palette-dots {
+      position: absolute; left: 12px; bottom: 12px;
+      display: flex; gap: 6px;
+    }
+    .palette-dots i {
+      width: 27px; height: 27px; border-radius: 999px;
+      box-shadow: inset 0 0 0 1px rgba(17,24,39,.06), 0 2px 6px rgba(17,24,39,.12);
+    }
+    .list-view .palette-dots i { width: 24px; height: 24px; }
+
+    .item-body {
+      display: flex; align-items: center; gap: 4px;
+      padding: 10px 8px 12px;
+      min-width: 0;
+    }
+    .item-info { min-width: 0; flex: 1; }
+    .item-info h3 {
+      font-size: 10px; font-weight: 800; color: var(--heading);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      letter-spacing: -.02em;
+    }
+    .item-info p {
+      font-size: 8px; color: var(--muted);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      margin-top: 1px; letter-spacing: -.02em;
+    }
+    .item-actions { display: flex; gap: 4px; flex: none; }
+    .mini-btn.view { color: #7c3aed; }
+    .mini-btn.view:hover { background: #ede9fe; }
+    html.dark .mini-btn.view:hover { background: #2a2140; }
+    .mini-btn {
+      width: 26px; height: 26px; border-radius: 9px;
+      display: grid; place-items: center;
+      background: var(--tile); color: var(--text);
+      transition: transform .15s ease, background .2s ease;
+    }
+    .mini-btn:hover { transform: translateY(-1px); }
+    .mini-btn svg { width: 13px; height: 13px; }
+
+    /* ---------- Bottom nav ---------- */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+      display: flex; justify-content: center;
+      pointer-events: none;
+    }
+    .bottom-nav .nav-inner {
+      pointer-events: auto;
+      width: 100%; max-width: 480px;
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid var(--border);
+      display: flex; align-items: stretch; justify-content: space-around;
+      padding: 8px 6px calc(8px + env(safe-area-inset-bottom, 0px));
+    }
+    .tab {
+      flex: 1; max-width: 86px;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      font-size: 10.5px; font-weight: 600; color: var(--muted);
+      padding: 6px 0 2px; border-radius: 14px;
+      transition: color .2s ease;
+    }
+    .tab svg { width: 21px; height: 21px; }
+    .tab.active { color: var(--primary); background: #ede9fe; font-weight: 800; }
+    html.dark .tab.active { background: #2a2344; }
+
+    /* ---------- Toast ---------- */
+    .toast {
+      position: fixed; left: 50%; bottom: calc(var(--nav-h) + 20px);
+      transform: translateX(-50%) translateY(16px);
+      background: #111827; color: #fff;
+      font-size: 12.5px; font-weight: 700;
+      padding: 10px 18px; border-radius: 999px;
+      opacity: 0; pointer-events: none;
+      transition: opacity .25s ease, transform .25s ease;
+      z-index: 60; white-space: nowrap;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ---------- Drawer menu ---------- */
+    .drawer-backdrop { position: fixed; inset: 0; background: rgba(15,10,40,.45); z-index: 90; }
+    .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(300px, 84vw); background: var(--surface); z-index: 91; transform: translateX(105%); transition: transform .28s cubic-bezier(.2,.8,.2,1); box-shadow: -12px 0 40px rgba(15,10,40,.18); display: flex; flex-direction: column; padding: 14px; }
+    .drawer.open { transform: translateX(0); }
+    .drawer-head { display: flex; align-items: center; justify-content: space-between; padding: 4px 4px 12px; border-bottom: 1px solid var(--border); }
+    .drawer-title { font-weight: 800; color: var(--heading); font-size: 15px; }
+    .drawer-nav { display: flex; flex-direction: column; gap: 4px; padding-top: 10px; overflow-y: auto; }
+    .drawer-nav a { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 12px; color: var(--text); font-weight: 700; font-size: 14px; text-decoration: none; }
+    .drawer-nav a:hover { background: var(--tile); }
+    .drawer-nav a.active { background: #f3e8ff; color: #7c3aed; }
+    html.dark .drawer-nav a.active { background: #2a2140; color: #c4b5fd; }
+    .drawer-nav svg { width: 18px; height: 18px; }
+  </style>
+  <link rel="stylesheet" href="/menu-extras.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>
+            <span class="brand-name">Color<span class="cn-grad">Nest</span></span><br />
+            <span class="brand-tag">Colors for Creators</span>
+          </span>
+        </a>
+        <div class="header-actions">
+          <button class="icon-btn" type="button" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          </button>
+          <button class="icon-btn" type="button" id="theme-btn" aria-label="Toggle theme">
+            <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          </button>
+          <button class="icon-btn" type="button" aria-label="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-head">
+        <div>
+          <h1>Saved</h1>
+          <p class="sub">Your saved colors, gradients, palettes and mixes all in one place.</p>
+        </div>
+        <div class="count-card" aria-live="polite">
+          <span class="heart-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M19 14c1.5-1.5 3-3.3 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3.4 1-4.5 2.5C10.9 4 9.3 3 7.5 3A5.5 5.5 0 0 0 2 8.5c0 2.2 1.5 4 3 5.5l7 7z"/></svg>
+          </span>
+          <span>
+            <b id="count-num">32</b>
+            <span>Saved Items</span>
+          </span>
+        </div>
+      </section>
+
+      <div class="filter-row" role="tablist" aria-label="Filter saved items">
+        <button class="f-chip active" type="button" data-filter="all" role="tab" aria-selected="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 21 3l-8 18-2-8z"/></svg>
+          All
+        </button>
+        <button class="f-chip" type="button" data-filter="color" role="tab" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 2.7s6.5 7 6.5 11.3a6.5 6.5 0 0 1-13 0C5.5 9.7 12 2.7 12 2.7z"/></svg>
+          Colors
+        </button>
+        <button class="f-chip" type="button" data-filter="gradient" role="tab" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 2.7s6.5 7 6.5 11.3a6.5 6.5 0 0 1-13 0C5.5 9.7 12 2.7 12 2.7z"/></svg>
+          Gradients
+        </button>
+        <button class="f-chip" type="button" data-filter="palette" role="tab" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a10 10 0 1 1 10-10c0 1.7-1.3 3-3 3h-2.2a2.8 2.8 0 0 0-2 4.8c.4.5.2 1.4-.4 1.9-.7.2-1.5.3-2.4.3z"/><circle cx="7.5" cy="11.5" r="1" fill="currentColor" stroke="none"/><circle cx="10.5" cy="7.5" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="8" r="1" fill="currentColor" stroke="none"/><circle cx="16.8" cy="12.2" r="1" fill="currentColor" stroke="none"/></svg>
+          Palettes
+        </button>
+        <button class="f-chip" type="button" data-filter="mix" role="tab" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h4l4-6-4-6H2"/><path d="m22 6h-4l-4 6 4 6h4"/><path d="m14 12-2-1M2 6h2M20 18h2"/></svg>
+          Mixes
+        </button>
+      </div>
+
+      <div class="search-row">
+        <label class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="search" id="search-input" placeholder="Search saved items..." aria-label="Search saved items" />
+        </label>
+        <button class="sort-btn" type="button" id="sort-btn" aria-label="Toggle sort order">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 15 5 5 5-5M7 9l5-5 5 5"/></svg>
+          <span id="sort-label">Newest</span>
+        </button>
+        <div class="view-toggle" role="group" aria-label="View mode">
+          <button class="view-btn active" type="button" id="grid-view-btn" aria-label="Grid view" aria-pressed="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          </button>
+          <button class="view-btn" type="button" id="list-view-btn" aria-label="List view" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <section class="grid" id="grid" aria-label="Saved items"></section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Bottom navigation">
+      <div class="nav-inner">
+        <a class="tab" href="/">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+          Home
+        </a>
+        <a class="tab" href="/color-preview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a10 10 0 1 1 10-10c0 1.7-1.3 3-3 3h-2.2a2.8 2.8 0 0 0-2 4.8c.4.5.2 1.4-.4 1.9-.7.2-1.5.3-2.4.3z"/><circle cx="7.5" cy="11.5" r="1" fill="currentColor" stroke="none"/><circle cx="10.5" cy="7.5" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="8" r="1" fill="currentColor" stroke="none"/><circle cx="16.8" cy="12.2" r="1" fill="currentColor" stroke="none"/></svg>
+          Colors
+        </a>
+        <a class="tab" href="/color-mix">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h4l4-6-4-6H2"/><path d="m22 6h-4l-4 6 4 6h4"/><path d="m14 12-2-1M2 6h2M20 18h2"/></svg>
+          Mix
+        </a>
+        <a class="tab" href="/gradients">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 2.7s6.5 7 6.5 11.3a6.5 6.5 0 0 1-13 0C5.5 9.7 12 2.7 12 2.7z"/></svg>
+          Gradients
+        </a>
+        <a class="tab active" href="/saved" aria-current="page">
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          Saved
+        </a>
+      </div>
+    </nav>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <script>
+  var ITEMS = [
+    { name: "Sky Blue", type: "color", value: "#0EA5E9", liked: true, ts: 12 },
+    { name: "Sunset Glow", type: "gradient", c1: "#F97316", c2: "#EC4899", liked: false, ts: 11 },
+    { name: "My Brand Palette", type: "palette", colors: ["#3B82F6", "#22D3EE", "#8B5CF6", "#EC4899"], liked: true, ts: 10 },
+    { name: "Ocean Breeze", type: "mix", c1: "#38B2F6", c2: "#EC4899", liked: false, ts: 9 },
+    { name: "Mint Green", type: "color", value: "#10B981", liked: false, ts: 8 },
+    { name: "Purple Haze", type: "gradient", c1: "#8B5CF6", c2: "#D946EF", liked: false, ts: 7 },
+    { name: "Warm Tones", type: "palette", colors: ["#EF4444", "#F97316", "#FBBF24", "#FDE1B9"], liked: true, ts: 6 },
+    { name: "Forest Mist", type: "mix", c1: "#0EA5E9", c2: "#10B981", liked: true, ts: 5 },
+    { name: "Berry Pop", type: "gradient", c1: "#C026D3", c2: "#F472B6", liked: true, ts: 4 },
+    { name: "Emerald Deep", type: "color", value: "#059669", liked: true, ts: 3 },
+    { name: "Neon Nights", type: "mix", c1: "#7C3AED", c2: "#06B6D4", liked: false, ts: 2 },
+    { name: "Pastel Set", type: "palette", colors: ["#F9A8D4", "#C4B5FD", "#A5F3FC", "#FDE68A"], liked: false, ts: 1 }
+  ];
+
+  var TYPE_LABEL = { color: "Color", gradient: "Gradient", palette: "Palette", mix: "Mix" };
+  var TYPE_ICON = {
+    color: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 2.7s6.5 7 6.5 11.3a6.5 6.5 0 0 1-13 0C5.5 9.7 12 2.7 12 2.7z"/></svg>',
+    gradient: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 2.7s6.5 7 6.5 11.3a6.5 6.5 0 0 1-13 0C5.5 9.7 12 2.7 12 2.7z"/></svg>',
+    palette: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="9" cy="9" r="1.6" fill="currentColor" stroke="none"/><circle cx="15" cy="9" r="1.6" fill="currentColor" stroke="none"/><circle cx="9" cy="15" r="1.6" fill="currentColor" stroke="none"/><circle cx="15" cy="15" r="1.6" fill="currentColor" stroke="none"/></svg>',
+    mix: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h4l4-6-4-6H2"/><path d="m22 6h-4l-4 6 4 6h4"/><path d="m14 12-2-1M2 6h2M20 18h2"/></svg>'
+  };
+
+  var state = { filter: "all", query: "", newest: true, listView: false };
+
+  var grid = document.getElementById("grid");
+  var searchInput = document.getElementById("search-input");
+  var toast = document.getElementById("toast");
+  var toastTimer = null;
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function previewStyle(item) {
+    if (item.type === "color") return "background:" + item.value;
+    if (item.type === "palette") return "";
+    return "background:linear-gradient(120deg," + item.c1 + " 0%," + item.c2 + " 100%)";
+  }
+
+  function subtitle(item) {
+    if (item.type === "color") return item.value;
+    if (item.type === "palette") return item.colors.length + " colors";
+    return item.c1 + " \u2192 " + item.c2;
+  }
+
+  function render() {
+    var q = state.query.trim().toLowerCase();
+    var list = ITEMS.filter(function (it) {
+      if (state.filter !== "all" && it.type !== state.filter) return false;
+      if (q && it.name.toLowerCase().indexOf(q) === -1 && subtitle(it).toLowerCase().indexOf(q) === -1) return false;
+      return true;
+    });
+    list.sort(function (a, b) { return state.newest ? b.ts - a.ts : a.ts - b.ts; });
+
+    document.getElementById("count-num").textContent = list.length;
+
+    if (!list.length) {
+      grid.innerHTML = '<p class="empty">No saved items found.</p>';
+      return;
+    }
+
+    grid.innerHTML = list.map(function (it, idx) {
+      var palDots = it.type === "palette"
+        ? '<span class="palette-dots">' + it.colors.map(function (c) {
+            return '<i style="background:' + c + '"></i>';
+          }).join("") + "</span>"
+        : "";
+      return (
+        '<article class="item-card" data-i="' + ITEMS.indexOf(it) + '">' +
+          '<div class="item-preview' + (it.type === "palette" ? " palette-bg" : "") + '" style="' + previewStyle(it) + '">' +
+            '<span class="type-badge">' + TYPE_ICON[it.type] + TYPE_LABEL[it.type] + "</span>" +
+            '<button class="like-btn' + (it.liked ? " liked" : "") + '" type="button" data-act="like" aria-label="' + (it.liked ? "Remove from saved" : "Save") + " " + esc(it.name) + '" aria-pressed="' + it.liked + '">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M19 14c1.5-1.5 3-3.3 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3.4 1-4.5 2.5C10.9 4 9.3 3 7.5 3A5.5 5.5 0 0 0 2 8.5c0 2.2 1.5 4 3 5.5l7 7z"/></svg>' +
+            "</button>" + palDots +
+          "</div>" +
+          '<div class="item-body">' +
+            '<div class="item-info"><h3>' + esc(it.name) + "</h3><p>" + esc(subtitle(it)) + "</p></div>" +
+            '<div class="item-actions">' +
+              '<button class="mini-btn view" type="button" data-act="preview" aria-label="Preview ' + esc(it.name) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></button>' +
+              '<button class="mini-btn" type="button" data-act="copy" aria-label="Copy ' + esc(it.name) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>' +
+              '<button class="mini-btn" type="button" data-act="more" aria-label="More options for ' + esc(it.name) + '"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></button>' +
+            "</div>" +
+          "</div>" +
+        "</article>"
+      );
+    }).join("");
+  }
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 1800);
+  }
+
+  function copyText(text, label) {
+    function done() { showToast(label + " copied \u2014 " + text); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, done);
+    } else { done(); }
+  }
+
+  grid.addEventListener("click", function (e) {
+    var btn = e.target.closest("button[data-act]");
+    if (!btn) return;
+    var card = btn.closest(".item-card");
+    var item = ITEMS[Number(card.dataset.i)];
+
+    if (btn.dataset.act === "like") {
+      item.liked = !item.liked;
+      render();
+      showToast(item.liked ? "Saved \u2014 " + item.name : "Removed \u2014 " + item.name);
+    } else if (btn.dataset.act === "preview") {
+      var url;
+      if (item.type === "color") {
+        url = "/color-preview?hex=" + encodeURIComponent(item.value) + "&name=" + encodeURIComponent(item.name);
+      } else if (item.type === "palette") {
+        url = "/color-preview?colors=" + encodeURIComponent(item.colors.join(",")) + "&name=" + encodeURIComponent(item.name);
+      } else {
+        url = "/gradient-preview?c1=" + encodeURIComponent(item.c1) + "&c2=" + encodeURIComponent(item.c2) + "&name=" + encodeURIComponent(item.name) + "&type=linear";
+      }
+      window.location.href = url;
+    } else if (btn.dataset.act === "copy") {
+      copyText(subtitle(item), item.name);
+    } else {
+      showToast("More options coming soon");
+    }
+  });
+
+  document.querySelectorAll(".f-chip").forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      document.querySelectorAll(".f-chip").forEach(function (c) {
+        c.classList.remove("active");
+        c.setAttribute("aria-selected", "false");
+      });
+      chip.classList.add("active");
+      chip.setAttribute("aria-selected", "true");
+      state.filter = chip.dataset.filter;
+      render();
+    });
+  });
+
+  searchInput.addEventListener("input", function () {
+    state.query = searchInput.value;
+    render();
+  });
+
+  document.getElementById("sort-btn").addEventListener("click", function () {
+    state.newest = !state.newest;
+    document.getElementById("sort-label").textContent = state.newest ? "Newest" : "Oldest";
+    render();
+  });
+
+  var gridBtn = document.getElementById("grid-view-btn");
+  var listBtn = document.getElementById("list-view-btn");
+  function setView(listMode) {
+    state.listView = listMode;
+    grid.classList.toggle("list-view", listMode);
+    gridBtn.classList.toggle("active", !listMode);
+    listBtn.classList.toggle("active", listMode);
+    gridBtn.setAttribute("aria-pressed", String(!listMode));
+    listBtn.setAttribute("aria-pressed", String(listMode));
+  }
+  gridBtn.addEventListener("click", function () { setView(false); });
+  listBtn.addEventListener("click", function () { setView(true); });
+
+  // Theme toggle (shared across pages via localStorage)
+  var themeBtn = document.getElementById("theme-btn");
+  if (localStorage.getItem("cl-theme") === "dark") document.documentElement.classList.add("dark");
+  themeBtn.addEventListener("click", function () {
+    var dark = document.documentElement.classList.toggle("dark");
+    localStorage.setItem("cl-theme", dark ? "dark" : "light");
+  });
+
+  render();
+  </script>
+  <!-- Drawer menu -->
+  <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+  <aside class="drawer" id="drawer" aria-hidden="true" aria-label="Navigation menu">
+    <div class="drawer-head">
+      <span class="drawer-title">Color<span class="cn-grad">Nest</span></span>
+      <button class="icon-btn" type="button" id="drawer-close" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <nav class="drawer-nav">
+      <a href="/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</a>
+      <a href="/colors"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22a10 10 0 1 1 10-10c0 1.7-1.3 3-3 3h-2.2a2.8 2.8 0 0 0-2 4.8c.4.5.2 1.4-.4 1.9-.7.2-1.5.3-2.4.3z"/></svg>Colors</a>
+      <a href="/color-mix"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg>Mix</a>
+      <a href="/gradients"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.7s6.5 7 6.5 11.3a6.5 6.5 0 0 1-13 0C5.5 9.7 12 2.7 12 2.7z"/></svg>Gradients</a>
+      <a href="/saved" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>Saved</a>
+    </nav>
+  </aside>
+  <script>
+    (function () {
+      var menuBtn = document.querySelector('[aria-label="Open menu"], [aria-label="Menu"]');
+      var drawer = document.getElementById("drawer");
+      var backdrop = document.getElementById("drawer-backdrop");
+      if (!menuBtn || !drawer) return;
+      function openDrawer() { drawer.classList.add("open"); backdrop.hidden = false; drawer.setAttribute("aria-hidden", "false"); }
+      function closeDrawer() { drawer.classList.remove("open"); backdrop.hidden = true; drawer.setAttribute("aria-hidden", "true"); }
+      menuBtn.addEventListener("click", openDrawer);
+      document.getElementById("drawer-close").addEventListener("click", closeDrawer);
+      backdrop.addEventListener("click", closeDrawer);
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeDrawer(); });
+    })();
+  </script>
+  <script src="/copy-limit.js"></script>
+  <script src="/menu-extras.js"></script>
+</body>
+</html>
