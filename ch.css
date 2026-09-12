@@ -4134,7 +4134,7 @@ body { background:#f7f9ff; }
   .header-inner { padding:0 12px; }
   .brand-mark { height:30px; max-width:108px; }
   .signin-button { padding:0 14px; font-size:11px; height:34px; }
-  .hero-inner { display:grid; grid-template-columns:1fr; padding:22px 16px 18px; gap:16px; align-items:center; }
+  .hero-inner { display:grid; grid-template-columns:1.12fr .88fr; padding:22px 16px 18px; gap:12px; align-items:center; }
   .hero-copy { order:1; width:100%; min-width:0; }
   .hero-copy h1 { font-size:clamp(28px,7vw,34px); line-height:1.12; letter-spacing:-1.2px; font-weight:800; max-width:100%; }
   .hero-copy .lead { font-size:15.5px; line-height:1.56; margin:12px 0 16px; color:#526078; max-width:100%; }
@@ -4147,8 +4147,8 @@ body { background:#f7f9ff; }
   .hero-stats b { width:22px; height:22px; font-size:12px; }
   .hero-stats strong { font-size:11.5px; }
   .hero-stats small { font-size:8.5px; }
-  .hero-art { order:2 !important; min-height:0 !important; height:auto !important; margin:8px auto 4px !important; display:flex !important; justify-content:center; align-items:center; width:100%; min-width:0; visibility:visible !important; opacity:1 !important; }
-  .hero-asset-img, #hero-art > img { display:block !important; width:auto !important; max-width:min(290px, 80vw) !important; max-height:185px !important; height:auto !important; margin:0 auto; object-fit:contain; filter:drop-shadow(0 12px 28px rgba(60,50,140,.12)); visibility:visible !important; opacity:1 !important; }
+  .hero-art { order:2 !important; min-height:0 !important; height:auto !important; margin:0 !important; display:flex !important; justify-content:center; align-items:center; width:100%; min-width:0; visibility:visible !important; opacity:1 !important; }
+  .hero-asset-img, #hero-art > img { display:block !important; width:100% !important; max-width:100% !important; max-height:150px !important; height:auto !important; margin:0 auto; object-fit:contain; filter:drop-shadow(0 10px 22px rgba(60,50,140,.12)); visibility:visible !important; opacity:1 !important; }
   .hero-wide-search { grid-column:1 / -1; order:3; height:46px; border-radius:14px; padding-left:12px; }
   .hero-wide-search svg { width:16px; }
   .hero-wide-search input { font-size:12.5px; padding:0 8px; }
