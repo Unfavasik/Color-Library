@@ -347,6 +347,7 @@
     .drawer-nav svg { width: 18px; height: 18px; }
   </style>
   <link rel="stylesheet" href="/menu-extras.css" />
+  <link rel="stylesheet" href="/brand.css?v=1" />
 </head>
 <body>
   <div class="app">
@@ -463,21 +464,107 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </div>
 
+  <script src="/colors-data.js"></script>
   <script>
-  var ITEMS = [
-    { name: "Sky Blue", type: "color", value: "#0EA5E9", liked: true, ts: 12 },
-    { name: "Sunset Glow", type: "gradient", c1: "#F97316", c2: "#EC4899", liked: false, ts: 11 },
-    { name: "My Brand Palette", type: "palette", colors: ["#3B82F6", "#22D3EE", "#8B5CF6", "#EC4899"], liked: true, ts: 10 },
-    { name: "Ocean Breeze", type: "mix", c1: "#38B2F6", c2: "#EC4899", liked: false, ts: 9 },
-    { name: "Mint Green", type: "color", value: "#10B981", liked: false, ts: 8 },
-    { name: "Purple Haze", type: "gradient", c1: "#8B5CF6", c2: "#D946EF", liked: false, ts: 7 },
-    { name: "Warm Tones", type: "palette", colors: ["#EF4444", "#F97316", "#FBBF24", "#FDE1B9"], liked: true, ts: 6 },
-    { name: "Forest Mist", type: "mix", c1: "#0EA5E9", c2: "#10B981", liked: true, ts: 5 },
-    { name: "Berry Pop", type: "gradient", c1: "#C026D3", c2: "#F472B6", liked: true, ts: 4 },
-    { name: "Emerald Deep", type: "color", value: "#059669", liked: true, ts: 3 },
-    { name: "Neon Nights", type: "mix", c1: "#7C3AED", c2: "#06B6D4", liked: false, ts: 2 },
-    { name: "Pastel Set", type: "palette", colors: ["#F9A8D4", "#C4B5FD", "#A5F3FC", "#FDE68A"], liked: false, ts: 1 }
-  ];
+  var ITEMS = [];
+  function loadAllSavedItems() {
+    var isAuth = false;
+    try {
+      if (window.CNAuth && typeof window.CNAuth.isLoggedIn === "function") {
+        isAuth = window.CNAuth.isLoggedIn();
+      } else {
+        var u = JSON.parse(localStorage.getItem("cn_user") || "null");
+        isAuth = !!(u && (u.id || u.email || u.user_metadata));
+      }
+    } catch (e) {}
+
+    if (!isAuth) {
+      return [];
+    }
+
+    var items = [];
+    var catalog = Array.isArray(window.COLOR_DATA) ? window.COLOR_DATA : [];
+
+    // 1. Single Colors
+    try {
+      var savedHexes = JSON.parse(localStorage.getItem("colorLibraryFavorites") || "[]");
+      if (Array.isArray(savedHexes)) {
+        savedHexes.forEach(function (hex, index) {
+          var value = String(hex || "").trim().toUpperCase();
+          if (/^#[0-9A-F]{6}$/.test(value)) {
+            var match = catalog.find(function (color) { return String(color.hex || "").toUpperCase() === value; });
+            items.push({
+              id: "color-" + value,
+              name: match ? match.name : value,
+              type: "color",
+              value: value,
+              liked: true,
+              ts: Date.now() - (index * 1000)
+            });
+          }
+        });
+      }
+    } catch (e) {}
+
+    // 2. Saved Gradients
+    try {
+      var savedGradients = JSON.parse(localStorage.getItem("colorLibrarySavedGradients") || "[]");
+      if (Array.isArray(savedGradients)) {
+        savedGradients.forEach(function (g, index) {
+          if (g && g.c1 && g.c2) {
+            items.push({
+              id: "gradient-" + (g.name || "") + "-" + g.c1 + "-" + g.c2,
+              name: g.name || (g.c1 + " \u2192 " + g.c2),
+              type: "gradient",
+              c1: g.c1,
+              c2: g.c2,
+              gradType: g.type || "linear",
+              liked: true,
+              ts: (g.ts || Date.now()) - (index * 500)
+            });
+          }
+        });
+      }
+    } catch (e) {}
+
+    // 3. Saved Mixes & Mix History
+    try {
+      var savedMixes = JSON.parse(localStorage.getItem("colorLibrarySavedMixes") || "[]");
+      var mixHistory = JSON.parse(localStorage.getItem("cl-mix-history") || "[]");
+      var combinedMixes = [];
+      if (Array.isArray(savedMixes)) combinedMixes = combinedMixes.concat(savedMixes);
+      if (Array.isArray(mixHistory)) combinedMixes = combinedMixes.concat(mixHistory);
+
+      var seenMixCss = {};
+      combinedMixes.forEach(function (m, index) {
+        if (!m) return;
+        var css = m.gradientCss || m.css;
+        var name = m.name || (m.hex ? ("Mixed " + m.hex) : "Custom Mix");
+        if (css && !seenMixCss[css]) {
+          seenMixCss[css] = true;
+          var stops = Array.isArray(m.stops) ? m.stops : [];
+          var c1 = stops[0] ? (stops[0].color || stops[0]) : "#FF6B3D";
+          var c2 = stops[1] ? (stops[1].color || stops[1]) : (stops[0] ? (stops[0].color || stops[0]) : "#8834DF");
+          items.push({
+            id: "mix-" + (m.id || index),
+            name: name,
+            type: "mix",
+            value: m.hex || c1,
+            c1: c1,
+            c2: c2,
+            css: css,
+            stops: stops,
+            liked: true,
+            ts: (m.ts || Date.now()) - (index * 200)
+          });
+        }
+      });
+    } catch (e) {}
+
+    return items;
+  }
+
+  ITEMS = loadAllSavedItems();
 
   var TYPE_LABEL = { color: "Color", gradient: "Gradient", palette: "Palette", mix: "Mix" };
   var TYPE_ICON = {
@@ -503,12 +590,16 @@
   function previewStyle(item) {
     if (item.type === "color") return "background:" + item.value;
     if (item.type === "palette") return "";
-    return "background:linear-gradient(120deg," + item.c1 + " 0%," + item.c2 + " 100%)";
+    if (item.type === "mix" && item.css) {
+      return item.css.indexOf("background:") !== -1 ? item.css.replace("background:", "background:") : ("background:" + item.css);
+    }
+    return "background:linear-gradient(120deg," + (item.c1 || "#3b82f6") + " 0%," + (item.c2 || "#ec4899") + " 100%)";
   }
 
   function subtitle(item) {
     if (item.type === "color") return item.value;
-    if (item.type === "palette") return item.colors.length + " colors";
+    if (item.type === "palette") return (item.colors ? item.colors.length : 0) + " colors";
+    if (item.type === "mix") return item.value ? item.value : (item.c1 + " \u2192 " + item.c2);
     return item.c1 + " \u2192 " + item.c2;
   }
 
@@ -524,12 +615,12 @@
     document.getElementById("count-num").textContent = list.length;
 
     if (!list.length) {
-      grid.innerHTML = '<p class="empty">No saved items found.</p>';
+      grid.innerHTML = '<p class="empty">No saved items found. Tap the heart on any color, gradient, or mix to save your favorites!</p>';
       return;
     }
 
     grid.innerHTML = list.map(function (it, idx) {
-      var palDots = it.type === "palette"
+      var palDots = it.type === "palette" && Array.isArray(it.colors)
         ? '<span class="palette-dots">' + it.colors.map(function (c) {
             return '<i style="background:' + c + '"></i>';
           }).join("") + "</span>"
@@ -539,7 +630,7 @@
           '<div class="item-preview' + (it.type === "palette" ? " palette-bg" : "") + '" style="' + previewStyle(it) + '">' +
             '<span class="type-badge">' + TYPE_ICON[it.type] + TYPE_LABEL[it.type] + "</span>" +
             '<button class="like-btn' + (it.liked ? " liked" : "") + '" type="button" data-act="like" aria-label="' + (it.liked ? "Remove from saved" : "Save") + " " + esc(it.name) + '" aria-pressed="' + it.liked + '">' +
-              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M19 14c1.5-1.5 3-3.3 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3.4 1-4.5 2.5C10.9 4 9.3 3 7.5 3A5.5 5.5 0 0 0 2 8.5c0 2.2 1.5 4 3 5.5l7 7z"/></svg>' +
+              '<svg viewBox="0 0 24 24" fill="' + (it.liked ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M19 14c1.5-1.5 3-3.3 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3.4 1-4.5 2.5C10.9 4 9.3 3 7.5 3A5.5 5.5 0 0 0 2 8.5c0 2.2 1.5 4 3 5.5l7 7z"/></svg>' +
             "</button>" + palDots +
           "</div>" +
           '<div class="item-body">' +
@@ -547,8 +638,7 @@
             '<div class="item-actions">' +
               '<button class="mini-btn view" type="button" data-act="preview" aria-label="Preview ' + esc(it.name) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></button>' +
               '<button class="mini-btn" type="button" data-act="copy" aria-label="Copy ' + esc(it.name) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>' +
-              '<button class="mini-btn" type="button" data-act="more" aria-label="More options for ' + esc(it.name) + '"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></button>' +
-            "</div>" +
+            '</div>' +
           "</div>" +
         "</article>"
       );
@@ -574,9 +664,43 @@
     if (!btn) return;
     var card = btn.closest(".item-card");
     var item = ITEMS[Number(card.dataset.i)];
+    if (!item) return;
 
     if (btn.dataset.act === "like") {
+      if (window.CNAuth && !window.CNAuth.gateSave()) return;
       item.liked = !item.liked;
+      if (!item.liked) {
+        if (window.CNAuth && typeof window.CNAuth.removeColorFromSupabase === "function") {
+          window.CNAuth.removeColorFromSupabase(item.id || item.value || item.name);
+        }
+        if (item.type === "color") {
+          try {
+            var currentColors = JSON.parse(localStorage.getItem("colorLibraryFavorites") || "[]");
+            localStorage.setItem("colorLibraryFavorites", JSON.stringify(currentColors.filter(function (hex) {
+              return String(hex).trim().toUpperCase() !== item.value.toUpperCase();
+            })));
+          } catch (e) {}
+        } else if (item.type === "gradient") {
+          try {
+            var currentGrads = JSON.parse(localStorage.getItem("colorLibrarySavedGradients") || "[]");
+            localStorage.setItem("colorLibrarySavedGradients", JSON.stringify(currentGrads.filter(function (g) {
+              return !(g.c1 === item.c1 && g.c2 === item.c2 && (g.name || "").toLowerCase() === (item.name || "").toLowerCase());
+            })));
+          } catch (e) {}
+        } else if (item.type === "mix") {
+          try {
+            var currentMixes = JSON.parse(localStorage.getItem("colorLibrarySavedMixes") || "[]");
+            localStorage.setItem("colorLibrarySavedMixes", JSON.stringify(currentMixes.filter(function (m) {
+              return m.css !== item.css && m.name !== item.name;
+            })));
+            var mixHist = JSON.parse(localStorage.getItem("cl-mix-history") || "[]");
+            localStorage.setItem("cl-mix-history", JSON.stringify(mixHist.filter(function (m) {
+              return m.css !== item.css && m.name !== item.name;
+            })));
+          } catch (e) {}
+        }
+        ITEMS = ITEMS.filter(function (entry) { return entry !== item; });
+      }
       render();
       showToast(item.liked ? "Saved \u2014 " + item.name : "Removed \u2014 " + item.name);
     } else if (btn.dataset.act === "preview") {
@@ -584,15 +708,15 @@
       if (item.type === "color") {
         url = "/color-preview?hex=" + encodeURIComponent(item.value) + "&name=" + encodeURIComponent(item.name);
       } else if (item.type === "palette") {
-        url = "/color-preview?colors=" + encodeURIComponent(item.colors.join(",")) + "&name=" + encodeURIComponent(item.name);
+        url = "/color-preview?colors=" + encodeURIComponent((item.colors || []).join(",")) + "&name=" + encodeURIComponent(item.name);
+      } else if (item.type === "mix") {
+        url = "/color-mix";
       } else {
-        url = "/gradient-preview?c1=" + encodeURIComponent(item.c1) + "&c2=" + encodeURIComponent(item.c2) + "&name=" + encodeURIComponent(item.name) + "&type=linear";
+        url = "/gradient-preview?c1=" + encodeURIComponent(item.c1) + "&c2=" + encodeURIComponent(item.c2) + "&name=" + encodeURIComponent(item.name) + "&type=" + encodeURIComponent(item.gradType || "linear");
       }
       window.location.href = url;
     } else if (btn.dataset.act === "copy") {
       copyText(subtitle(item), item.name);
-    } else {
-      showToast("More options coming soon");
     }
   });
 
@@ -640,6 +764,18 @@
     var dark = document.documentElement.classList.toggle("dark");
     localStorage.setItem("cl-theme", dark ? "dark" : "light");
   });
+
+  window.addEventListener("cn:favorites-synced", function () {
+    ITEMS = loadAllSavedItems();
+    render();
+  });
+
+  if (window.CNAuth && typeof window.CNAuth.syncWithSupabase === "function") {
+    window.CNAuth.syncWithSupabase().then(function () {
+      ITEMS = loadAllSavedItems();
+      render();
+    });
+  }
 
   render();
   </script>

@@ -1132,6 +1132,7 @@
       display: block !important;
     }
   </style>
+  <link rel="stylesheet" href="/brand.css?v=1" />
 </head>
 <body>
   <div id="desktop-viewport-wrapper">
@@ -1139,11 +1140,8 @@
     <!-- TOPBAR -->
     <header class="topbar">
       <a href="/color-mix" class="brand-logo" aria-label="ColorNest Home">
-        <div class="logo-marks" aria-hidden="true">
-          <div class="logo-disc left"></div>
-          <div class="logo-disc right"></div>
-        </div>
-        <span class="brand-text">Colour <span class="brand-accent">Library</span></span>
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text">Color<span class="brand-accent">Nest</span></span>
       </a>
 
       <nav class="nav-links" aria-label="Primary Navigation">
@@ -1220,8 +1218,13 @@
           <div class="hero-device">
             <div class="device-header">
               <span class="device-hex" id="device-hex">#FF6B3D</span>
-              <div class="device-copy-icon" title="Copy Color Code">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <button class="device-save-icon" id="device-save-btn" title="Save to Favorites" aria-label="Save to Favorites" style="background: none; border: none; padding: 0; color: var(--text-muted); cursor: pointer; display: grid; place-items: center; transition: color 0.2s, transform 0.2s;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-1.5 3-3.3 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3.4 1-4.5 2.5C10.9 4 9.3 3 7.5 3A5.5 5.5 0 0 0 2 8.5c0 2.2 1.5 4 3 5.5l7 7z"/></svg>
+                </button>
+                <div class="device-copy-icon" title="Copy Color Code">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </div>
               </div>
             </div>
 
@@ -1468,11 +1471,8 @@
       <div class="footer-top">
         <div class="footer-brand">
           <a href="/color-mix" class="brand-logo" aria-label="ColorNest">
-            <div class="logo-marks" aria-hidden="true">
-              <div class="logo-disc left"></div>
-              <div class="logo-disc right"></div>
-            </div>
-            <span class="brand-text">Color<span class="cn-grad">Nest</span></span>
+            <span class="brand-mark" aria-hidden="true"></span>
+            <span class="brand-text">Color<span class="brand-accent">Nest</span></span>
           </a>
           <span class="footer-tagline">Colours Inspire Creativity.</span>
         </div>
@@ -1612,6 +1612,61 @@
       if (canvas) {
         canvas.style.background = `linear-gradient(to bottom, transparent, #000000), linear-gradient(to right, #ffffff, ${hex})`;
       }
+
+      // Save to favorites handler
+      const saveBtn = document.getElementById('device-save-btn');
+      function checkIsFav() {
+        try {
+          const list = JSON.parse(localStorage.getItem("colorLibraryFavorites") || "[]");
+          return Array.isArray(list) && list.map(function (h) { return String(h).trim().toUpperCase(); }).includes(hex.toUpperCase());
+        } catch(e) { return false; }
+      }
+      function updateSaveBtnState() {
+        if (!saveBtn) return;
+        const isFav = checkIsFav();
+        saveBtn.style.color = isFav ? '#EF4444' : 'var(--text-muted)';
+        const svg = saveBtn.querySelector('svg');
+        if (svg) svg.setAttribute('fill', isFav ? '#EF4444' : 'none');
+        saveBtn.setAttribute('title', isFav ? 'Remove from Favorites' : 'Save to Favorites');
+        saveBtn.setAttribute('aria-pressed', String(isFav));
+      }
+      updateSaveBtnState();
+
+      if (saveBtn) {
+        saveBtn.addEventListener('click', () => {
+          if (window.CNAuth && !window.CNAuth.gateSave()) return;
+          try {
+            let list = JSON.parse(localStorage.getItem("colorLibraryFavorites") || "[]");
+            if (!Array.isArray(list)) list = [];
+            const norm = hex.toUpperCase();
+            if (list.map(function (h) { return String(h).trim().toUpperCase(); }).includes(norm)) {
+              list = list.filter(function (h) { return String(h).trim().toUpperCase() !== norm; });
+              if (window.CNAuth && typeof window.CNAuth.removeColorFromSupabase === 'function') {
+                window.CNAuth.removeColorFromSupabase(norm);
+              }
+            } else {
+              list.unshift(norm);
+              if (window.CNAuth && typeof window.CNAuth.saveColorToSupabase === 'function') {
+                window.CNAuth.saveColorToSupabase({ name: hex, type: 'color', value: norm, hex: norm });
+              }
+            }
+            localStorage.setItem("colorLibraryFavorites", JSON.stringify(list));
+            updateSaveBtnState();
+          } catch(e) {}
+        });
+      }
+
+      window.addEventListener('cn:favorites-synced', () => {
+        updateSaveBtnState();
+      });
+
+      // Feature card save links
+      document.querySelectorAll('a[href="#save"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          window.location.href = '/saved';
+        });
+      });
 
       // Copy on device header click
       const copyIcon = document.querySelector('.device-copy-icon');

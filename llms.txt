@@ -29,7 +29,7 @@ Color Library is designed and maintained by Dev Asik, Web Developer.
 
 ## Key files
 - https://color-library.pages.dev/ — interactive color library
-- https://color-library.pages.dev/about.html — developer profile
+- https://color-library.pages.dev/about — developer profile
 - https://color-library.pages.dev/sitemap.xml — crawlable URL list
 - https://color-library.pages.dev/robots.txt — crawler policy
 

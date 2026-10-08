@@ -356,6 +356,7 @@
     .drawer-nav svg { width: 18px; height: 18px; }
   </style>
   <link rel="stylesheet" href="/menu-extras.css" />
+  <link rel="stylesheet" href="/brand.css?v=1" />
 </head>
 <body>
   <div class="app">
@@ -511,6 +512,42 @@
       // Pre-compute families once
       COLORS.forEach(function (c) { c.family = familyOf(c.hex.toUpperCase()); });
 
+      // ---------- Favorites Management ----------
+      function getSavedHexes() {
+        try {
+          var raw = localStorage.getItem("colorLibraryFavorites");
+          var arr = JSON.parse(raw || "[]");
+          return Array.isArray(arr) ? arr.map(function (h) { return String(h).trim().toUpperCase(); }) : [];
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function toggleSavedHex(hex, name) {
+        if (window.CNAuth && !window.CNAuth.gateSave()) return null;
+        var normalized = String(hex).trim().toUpperCase();
+        var current = getSavedHexes();
+        var idx = current.indexOf(normalized);
+        var isNowLiked = false;
+        if (idx > -1) {
+          current.splice(idx, 1);
+          isNowLiked = false;
+          if (window.CNAuth && typeof window.CNAuth.removeColorFromSupabase === "function") {
+            window.CNAuth.removeColorFromSupabase(normalized);
+          }
+        } else {
+          current.unshift(normalized);
+          isNowLiked = true;
+          if (window.CNAuth && typeof window.CNAuth.saveColorToSupabase === "function") {
+            window.CNAuth.saveColorToSupabase({ name: name || normalized, type: "color", value: normalized, hex: normalized });
+          }
+        }
+        try {
+          localStorage.setItem("colorLibraryFavorites", JSON.stringify(current));
+        } catch (e) {}
+        return isNowLiked;
+      }
+
       // ---------- Rendering ----------
       function esc(s) {
         return String(s).replace(/[&<>"']/g, function (ch) {
@@ -518,8 +555,9 @@
         });
       }
 
-      function cardHTML(c, i) {
+      function cardHTML(c, i, savedSet) {
         var hex = c.hex.toUpperCase();
+        var isFav = savedSet ? savedSet.has(hex) : (getSavedHexes().indexOf(hex) !== -1);
         return '' +
           '<article class="ccard">' +
             '<div class="swatch" style="background:' + hex + '">' +
@@ -527,8 +565,8 @@
                 '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7s6.5 7 6.5 11.3a6.5 6.5 0 0 1-13 0C5.5 9.7 12 2.7 12 2.7z"/></svg>' +
                 'Color' +
               '</span>' +
-              '<button class="like-btn" type="button" data-like="' + i + '" aria-label="Save ' + esc(c.name) + '" aria-pressed="false">' +
-                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-1.5 3-3.3 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3.4 1-4.5 2.5C10.9 4 9.3 3 7.5 3A5.5 5.5 0 0 0 2 8.5c0 2.2 1.5 4 3 5.5l7 7z"/></svg>' +
+              '<button class="like-btn' + (isFav ? ' liked' : '') + '" type="button" data-like="' + i + '" data-hex="' + hex + '" data-name="' + esc(c.name) + '" aria-label="' + (isFav ? 'Remove ' : 'Save ') + esc(c.name) + '" aria-pressed="' + isFav + '">' +
+                '<svg viewBox="0 0 24 24" fill="' + (isFav ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-1.5 3-3.3 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3.4 1-4.5 2.5C10.9 4 9.3 3 7.5 3A5.5 5.5 0 0 0 2 8.5c0 2.2 1.5 4 3 5.5l7 7z"/></svg>' +
               '</button>' +
             '</div>' +
             '<div class="ccard-body">' +
@@ -568,9 +606,10 @@
         loadWrap.hidden = state.shown >= list.length;
         loadBtn.textContent = "Load More Colors (" + (list.length - state.shown).toLocaleString() + " left)";
 
+        var savedSet = new Set(getSavedHexes());
         // Map filtered index to original index for copy/like handlers
         grid.innerHTML = page.map(function (c) {
-          return cardHTML(c, COLORS.indexOf(c));
+          return cardHTML(c, COLORS.indexOf(c), savedSet);
         }).join("");
       }
 
@@ -602,10 +641,19 @@
         }
         var like = e.target.closest("[data-like]");
         if (like) {
-          if (window.CNAuth && !CNAuth.gateSave()) return;
-          var liked = like.classList.toggle("liked");
-          like.setAttribute("aria-pressed", String(liked));
-          showToast(liked ? "Added to Saved" : "Removed from Saved");
+          if (window.CNAuth && !window.CNAuth.gateSave()) return;
+          var colorIndex = Number(like.dataset.like);
+          var c = COLORS[colorIndex];
+          var hex = c ? c.hex.toUpperCase() : (like.dataset.hex || "");
+          var name = c ? c.name : (like.dataset.name || hex);
+          var isNowLiked = toggleSavedHex(hex, name);
+          like.classList.toggle("liked", isNowLiked);
+          like.setAttribute("aria-pressed", String(isNowLiked));
+          like.setAttribute("aria-label", (isNowLiked ? "Remove " : "Save ") + name);
+          var svg = like.querySelector("svg");
+          if (svg) svg.setAttribute("fill", isNowLiked ? "currentColor" : "none");
+          showToast(isNowLiked ? "♥ Saved \"" + name + "\" (" + hex + ") to favorites!" : "Removed \"" + name + "\" from favorites");
+          return;
         }
       });
 
@@ -643,6 +691,10 @@
         var dark = document.documentElement.classList.toggle("dark");
         try { localStorage.setItem("cl-theme", dark ? "dark" : "light"); } catch (err) {}
         themeBtn.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+      });
+
+      window.addEventListener("cn:favorites-synced", function () {
+        render();
       });
 
       render();

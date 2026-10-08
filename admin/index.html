@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Login · ColorNest</title>
-  <meta name="description" content="ColorNest admin panel login" />
+  <meta name="viewport" content="width=1000, viewport-fit=cover" />
+    <title>Admin Access · ColorNest</title>
+    <meta name="description" content="ColorNest admin panel access" />
   <meta name="robots" content="noindex, nofollow" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,6 +29,8 @@
       box-shadow: 0 30px 80px rgba(2, 6, 23, .55);
       text-align: center;
     }
+    .view { display: none; }
+    .view.active { display: block; }
     .logo {
       width: 68px; height: 68px; margin: 0 auto 14px; border-radius: 20px;
       background: conic-gradient(from 200deg, #ef4444, #f97316, #facc15, #22c55e, #06b6d4, #3b82f6, #8b5cf6, #ec4899, #ef4444);
@@ -41,69 +43,162 @@
       -webkit-text-fill-color: transparent; color: transparent;
     }
     .sub { font-size: 13.5px; color: var(--muted); margin-top: 6px; font-weight: 600; }
-    form { margin-top: 24px; text-align: left; display: grid; gap: 14px; }
-    label { font-size: 12.5px; font-weight: 700; color: var(--ink); display: block; margin-bottom: 6px; }
-    .field {
-      width: 100%; padding: 12px 14px; border: 1.5px solid var(--border);
-      border-radius: 12px; font-size: 14.5px; font-weight: 600; color: var(--ink);
-      outline: none; background: #f8fafc; transition: border-color .15s, box-shadow .15s;
+
+    /* Loading view */
+    .spinner {
+      width: 46px; height: 46px; margin: 8px auto 18px;
+      border: 4px solid rgba(124, 58, 237, .15); border-top-color: var(--purple);
+      border-radius: 50%; animation: spin .8s linear infinite;
     }
-    .field:focus { border-color: var(--purple); box-shadow: 0 0 0 4px rgba(124, 58, 237, .12); background: #fff; }
-    .err {
-      display: none; background: #fef2f2; color: #dc2626; border: 1px solid #fecaca;
-      border-radius: 10px; padding: 10px 12px; font-size: 13px; font-weight: 700;
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-size: 13.5px; color: var(--muted); font-weight: 700; }
+
+    /* Access denied view */
+    .lock {
+      width: 74px; height: 74px; margin: 6px auto 18px; border-radius: 50%;
+      background: #fef2f2; border: 1.5px solid #fecaca;
+      display: flex; align-items: center; justify-content: center;
     }
-    .err.show { display: block; }
-    .submit {
-      margin-top: 4px; padding: 13px; border: 0; border-radius: 12px; cursor: pointer;
-      font-size: 15px; font-weight: 800; color: #fff; font-family: inherit;
-      background: linear-gradient(135deg, var(--purple), var(--pink));
-      box-shadow: 0 10px 24px rgba(124, 58, 237, .35);
-      transition: transform .12s, box-shadow .12s;
+    .lock svg { width: 34px; height: 34px; color: #dc2626; }
+    .denied-title { font-size: 20px; font-weight: 800; color: var(--ink); }
+    .denied-msg { font-size: 13.5px; color: var(--muted); font-weight: 600; margin-top: 8px; line-height: 1.6; }
+    .denied-email {
+      display: inline-block; margin-top: 10px; font-size: 12px; font-weight: 700; color: var(--ink);
+      background: #f1f5f9; border-radius: 8px; padding: 5px 10px; word-break: break-all;
     }
-    .submit:hover { transform: translateY(-1px); box-shadow: 0 14px 30px rgba(124, 58, 237, .45); }
-    .hint { margin-top: 18px; font-size: 12px; color: var(--muted); font-weight: 600; line-height: 1.6; }
-    .hint code { background: #f1f5f9; border-radius: 6px; padding: 2px 7px; font-weight: 700; color: var(--ink); }
-    .back { display: inline-block; margin-top: 14px; font-size: 12.5px; font-weight: 700; color: var(--purple); text-decoration: none; }
+    .denied-actions { margin-top: 22px; display: grid; gap: 10px; }
+    .btn-logout {
+      padding: 12px; border: 0; border-radius: 12px; cursor: pointer; font-family: inherit;
+      font-size: 14px; font-weight: 800; color: #fff; background: linear-gradient(135deg, #dc2626, #f97316);
+      box-shadow: 0 10px 24px rgba(220, 38, 38, .3);
+    }
+    .btn-home {
+      display: block; padding: 12px; border-radius: 12px; text-decoration: none;
+      font-size: 14px; font-weight: 800; color: var(--purple); background: #f5f3ff;
+      border: 1.5px solid #ddd6fe;
+    }
   </style>
+  <link rel="stylesheet" href="/menu-extras.css?v=7" />
+  <link rel="stylesheet" href="/desktop.css?v=4" />
+  <script src="/desktop-shell.js?v=2" defer></script>
+  <script type="module" src="/js/supabase-init.js?v=2"></script>
+  <link rel="stylesheet" href="/brand.css?v=1" />
 </head>
 <body>
   <main class="card">
-    <div class="logo" aria-hidden="true"></div>
-    <h1><span class="cn-grad">ColorNest</span> Admin</h1>
-    <p class="sub">Sign in to the admin panel</p>
-    <form id="login-form" novalidate>
-      <div>
-        <label for="email">Gmail ID</label>
-        <input class="field" id="email" type="email" autocomplete="email" placeholder="you@gmail.com" />
+
+    <!-- View: checking existing session -->
+    <section class="view active" id="view-loading" aria-live="polite">
+      <div class="logo" aria-hidden="true"></div>
+      <h1><span class="cn-grad">ColorNest</span> Admin</h1>
+      <div class="spinner" style="margin-top:26px"></div>
+      <p class="loading-text">Verifying your session&hellip;</p>
+    </section>
+
+    <!-- View: access denied (also shown to signed-out visitors) -->
+    <section class="view" id="view-denied">
+      <div class="lock" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
       </div>
-      <div>
-        <label for="password">Password</label>
-        <input class="field" id="password" type="password" autocomplete="current-password" placeholder="••••••••" />
+      <h1 class="denied-title">Access Denied</h1>
+      <p class="denied-msg" id="denied-msg">You don&rsquo;t have permission to access this dashboard.</p>
+      <p class="denied-email" id="denied-email"></p>
+      <div class="denied-actions">
+        <a class="btn-home" id="denied-signin" href="/login?next=/admin" style="display:none">Sign In to Admin &rarr;</a>
+        <button class="btn-logout" id="denied-logout" type="button">Log Out</button>
+        <a class="btn-home" href="/">Back to Home</a>
       </div>
-      <p class="err" id="err" role="alert">Enter a valid Gmail address and a password of at least 6 characters.</p>
-      <button class="submit" type="submit">Sign In</button>
-    </form>
-    <p class="hint">Sign in with your Gmail ID and password to open the admin panel.</p>
-    <a class="back" href="/">← Back to ColorNest</a>
+    </section>
+
   </main>
+
   <script>
-    document.getElementById("login-form").addEventListener("submit", function (e) {
-      e.preventDefault();
-      var email = document.getElementById("email").value.trim().toLowerCase();
-      var p = document.getElementById("password").value;
-      var err = document.getElementById("err");
-      var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && p.length >= 6;
-      if (valid) {
-        try {
-          sessionStorage.setItem("cn-admin-auth", "1");
-          sessionStorage.setItem("cn-admin-email", email);
-        } catch (err2) {}
-        window.location.href = "/admin/dashboard";
-      } else {
-        err.classList.add("show");
+    (function () {
+      var views = { loading: document.getElementById("view-loading"), denied: document.getElementById("view-denied") };
+      function show(name) {
+        Object.keys(views).forEach(function (k) { views[k].classList.toggle("active", k === name); });
       }
-    });
+      function storedToken() {
+        try { return sessionStorage.getItem("cn_token"); } catch (e) { return null; }
+      }
+      function clearAdminSession() {
+        try {
+          sessionStorage.removeItem("cn-admin-auth");
+          sessionStorage.removeItem("cn-admin-email");
+          sessionStorage.removeItem("cn_token");
+        } catch (e) {}
+        if (window.cnSupabase) { try { window.cnSupabase.signOut(); } catch (e) {} }
+      }
+      function waitForBackend(timeout) {
+        return new Promise(function (resolve) {
+          if (window.cnSupabase) return resolve();
+          var done = false;
+          function finish() { if (!done) { done = true; resolve(); } }
+          window.addEventListener("cn:supabase-ready", finish, { once: true });
+          setTimeout(finish, timeout || 2500);
+        });
+      }
+      // Returns: { status, body? } — status is the HTTP status or "error"/"anonymous"
+      function verifyToken(token) {
+        if (!token) return Promise.resolve({ status: "anonymous" });
+        return fetch("/api/admin/verify", { headers: { Authorization: "Bearer " + token } })
+          .then(function (r) {
+            return r.json().then(function (d) { return { status: r.status, body: d }; });
+          })
+          .catch(function () { return { status: "error" }; });
+      }
+      function showDenied(opts) {
+        opts = opts || {};
+        document.getElementById("denied-email").textContent = opts.email || "";
+        document.getElementById("denied-msg").textContent = opts.message || "You don\u2019t have permission to access this dashboard.";
+        // Signed-out visitors get a Sign In button (login happens on the
+        // main site's login page); signed-in non-admins get Log Out.
+        document.getElementById("denied-signin").style.display = opts.anonymous ? "block" : "none";
+        document.getElementById("denied-logout").style.display = opts.anonymous ? "none" : "block";
+        show("denied");
+      }
+
+      // ---------- AdminRoute: loading -> dashboard / denied ----------
+      // There is no separate admin login page: admins sign in on the main
+      // site's /login page (email/password or Google) and are redirected
+      // here automatically when their email is on the whitelist.
+      waitForBackend().then(function () {
+        var token = null;
+        if (window.cnSupabase && window.cnSupabase.supabase) {
+          token = window.cnSupabase.supabase.auth.getSession().then(function (d) {
+            return (d && d.data && d.data.session && d.data.session.access_token) || storedToken();
+          });
+        } else {
+          token = storedToken();
+        }
+        Promise.resolve(token).then(verifyToken).then(function (result) {
+          if (result.status === 200) {
+            window.location.replace("/admin/dashboard");
+          } else if (result.status === 403) {
+            showDenied({ email: result.body && result.body.email });
+          } else if (result.status === 401 || result.status === "anonymous") {
+            if (result.status === 401) clearAdminSession();
+            showDenied({
+              anonymous: true,
+              message: "Please sign in with an authorized admin account on the ColorNest sign-in page."
+            });
+          } else {
+            showDenied({ message: "Authorization check failed. Please try again." });
+          }
+        });
+      });
+
+      // ---------- Access denied actions ----------
+      document.getElementById("denied-logout").addEventListener("click", function () {
+        clearAdminSession();
+        showDenied({ anonymous: true, message: "You have been signed out." });
+        setTimeout(function () { window.location.replace("/admin"); }, 400);
+      });
+    })();
   </script>
+  <script src="/menu-extras.js?v=4"></script>
 </body>
 </html>

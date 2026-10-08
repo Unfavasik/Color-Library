@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1000, viewport-fit=cover" />
+  <title>Authenticating — ColorNest</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/ch.css" />
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+    }
+    .auth-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 40px 32px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+      margin: 20px;
+    }
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 3.5px solid #e2e8f0;
+      border-top-color: #6366f1;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 20px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    h1 {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0 0 8px;
+      color: #0f172a;
+    }
+    p {
+      font-size: 14px;
+      color: #64748b;
+      margin: 0 0 24px;
+      line-height: 1.5;
+    }
+    .err-msg {
+      display: none;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #0f172a;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.15s;
+    }
+    .btn:hover {
+      background: #1e293b;
+    }
+  </style>
+  <link rel="stylesheet" href="/brand.css?v=1" />
+</head>
+<body>
+  <div class="auth-card" id="card">
+    <div class="spinner" id="spinner"></div>
+    <h1 id="title">Authenticating...</h1>
+    <p id="desc">Connecting your authorized account with ColorNest...</p>
+    <div class="err-msg" id="err-box"></div>
+    <a href="/login" class="btn" id="btn-back" style="display:none;">Return to Login</a>
+  </div>
+
+  <script>
+    (async function () {
+      var spinner = document.getElementById("spinner");
+      var title = document.getElementById("title");
+      var desc = document.getElementById("desc");
+      var errBox = document.getElementById("err-box");
+      var btnBack = document.getElementById("btn-back");
+
+      function showError(msg) {
+        spinner.style.display = "none";
+        title.textContent = "Authentication Notice";
+        desc.textContent = "We encountered an issue finalizing your sign-in.";
+        errBox.textContent = msg;
+        errBox.style.display = "block";
+        btnBack.style.display = "inline-block";
+      }
+
+      try {
+        var ADMIN_EMAILS = [
+          "asik.devhub@gmail.com",
+          "ayatulsekh3037@gmail.com",
+          "asikikbal@gmail.com"
+        ];
+
+        // 1. Check Hash Fragment (Implicit OAuth Flow)
+        var hash = window.location.hash.substring(1);
+        var hashParams = new URLSearchParams(hash);
+        var queryParams = new URLSearchParams(window.location.search);
+
+        var errDesc = hashParams.get("error_description") || queryParams.get("error_description") || hashParams.get("error") || queryParams.get("error");
+        if (errDesc) {
+          showError(decodeURIComponent(errDesc.replace(/\+/g, " ")));
+          return;
+        }
+
+        var accessToken = hashParams.get("access_token");
+        var code = queryParams.get("code");
+
+        if (accessToken) {
+          // Store token
+          sessionStorage.setItem("cn_token", accessToken);
+          localStorage.setItem("cn_token", accessToken);
+
+          // Fetch user profile from backend
+          var meRes = await fetch("/api/auth/me", {
+            headers: { "Authorization": "Bearer " + accessToken }
+          });
+          var meData = await meRes.json();
+
+          if (meRes.ok && meData.user) {
+            var userEmail = (meData.user.email || "").toLowerCase();
+            var isAdmin = meData.isAdmin || ADMIN_EMAILS.indexOf(userEmail) !== -1;
+
+            if (isAdmin) {
+              sessionStorage.setItem("cn-admin-auth", "1");
+              sessionStorage.setItem("cn-admin-email", userEmail);
+              window.location.href = "/admin/dashboard";
+              return;
+            }
+
+            localStorage.setItem("cn_user", JSON.stringify({
+              name: meData.user.name || userEmail.split("@")[0],
+              email: userEmail,
+              id: meData.user.id
+            }));
+
+            var nextUrl = localStorage.getItem("cn_oauth_next") || "/";
+            localStorage.removeItem("cn_oauth_next");
+            window.location.href = nextUrl;
+            return;
+          }
+        }
+
+        if (code) {
+          // Exchange code for session via backend
+          var exchRes = await fetch("/api/auth/oauth/exchange", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ code: code })
+          });
+          var exchData = await exchRes.json();
+
+          if (!exchRes.ok || !exchData.success) {
+            throw new Error(exchData.error || "Failed to exchange authorization code");
+          }
+
+          if (exchData.session && exchData.session.access_token) {
+            sessionStorage.setItem("cn_token", exchData.session.access_token);
+            localStorage.setItem("cn_token", exchData.session.access_token);
+          }
+
+          var exchEmail = (exchData.user?.email || "").toLowerCase();
+          var isExchAdmin = exchData.isAdmin || ADMIN_EMAILS.indexOf(exchEmail) !== -1;
+
+          if (isExchAdmin) {
+            sessionStorage.setItem("cn-admin-auth", "1");
+            sessionStorage.setItem("cn-admin-email", exchEmail);
+            window.location.href = "/admin/dashboard";
+            return;
+          }
+
+          localStorage.setItem("cn_user", JSON.stringify({
+            name: exchData.user?.name || exchEmail.split("@")[0],
+            email: exchEmail,
+            id: exchData.user?.id
+          }));
+
+          var next = localStorage.getItem("cn_oauth_next") || "/";
+          localStorage.removeItem("cn_oauth_next");
+          window.location.href = next;
+          return;
+        }
+
+        // If no token or code found
+        showError("No authorization credentials received from identity provider.");
+      } catch (err) {
+        showError(err.message || "An unexpected error occurred during sign in.");
+      }
+    })();
+  </script>
+</body>
+</html>

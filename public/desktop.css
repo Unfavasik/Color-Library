@@ -1,0 +1,18 @@
+/* Desktop viewport enhancements for ColorNest standalone cards and dashboard */
+@media (min-width: 540px) {
+  body {
+    background: linear-gradient(160deg, #f5f3ff 0%, #faf5ff 50%, #eff6ff 100%);
+  }
+  html.dark body {
+    background: linear-gradient(160deg, #09090f 0%, #0d0d18 50%, #0a0a14 100%);
+  }
+  .card, .wrap {
+    box-shadow: 0 10px 40px -10px rgba(124, 58, 237, 0.12), 0 0 0 1px rgba(124, 58, 237, 0.08);
+    border-radius: 24px;
+    background: var(--surface, #ffffff);
+  }
+  html.dark .card, html.dark .wrap {
+    box-shadow: 0 16px 48px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    background: var(--surface, #14141f);
+  }
+}

@@ -139,13 +139,20 @@ function cardTemplate(color) {
 }
 
 function toggleFavorite(hex, name = '') {
+  if (window.CNAuth && !window.CNAuth.gateSave()) return;
   const normalized = String(hex).trim().toUpperCase();
   const willFavorite = !state.favorites.has(normalized);
 
   if (willFavorite) {
     state.favorites.add(normalized);
+    if (window.CNAuth && typeof window.CNAuth.saveColorToSupabase === 'function') {
+      window.CNAuth.saveColorToSupabase({ name: name || normalized, type: 'color', value: normalized, hex: normalized });
+    }
   } else {
     state.favorites.delete(normalized);
+    if (window.CNAuth && typeof window.CNAuth.removeColorFromSupabase === 'function') {
+      window.CNAuth.removeColorFromSupabase(normalized);
+    }
   }
   saveFavorites();
 
@@ -934,8 +941,25 @@ function openContentModal(pageKey) {
   if (pageKey === 'contact') {
     const form = $('#contact-form');
     if (form) {
-      form.onsubmit = (e) => {
+      form.onsubmit = async (e) => {
         e.preventDefault();
+        const nameInput = $('#contact-name');
+        const emailInput = $('#contact-email');
+        const msgInput = $('#contact-msg');
+        const name = nameInput ? nameInput.value.trim() : '';
+        const email = emailInput ? emailInput.value.trim() : '';
+        const message = msgInput ? msgInput.value.trim() : '';
+
+        try {
+          await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, message, subject: 'Inquiry from web app' })
+          });
+        } catch (err) {
+          console.warn('Contact API sync fallback:', err);
+        }
+
         closeContentModal();
         showToast('Thank you for your feedback!');
       };
@@ -1107,11 +1131,23 @@ function getActiveRoute() {
   }
 
   const hash = (window.location.hash || '').toLowerCase();
+  if (path === '/home' || path === '/home.html' || hash === '#home' || hash === '#top') {
+    if (window.location.hash) {
+      try { history.replaceState(null, '', window.location.pathname || '/'); } catch (_) {}
+    }
+    return 'home';
+  }
   if (hash === '#color-mix' || path === '/color-mix') return 'color-mix';
   if (hash === '#palettes' || hash === '#palette' || path === '/palettes' || path === '/palette') return 'palettes';
   if (hash === '#recently-viewed' || hash === '#recent' || path === '/recently-viewed' || path === '/recent') return 'recently-viewed';
   if (hash === '#saved' || hash === '#favorites' || path === '/favorites' || path === '/saved') return 'favorites';
   if (hash === '#colors' || hash === '#color-chart' || path === '/color-chart' || path === '/colors') return 'color-chart';
+  if (hash === '#gradients' || hash === '#gradient' || decodedHash === 'gradients' || decodedHash === 'gradient') {
+    if (window.location.hash) {
+      try { history.replaceState(null, '', window.location.pathname || '/'); } catch (_) {}
+    }
+    return 'home';
+  }
   if (hash === '#tools' || path === '/tools') return 'tools';
   if (hash === '#developer' || path === '/developer') return 'developer';
   return 'home';
@@ -1241,14 +1277,12 @@ function handleRoute() {
     if (pageView) pageView.classList.remove('active');
     openContentModal('developer');
   } else {
-    document.title = 'Color Library — HTML Color Codes';
+    document.title = 'ColorNest — Colors for Creators';
     if (homeView) homeView.classList.remove('hidden');
     if (pageView) pageView.classList.remove('active');
     closeMoreMenu();
     closeContentModal();
-    if (window.location.hash === '#home' || window.location.hash === '#top' || !window.location.hash) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }
 }
 
@@ -1997,6 +2031,7 @@ function copyGradientCss() {
 }
 
 function saveCurrentGradient() {
+  if (window.CNAuth && !window.CNAuth.gateSave()) return;
   const stops = [...colorMixState.stops].sort((a, b) => a.pos - b.pos);
   const angle = colorMixState.angle || 135;
   const stopsCssPart = stops.map(s => `${s.hex.toUpperCase()} ${s.pos}%`).join(', ');
@@ -2397,6 +2432,7 @@ function updateSingleMixFavState(hex) {
 }
 
 function toggleSingleMixFavorite() {
+  if (window.CNAuth && !window.CNAuth.gateSave()) return;
   const mix = colorMixState.currentMix || colorMixState.history[colorMixState.historyIndex];
   if (!mix || !mix.hex) {
     showToast('Generate a color mix first');
@@ -3534,6 +3570,22 @@ if (document.readyState === 'loading') {
   initTubelightNav();
   initAnimatedTabBar();
 }
+
+window.addEventListener('cn:favorites-synced', (e) => {
+  state.favorites = loadFavorites();
+  renderFilters();
+  if (state.category === 'Saved') renderGrid();
+  else {
+    $$('.card-fav-btn').forEach((btn) => {
+      const hex = btn.dataset.fav;
+      if (hex) {
+        const isFav = state.favorites.has(hex.toUpperCase());
+        btn.classList.toggle('is-fav', isFav);
+        btn.innerHTML = getHeartSvg(isFav);
+      }
+    });
+  }
+});
 
 // Google Ads conversion helper (safe fallback when gtag is loaded)
 function trackAdConversion(conversionLabel, conversionValue = 0) {

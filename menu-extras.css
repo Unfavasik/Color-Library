@@ -83,6 +83,75 @@ html.dark .me-btn:hover { background: #3f1d1d; }
 .me-version { text-align: center; font-size: 12px; color: var(--muted); margin-top: 14px; }
 
 /* Feedback form */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+.me-rating-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 16px;
+  padding: 4px 0;
+}
+.me-stars-row {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.me-star-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+.me-star-btn:hover {
+  transform: scale(1.24);
+}
+.me-star-btn:active {
+  transform: scale(0.92);
+}
+.me-star-btn:focus-visible {
+  outline: 2px solid #a855f7;
+  outline-offset: 2px;
+}
+.me-star-svg {
+  width: 34px;
+  height: 34px;
+  color: #94a3b8;
+  transition: color 0.18s ease, filter 0.18s ease;
+}
+html.dark .me-star-svg {
+  color: #475569;
+}
+.me-star-btn.is-active .me-star-svg,
+.me-star-btn.is-hover .me-star-svg {
+  color: #f59e0b;
+  filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.4));
+}
+.me-rating-caption {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: -0.01em;
+  min-height: 18px;
+  text-align: center;
+}
 .me-textarea {
   width: 100%; min-height: 110px; resize: vertical;
   padding: 12px 14px; border-radius: 14px;
@@ -167,7 +236,10 @@ html.dark .drawer-nav a.active { color: #c4b5fd; }
 /* Compact profile row pinned under Share App */
 .me-profile {
   display: flex; align-items: center; gap: 10px;
-  padding: 8px 14px; margin: 6px 0 2px;
+  padding: 9px 12px; margin: 8px 0 3px;
+  border-radius: 14px;
+  background: var(--tile);
+  border: 1px solid var(--border);
 }
 .me-avatar {
   flex: none; width: 34px; height: 34px; border-radius: 50%;
@@ -178,13 +250,18 @@ html.dark .drawer-nav a.active { color: #c4b5fd; }
 .me-avatar svg { width: 16px; height: 16px; }
 .me-avatar-guest { background: var(--tile); color: var(--muted); }
 .me-profile-meta { display: flex; flex-direction: column; min-width: 0; flex: 1; }
-.me-profile-meta b { font-size: 13px; font-weight: 800; color: var(--heading); }
+.me-profile-meta b { font-size: 13px; font-weight: 800; color: var(--heading); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .me-profile-meta small { font-size: 10.5px; font-weight: 600; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .me-logout {
   flex: none; width: 32px; height: 32px; border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
   color: #dc2626; background: rgba(220, 38, 38, .08);
   border: none; cursor: pointer;
+  transition: all 0.15s ease;
+}
+.me-logout:hover {
+  background: rgba(220, 38, 38, .16);
+  color: #b91c1c;
 }
 .me-logout svg { width: 15px; height: 15px; }
 .me-auth-btns { display: flex; gap: 5px; flex: none; }
@@ -196,6 +273,124 @@ html.dark .drawer-nav a.active { color: #c4b5fd; }
 }
 .drawer-nav a.me-auth-login, .me-auth-login { color: #7c3aed; background: rgba(124, 58, 237, .1); }
 .drawer-nav a.me-auth-signup, .me-auth-signup { color: #fff; background: linear-gradient(135deg, #7c3aed, #ec4899); }
+
+/* Admin Panel Go Card / Banner in Drawer */
+.me-admin-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 13px;
+  margin: 7px 0 4px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(236, 72, 153, 0.08));
+  border: 1.5px solid rgba(124, 58, 237, 0.28);
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.08);
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.me-admin-banner:hover {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.14), rgba(236, 72, 153, 0.14));
+  border-color: rgba(124, 58, 237, 0.45);
+  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.16);
+  transform: translateY(-1px);
+}
+.me-admin-banner:active {
+  transform: scale(0.98);
+}
+.me-admin-badge-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+.me-admin-icon {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #7c3aed, #6366f1);
+  color: #ffffff;
+  box-shadow: 0 3px 8px rgba(124, 58, 237, 0.35);
+}
+.me-admin-icon svg {
+  width: 17px;
+  height: 17px;
+}
+.me-admin-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.me-admin-meta b {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--heading);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.25;
+}
+.me-admin-meta small {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #7c3aed;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.25;
+}
+html.dark .me-admin-meta small {
+  color: #c4b5fd;
+}
+.me-admin-go {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 7px 15px;
+  height: 32px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  color: #ffffff !important;
+  font-size: 12.5px;
+  font-weight: 800;
+  text-decoration: none !important;
+  letter-spacing: 0.01em;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35);
+  transition: all 0.15s ease;
+  line-height: 1;
+}
+.me-admin-go svg {
+  width: 13px;
+  height: 13px;
+  transition: transform 0.15s ease;
+}
+.me-admin-banner:hover .me-admin-go,
+.me-admin-go:hover {
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.5);
+  transform: scale(1.04);
+}
+.me-admin-banner:hover .me-admin-go svg,
+.me-admin-go:hover svg {
+  transform: translateX(2px);
+}
+html.dark .me-admin-banner {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.16), rgba(236, 72, 153, 0.16));
+  border-color: rgba(167, 139, 250, 0.3);
+}
+html.dark .me-admin-banner:hover {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.25), rgba(236, 72, 153, 0.25));
+  border-color: rgba(167, 139, 250, 0.5);
+}
 
 /* Log out confirmation dialog */
 .me-confirm { text-align: center; }

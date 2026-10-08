@@ -18,12 +18,6 @@ const coreFiles = [
   'index.html',
   '404.html',
   'htmcolor.html',
-  'privacy-policy.html',
-  'terms-of-service.html',
-  'contact.html',
-  'about.html',
-  'color-mix.html',
-  'color-preview.html',
   'mix.css',
   'mix.js',
   'ch.css',
@@ -35,7 +29,15 @@ const coreFiles = [
   'favicon.png',
   'og-image.webp',
   'vercel.json',
-  'ads.txt'
+  'ads.txt',
+  'colors-data.js',
+  'menu-extras.css',
+  'menu-extras.js',
+  'homepage-assets.webp',
+  'copy-limit.js',
+  'desktop.css',
+  'desktop-shell.js',
+  'brand.css'
 ];
 
 for (const file of coreFiles) {
@@ -46,8 +48,29 @@ for (const file of coreFiles) {
   }
 }
 
-// 2b. Copy dedicated route directories
-const routeDirs = ['privacy-policy', 'terms-of-service', 'contact', 'about', 'color-mix', 'color-preview', '404'];
+// 2b. Copy dedicated route and asset directories
+const routeDirs = [
+  'privacy-policy',
+  'terms-of-service',
+  'contact',
+  'about',
+  'color-mix',
+  'color-preview',
+  'team',
+  'colors',
+  'admin',
+  'feedback',
+  'gradient-preview',
+  'gradients',
+  'login',
+  'saved',
+  'signup',
+  'auth',
+  'assets',
+  'vendor',
+  '404',
+  'js'
+];
 for (const dir of routeDirs) {
   const src = path.join(ROOT_DIR, dir);
   const dest = path.join(DIST_DIR, dir);
@@ -55,6 +78,13 @@ for (const dir of routeDirs) {
     fs.cpSync(src, dest, { recursive: true });
   }
 }
+
+// 2c. Create dist/home/index.html for /home clean routing
+const homeDir = path.join(DIST_DIR, 'home');
+if (!fs.existsSync(homeDir)) {
+  fs.mkdirSync(homeDir, { recursive: true });
+}
+fs.copyFileSync(path.join(ROOT_DIR, 'index.html'), path.join(homeDir, 'index.html'));
 
 // 3. Copy everything from public/ directly to dist/ and also to dist/public/
 if (fs.existsSync(PUBLIC_DIR)) {

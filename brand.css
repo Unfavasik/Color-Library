@@ -1,0 +1,22 @@
+/* Canonical ColorNest brand mark — keep this identical across every route. */
+.brand-mark,
+.app-icon,
+.side-logo,
+.logo {
+  display: inline-block;
+  flex: none;
+  background: linear-gradient(135deg, #f472b6 0%, #a855f7 45%, #3b82f6 100%) !important;
+  border-radius: 46% 54% 58% 42% / 52% 44% 56% 48% !important;
+  box-shadow: inset 0 -3px 6px rgba(255,255,255,.45), 0 4px 10px rgba(168,85,247,.35) !important;
+}
+.brand-mark { width: 40px !important; height: 40px !important; }
+.app-icon { width: 64px; height: 64px; }
+.about-page .app-icon { width: 92px; height: 92px; }
+.logo { width: 68px; height: 68px; }
+.side-logo { width: 32px !important; height: 32px !important; }
+.mobile-brand .side-logo { width: 28px !important; height: 28px !important; }
+.brand-name .cn-grad,
+.brand-text .brand-accent { color: #8b5cf6; }
+
+.brand-name { font-size: 17px; font-weight: 800; line-height: 1.2; letter-spacing: -.01em; }
+.brand-tag { font-size: 11.5px; font-weight: 600; line-height: 1.2; }

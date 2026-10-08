@@ -2,7 +2,7 @@
 <html lang="en" class="bg-background">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=1000, viewport-fit=cover" />
   <title>Feedback — ColorNest</title>
   <meta name="description" content="Share your thoughts, suggestions, or report an issue. Your feedback helps us make ColorNest better for everyone." />
   <meta property="og:title" content="Feedback — ColorNest" />
@@ -10,7 +10,7 @@
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237C3AED'/%3E%3Cstop offset='1' stop-color='%23EC4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23g)'/%3E%3C/svg%3E" />
-  <link rel="stylesheet" href="/menu-extras.css" />
+  <link rel="stylesheet" href="/menu-extras.css?v=7" />
   <style>
     :root {
       --bg: #f6f5fb;
@@ -132,14 +132,25 @@
     .textarea { min-height: 130px; resize: vertical; line-height: 1.6; }
     .char-count { text-align: right; font-size: 12px; color: var(--muted); margin-top: 6px; }
 
+    /* rating stars */
+    .page-rating-row { display: flex; align-items: center; gap: 8px; margin: 6px 0 16px; flex-wrap: wrap; }
+    .page-star-lbl { cursor: pointer; padding: 4px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; transition: transform .15s ease; -webkit-tap-highlight-color: transparent; }
+    .page-star-lbl:hover { transform: scale(1.22); }
+    .page-star-lbl:active { transform: scale(0.92); }
+    .page-star-lbl svg { width: 30px; height: 30px; color: #94a3b8; transition: color .18s, filter .18s; }
+    html.dark .page-star-lbl svg { color: #475569; }
+    .page-star-lbl.is-active svg { color: #f59e0b; filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.4)); }
+    .page-rating-text { font-size: 13px; font-weight: 700; color: var(--muted); margin-left: 6px; }
+
     /* screenshot dropzone */
     .dropzone {
       margin-top: 4px; display: flex; align-items: center; gap: 14px;
       border: 1.5px dashed var(--border); border-radius: 16px;
       padding: 14px; cursor: pointer; background: transparent; width: 100%;
-      text-align: left; font-family: inherit; transition: border-color .2s;
+      text-align: left; font-family: inherit; transition: all .2s ease;
+      color: var(--body);
     }
-    .dropzone:hover { border-color: var(--primary); }
+    .dropzone:hover, .dropzone:focus-visible { border-color: var(--primary); outline: none; background: rgba(124, 58, 237, 0.03); }
     .dz-icon {
       width: 52px; height: 52px; border-radius: 14px; flex: none;
       background: var(--primary-soft); color: var(--primary);
@@ -148,12 +159,92 @@
     .dz-icon svg { width: 24px; height: 24px; }
     .dz-title { font-size: 14.5px; font-weight: 700; color: var(--heading); }
     .dz-sub { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
-    .dz-preview { display: none; margin-top: 10px; position: relative; }
-    .dz-preview img { max-width: 100%; max-height: 160px; border-radius: 12px; display: block; }
+    
+    .dz-preview {
+      display: none; margin-top: 10px; position: relative;
+      border: 1px solid var(--border); border-radius: 16px;
+      padding: 10px; background: var(--bg);
+      align-items: center; gap: 12px;
+    }
+    .dz-preview.active { display: flex; }
+    .dz-preview-thumb {
+      width: 64px; height: 64px; border-radius: 10px; object-fit: cover;
+      border: 1px solid var(--border); flex: none; background: #000;
+    }
+    .dz-preview-meta { flex: 1; min-width: 0; }
+    .dz-preview-name { font-size: 13.5px; font-weight: 700; color: var(--heading); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .dz-preview-size { font-size: 12px; color: var(--muted); margin-top: 2px; }
     .dz-remove {
-      position: absolute; top: 8px; right: 8px; width: 28px; height: 28px;
-      border: none; border-radius: 50%; background: rgba(0,0,0,.6); color: #fff;
-      cursor: pointer; font-size: 15px; line-height: 1;
+      width: 34px; height: 34px; border: none; border-radius: 10px;
+      background: #fee2e2; color: #ef4444; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .15s; flex: none;
+    }
+    .dz-remove:hover { background: #fecaca; transform: scale(1.05); }
+    .dz-remove svg { width: 18px; height: 18px; }
+
+    .fb-alert {
+      display: none; margin-top: 10px; padding: 10px 14px;
+      border-radius: 12px; font-size: 13px; font-weight: 600; line-height: 1.4;
+      align-items: center; gap: 8px;
+    }
+    .fb-alert.error { display: flex; background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+    .fb-alert.warning { display: flex; background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+    .fb-alert svg { width: 18px; height: 18px; flex: none; }
+
+    /* Upload Progress Bar */
+    .upload-progress-wrap {
+      display: none; margin-top: 14px; padding: 14px 16px;
+      border-radius: 16px; background: #ffffff;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.06);
+      animation: fbFadeIn .2s ease;
+    }
+    .upload-progress-wrap.active { display: block; }
+    .upload-progress-head {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;
+    }
+    .upload-progress-title {
+      font-size: 13.5px; font-weight: 700; color: var(--heading);
+      display: flex; align-items: center; gap: 7px;
+    }
+    .upload-progress-title svg { width: 16px; height: 16px; color: var(--primary); }
+    .upload-progress-pct {
+      font-size: 13.5px; font-weight: 800; color: var(--primary);
+      font-variant-numeric: tabular-nums;
+    }
+    .upload-progress-track {
+      width: 100%; height: 8px; border-radius: 999px;
+      background: rgba(139, 92, 246, 0.12);
+      overflow: hidden; position: relative;
+    }
+    .upload-progress-fill {
+      height: 100%; width: 0%; border-radius: 999px;
+      background: linear-gradient(90deg, #818cf8, #a855f7, #ec4899);
+      transition: width 0.15s ease-out;
+      box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+    }
+    .upload-progress-fill.is-done {
+      background: linear-gradient(90deg, #10b981, #059669);
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+    }
+    .upload-progress-sub {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 12px; color: var(--muted); margin-top: 6px;
+    }
+    .spin-icon {
+      animation: fb-spin 0.85s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+    @keyframes fb-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes fbFadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* email row */
@@ -173,11 +264,17 @@
       color: #fff; font-size: 16px; font-weight: 700; font-family: inherit;
       display: flex; align-items: center; justify-content: center; gap: 10px;
       box-shadow: 0 10px 26px rgba(168, 85, 247, .35);
-      transition: transform .15s ease, opacity .2s;
+      transition: transform .15s ease, opacity .2s, filter .2s;
     }
     .send-btn:active { transform: scale(.98); }
     .send-btn svg { width: 19px; height: 19px; }
-    .send-btn:disabled { opacity: .6; cursor: default; }
+    .send-btn:disabled {
+      opacity: .65;
+      cursor: not-allowed;
+      filter: grayscale(15%);
+      box-shadow: none;
+      transform: none !important;
+    }
 
     /* footer */
     .footer { position: relative; z-index: 1; margin-top: 34px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -205,6 +302,9 @@
     .success h2 { font-size: 21px; font-weight: 800; color: var(--heading); }
     .success p { margin-top: 8px; font-size: 14px; line-height: 1.6; }
   </style>
+  <link rel="stylesheet" href="/desktop.css?v=4" />
+  <script src="/desktop-shell.js?v=2" defer></script>
+  <link rel="stylesheet" href="/brand.css?v=1" />
 </head>
 <body>
   <div class="blob blob-1" aria-hidden="true"></div>
@@ -221,14 +321,14 @@
     <section class="hero">
       <div class="app-icon" aria-hidden="true"></div>
       <div>
-        <div class="hero-name">Color<span class="cn-grad">Nest</span></div>
+        <div class="hero-name">Colour Library</div>
         <div class="hero-tag">Colors for Creators</div>
       </div>
       <div class="fb-note" aria-hidden="true">Your<br>Feedback<br>Matters</div>
     </section>
 
     <h2 class="headline">We&rsquo;d Love to Hear <em>from You!</em></h2>
-    <p class="sub">Share your thoughts, suggestions, or report an issue. Your feedback helps us make ColorNest better for everyone.</p>
+    <p class="sub">Share your thoughts, suggestions, or report an issue. Your feedback helps us make Colour Library better for everyone.</p>
 
     <div class="types" role="radiogroup" aria-label="Feedback type">
       <button class="type-chip active" type="button" data-type="General" role="radio" aria-checked="true">
@@ -251,15 +351,22 @@
 
     <form class="form-card" id="fb-form" novalidate>
       <div id="fb-fields">
-        <label class="field-label" for="fb-subject">Subject</label>
-        <input class="input" id="fb-subject" type="text" maxlength="120" placeholder="Give a short title (e.g. Add more gradients)" />
+        <label class="field-label" for="feedback-subject">Subject</label>
+        <input
+          class="input"
+          id="feedback-subject"
+          name="subject"
+          type="text"
+          maxlength="160"
+          placeholder="Give a short title (e.g. Add more gradients)"
+        />
 
-        <label class="field-label" for="fb-message" style="margin-top:18px">Your Feedback</label>
-        <textarea class="textarea" id="fb-message" maxlength="1000" placeholder="Tell us more about your feedback..."></textarea>
+        <label class="field-label" for="feedback-message" style="margin-top:18px">Your Feedback</label>
+        <textarea class="textarea" id="feedback-message" maxlength="1000" placeholder="Tell us more about your feedback..."></textarea>
         <div class="char-count"><span id="fb-count">0</span>/1000</div>
 
         <span class="field-label" style="margin-top:14px">Add Screenshot <span class="opt">(Optional)</span></span>
-        <button class="dropzone" type="button" id="fb-dropzone">
+        <button class="dropzone" type="button" id="fb-dropzone" aria-label="Attach image for feedback">
           <span class="dz-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-4.5-4.5L7 20"/></svg>
           </span>
@@ -268,10 +375,43 @@
             <span class="dz-sub" id="dz-sub" style="display:block">PNG, JPG or WebP (Max 5MB)</span>
           </span>
         </button>
-        <input type="file" id="fb-file" accept="image/png,image/jpeg,image/webp" hidden />
+        <input type="file" id="fb-file" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" style="display:none" />
+        
         <div class="dz-preview" id="dz-preview">
-          <img id="dz-img" alt="Screenshot preview" />
-          <button class="dz-remove" type="button" id="dz-remove" aria-label="Remove screenshot">&times;</button>
+          <img id="dz-img" class="dz-preview-thumb" alt="Attached preview" />
+          <div class="dz-preview-meta">
+            <div class="dz-preview-name" id="dz-filename">image.png</div>
+            <div class="dz-preview-size" id="dz-filesize">0 KB</div>
+          </div>
+          <button class="dz-remove" type="button" id="dz-remove" aria-label="Remove selected image" title="Remove image">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <div class="upload-progress-wrap" id="fb-upload-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+          <div class="upload-progress-head">
+            <span class="upload-progress-title" id="fb-progress-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+              <span>Uploading image...</span>
+            </span>
+            <span class="upload-progress-pct" id="fb-progress-pct">0%</span>
+          </div>
+          <div class="upload-progress-track">
+            <div class="upload-progress-fill" id="fb-progress-fill"></div>
+          </div>
+          <div class="upload-progress-sub">
+            <span id="fb-progress-status">Preparing upload...</span>
+            <span id="fb-progress-bytes">0 KB / 0 KB</span>
+          </div>
+        </div>
+
+        <div class="fb-alert" id="fb-file-alert" role="alert">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span id="fb-file-alert-text"></span>
         </div>
 
         <label class="field-label" for="fb-email" style="margin-top:18px">Your Email <span class="opt">(Optional)</span></label>
@@ -294,7 +434,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
         </div>
         <h2>Thank You!</h2>
-        <p>Your feedback has been sent. We read every message and use it to make ColorNest better.</p>
+        <p>Your feedback has been sent. We read every message and use it to make Colour Library better.</p>
       </div>
     </form>
 
@@ -313,11 +453,285 @@
     </div>
   </main>
 
-  <script src="/menu-extras.js"></script>
+  <script src="/copy-limit.js"></script>
+  <script type="module" src="/js/supabase-init.js"></script>
+  <script src="/menu-extras.js?v=4"></script>
   <script>
     (function () {
       var type = "General";
-      var fileData = null;
+      var selectedRawFile = null;
+      var allowedMimeTypes = ["image/jpeg", "image/png", "image/webp"];
+      var maxSizeBytes = 5 * 1024 * 1024; // 5MB
+
+      var dropzone = document.getElementById("fb-dropzone");
+      var fileInput = document.getElementById("fb-file");
+      var preview = document.getElementById("dz-preview");
+      var img = document.getElementById("dz-img");
+      var removeBtn = document.getElementById("dz-remove");
+      var alertEl = document.getElementById("fb-file-alert");
+      var textEl = document.getElementById("fb-file-alert-text");
+      var submitBtn = document.getElementById("fb-send");
+      var originalBtnHtml = submitBtn ? submitBtn.innerHTML : "Send Feedback";
+
+      var progressWrap = document.getElementById("fb-upload-progress");
+      var progressFill = document.getElementById("fb-progress-fill");
+      var progressPct = document.getElementById("fb-progress-pct");
+      var progressStatus = document.getElementById("fb-progress-status");
+      var progressBytes = document.getElementById("fb-progress-bytes");
+
+      var activeUploadXhr = null;
+      var activeUploadPromise = null;
+      var uploadedImageUrl = null;
+      var uploadedImageData = null;
+      var isUploadingImage = false;
+
+      function formatBytes(bytes) {
+        if (!bytes || bytes <= 0) return "0 KB";
+        var k = 1024;
+        var sizes = ["B", "KB", "MB", "GB"];
+        var i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
+      }
+
+      function setUploadProgress(percent, statusText, bytesText) {
+        var clamped = Math.max(0, Math.min(100, Math.round(percent)));
+        if (progressWrap) {
+          progressWrap.classList.add("active");
+          progressWrap.setAttribute("aria-valuenow", clamped);
+        }
+        if (progressFill) {
+          progressFill.style.width = clamped + "%";
+          if (clamped >= 100) {
+            progressFill.classList.add("is-done");
+          } else {
+            progressFill.classList.remove("is-done");
+          }
+        }
+        if (progressPct) progressPct.textContent = clamped + "%";
+        if (progressStatus && statusText) progressStatus.textContent = statusText;
+        if (progressBytes && bytesText !== undefined) progressBytes.textContent = bytesText;
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<svg class="spin-icon" style="width:18px;height:18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-dashoffset="12"/></svg> <span>Uploading image (' + clamped + '%)...</span>';
+        }
+      }
+
+      function hideUploadProgress() {
+        if (progressWrap) progressWrap.classList.remove("active");
+        if (progressFill) {
+          progressFill.style.width = "0%";
+          progressFill.classList.remove("is-done");
+        }
+        if (progressPct) progressPct.textContent = "0%";
+        if (progressStatus) progressStatus.textContent = "Preparing upload...";
+        if (progressBytes) progressBytes.textContent = "0 KB / 0 KB";
+      }
+
+      function showFileAlert(text, isWarning) {
+        if (alertEl && textEl) {
+          textEl.textContent = text;
+          alertEl.className = "fb-alert " + (isWarning ? "warning" : "error");
+          alertEl.style.display = "flex";
+        }
+      }
+
+      function hideFileAlert() {
+        if (alertEl) alertEl.style.display = "none";
+      }
+
+      function clearSelectedFile() {
+        if (activeUploadXhr) {
+          try { activeUploadXhr.abort(); } catch (e) {}
+          activeUploadXhr = null;
+        }
+        activeUploadPromise = null;
+        uploadedImageUrl = null;
+        uploadedImageData = null;
+        isUploadingImage = false;
+        selectedRawFile = null;
+        if (fileInput) fileInput.value = "";
+        if (preview) preview.classList.remove("active");
+        if (dropzone) dropzone.style.display = "flex";
+        if (img) img.src = "";
+        hideUploadProgress();
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnHtml;
+        }
+      }
+
+      function startImageUpload(rawFile) {
+        if (!rawFile) return;
+        if (activeUploadXhr) {
+          try { activeUploadXhr.abort(); } catch (e) {}
+          activeUploadXhr = null;
+        }
+
+        isUploadingImage = true;
+        setUploadProgress(0, "Starting upload...", "0 KB / " + formatBytes(rawFile.size));
+
+        activeUploadPromise = new Promise(function (resolve) {
+          var reader = new FileReader();
+          reader.onload = function (readEvt) {
+            var dataUrl = readEvt.target.result;
+            uploadedImageData = dataUrl;
+
+            setUploadProgress(10, "Uploading image...", "0 KB / " + formatBytes(rawFile.size));
+
+            var token = (window.CNAuth && typeof window.CNAuth.getAuthToken === "function" && window.CNAuth.getAuthToken()) ||
+              localStorage.getItem("cn_token") || sessionStorage.getItem("cn_token");
+
+            var xhr = new XMLHttpRequest();
+            activeUploadXhr = xhr;
+            xhr.open("POST", "/api/feedback/upload", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            if (token) xhr.setRequestHeader("Authorization", "Bearer " + token);
+
+            xhr.upload.addEventListener("progress", function (e) {
+              if (e.lengthComputable && e.total > 0) {
+                var pct = Math.min(96, Math.max(10, Math.round((e.loaded / e.total) * 100)));
+                var bytesStr = formatBytes(e.loaded) + " / " + formatBytes(e.total);
+                setUploadProgress(pct, "Uploading image...", bytesStr);
+              }
+            });
+
+            xhr.onload = function () {
+              isUploadingImage = false;
+              activeUploadXhr = null;
+              setUploadProgress(100, "Upload complete ✓", formatBytes(rawFile.size) + " / " + formatBytes(rawFile.size));
+              if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnHtml;
+              }
+              try {
+                var jsonRes = JSON.parse(xhr.responseText || "{}");
+                if (jsonRes && jsonRes.url) {
+                  uploadedImageUrl = jsonRes.url;
+                  resolve(jsonRes.url);
+                  return;
+                }
+              } catch (err) {}
+              uploadedImageUrl = dataUrl;
+              resolve(dataUrl);
+            };
+
+            xhr.onerror = function () {
+              isUploadingImage = false;
+              activeUploadXhr = null;
+              setUploadProgress(100, "Attachment ready", formatBytes(rawFile.size) + " / " + formatBytes(rawFile.size));
+              if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnHtml;
+              }
+              uploadedImageUrl = dataUrl;
+              resolve(dataUrl);
+            };
+
+            xhr.onabort = function () {
+              isUploadingImage = false;
+              activeUploadXhr = null;
+              resolve(null);
+            };
+
+            xhr.send(JSON.stringify({
+              image: dataUrl,
+              filename: rawFile.name || "feedback_attachment.jpg",
+              mime_type: rawFile.type || "image/jpeg"
+            }));
+          };
+
+          reader.onerror = function () {
+            isUploadingImage = false;
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalBtnHtml;
+            }
+            resolve(null);
+          };
+
+          reader.readAsDataURL(rawFile);
+        });
+      }
+
+      function handleFileSelection(f) {
+        if (!f) return;
+        hideFileAlert();
+
+        // Validate file type
+        var isAllowed = allowedMimeTypes.indexOf(f.type) !== -1;
+        if (!isAllowed && f.name) {
+          var ext = f.name.split(".").pop().toLowerCase();
+          if (ext === "jpg" || ext === "jpeg" || ext === "png" || ext === "webp") {
+            isAllowed = true;
+          }
+        }
+
+        if (!isAllowed) {
+          showFileAlert("Invalid format. Only JPG, PNG, and WebP images are allowed.");
+          clearSelectedFile();
+          return;
+        }
+
+        // Validate file size (5MB max)
+        if (f.size > maxSizeBytes) {
+          showFileAlert("Image is too large (" + (f.size / (1024 * 1024)).toFixed(1) + "MB). Maximum allowed size is 5MB.");
+          clearSelectedFile();
+          return;
+        }
+
+        selectedRawFile = f;
+        var r = new FileReader();
+        r.onload = function (e) {
+          if (img) img.src = e.target.result;
+          var fn = document.getElementById("dz-filename");
+          if (fn) fn.textContent = f.name;
+          var fs = document.getElementById("dz-filesize");
+          if (fs) {
+            fs.textContent = f.size < 1024 * 1024
+              ? Math.round(f.size / 1024) + " KB"
+              : (f.size / (1024 * 1024)).toFixed(2) + " MB";
+          }
+          if (preview) preview.classList.add("active");
+          if (dropzone) dropzone.style.display = "none";
+          startImageUpload(f);
+        };
+        r.readAsDataURL(f);
+      }
+
+      // Auto-fill logged-in user email and make readonly
+      function syncAuthEmail() {
+        var emailInp = document.getElementById("fb-email");
+        if (!emailInp) return;
+
+        var user = null;
+        if (window.CNAuth && typeof window.CNAuth.isLoggedIn === "function" && window.CNAuth.isLoggedIn()) {
+          user = typeof window.CNAuth.getUser === "function" ? window.CNAuth.getUser() : null;
+        }
+        if (!user) {
+          try {
+            var raw = localStorage.getItem("cn_user");
+            if (raw) user = JSON.parse(raw);
+          } catch (e) {}
+        }
+
+        if (user && user.email) {
+          emailInp.value = user.email;
+          emailInp.readOnly = true;
+          emailInp.setAttribute("readonly", "readonly");
+          var hint = document.querySelector(".email-hint");
+          if (hint) {
+            hint.textContent = "Signed in as " + user.email + " (tied to your account).";
+          }
+        }
+      }
+
+      syncAuthEmail();
+      window.addEventListener("DOMContentLoaded", syncAuthEmail);
+      window.addEventListener("cn:auth-changed", syncAuthEmail);
+      window.addEventListener("cn:user-changed", syncAuthEmail);
+      window.addEventListener("storage", function (e) {
+        if (e.key === "cn_user" || e.key === "cn_token") syncAuthEmail();
+      });
 
       // Type chips
       document.querySelectorAll(".type-chip").forEach(function (chip) {
@@ -333,57 +747,236 @@
       });
 
       // Char counter
-      var msg = document.getElementById("fb-message");
+      var msg = document.getElementById("feedback-message") || document.getElementById("fb-message");
       var count = document.getElementById("fb-count");
-      msg.addEventListener("input", function () { count.textContent = msg.value.length; });
+      if (msg && count) {
+        msg.addEventListener("input", function () { count.textContent = msg.value.length; });
+      }
 
-      // Screenshot
-      var dropzone = document.getElementById("fb-dropzone");
-      var fileInput = document.getElementById("fb-file");
-      var preview = document.getElementById("dz-preview");
-      var img = document.getElementById("dz-img");
-      dropzone.addEventListener("click", function () { if (!fileData) fileInput.click(); });
-      fileInput.addEventListener("change", function () {
-        var f = fileInput.files && fileInput.files[0];
-        if (!f) return;
-        if (f.size > 5 * 1024 * 1024) { alert("Image must be under 5MB."); fileInput.value = ""; return; }
-        var reader = new FileReader();
-        reader.onload = function () {
-          fileData = f.name;
-          img.src = reader.result;
-          preview.style.display = "block";
-          document.getElementById("dz-title").textContent = f.name;
-          document.getElementById("dz-sub").textContent = "Tap the image to replace it";
-        };
-        reader.readAsDataURL(f);
-      });
-      document.getElementById("dz-remove").addEventListener("click", function (e) {
-        e.stopPropagation();
-        fileData = null;
-        fileInput.value = "";
-        preview.style.display = "none";
-        document.getElementById("dz-title").textContent = "Tap to add image";
-        document.getElementById("dz-sub").textContent = "PNG, JPG or WebP (Max 5MB)";
+      // Image attachment handling
+      if (dropzone && fileInput) {
+        dropzone.addEventListener("click", function () { fileInput.click(); });
+        dropzone.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            fileInput.click();
+          }
+        });
+
+        // Drag and drop support
+        dropzone.addEventListener("dragenter", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.style.borderColor = "var(--primary)";
+          dropzone.style.background = "rgba(124, 58, 237, 0.04)";
+        });
+        dropzone.addEventListener("dragover", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.style.borderColor = "var(--primary)";
+          dropzone.style.background = "rgba(124, 58, 237, 0.04)";
+        });
+        dropzone.addEventListener("dragleave", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.style.borderColor = "";
+          dropzone.style.background = "";
+        });
+        dropzone.addEventListener("drop", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.style.borderColor = "";
+          dropzone.style.background = "";
+          var dt = e.dataTransfer;
+          if (dt && dt.files && dt.files.length > 0) {
+            handleFileSelection(dt.files[0]);
+          }
+        });
+
+        fileInput.addEventListener("change", function () {
+          var f = fileInput.files && fileInput.files[0];
+          if (f) handleFileSelection(f);
+        });
+      }
+
+      if (removeBtn) {
+        removeBtn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          hideFileAlert();
+          clearSelectedFile();
+        });
+        removeBtn.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            e.stopPropagation();
+            hideFileAlert();
+            clearSelectedFile();
+          }
+        });
+      }
+
+      // Rating star radio group logic
+      var pageRating = 0;
+      var pageCaptions = {
+        1: "1 of 5 stars (Poor)",
+        2: "2 of 5 stars (Fair)",
+        3: "3 of 5 stars (Good)",
+        4: "4 of 5 stars (Very Good)",
+        5: "5 of 5 stars (Excellent)"
+      };
+      var pLabels = document.querySelectorAll(".page-star-lbl");
+      var pText = document.getElementById("page-rating-text");
+
+      function updatePageStars(val) {
+        pLabels.forEach(function (lbl) {
+          var v = parseInt(lbl.getAttribute("data-val"), 10);
+          if (val > 0 && v <= val) lbl.classList.add("is-active");
+          else lbl.classList.remove("is-active");
+        });
+        if (pText) {
+          pText.textContent = val > 0 && pageCaptions[val] ? pageCaptions[val] : "Tap a star to rate";
+        }
+      }
+
+      pLabels.forEach(function (lbl) {
+        var v = parseInt(lbl.getAttribute("data-val"), 10);
+        lbl.addEventListener("mouseenter", function () {
+          updatePageStars(v);
+        });
+        lbl.addEventListener("mouseleave", function () {
+          updatePageStars(pageRating);
+        });
+        lbl.addEventListener("click", function () {
+          pageRating = v;
+          var inp = lbl.querySelector("input");
+          if (inp) inp.checked = true;
+          updatePageStars(pageRating);
+        });
       });
 
-      // Submit — save locally like the modal does
-      document.getElementById("fb-form").addEventListener("submit", function (e) {
+      // Submit form
+      document.getElementById("fb-form").addEventListener("submit", async function (e) {
         e.preventDefault();
-        var message = msg.value.trim();
-        if (!message) { msg.focus(); return; }
+        hideFileAlert();
+
+        const subjectInput =
+          document.getElementById("feedback-subject") || document.getElementById("fb-subject");
+
+        const messageInput =
+          document.getElementById("feedback-message") || document.getElementById("fb-message");
+
+        const subject =
+          String(subjectInput?.value || "").trim().slice(0, 160);
+
+        const message =
+          String(messageInput?.value || "").trim();
+
+        if (!message) {
+          showFileAlert("Please enter your feedback message before submitting.");
+          if (messageInput) messageInput.focus();
+          return;
+        }
+
+        // Wait if image upload is currently in-flight
+        if (isUploadingImage && activeUploadPromise) {
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<svg class="spin-icon" style="width:18px;height:18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-dashoffset="12"/></svg> <span>Uploading image (' + (progressPct ? progressPct.textContent : "...") + ')...</span>';
+          }
+          await activeUploadPromise;
+        } else if (selectedRawFile && !uploadedImageUrl && !uploadedImageData) {
+          startImageUpload(selectedRawFile);
+          if (activeUploadPromise) await activeUploadPromise;
+        }
+
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<svg class="spin-icon" style="width:18px;height:18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-dashoffset="12"/></svg> <span>Submitting feedback...</span>';
+        }
+
+        var selectedRating = pageRating > 0 ? pageRating : 5;
+        var emailInp = document.getElementById("fb-email");
+        var effectiveEmail = emailInp ? emailInp.value.trim() : "";
+
+        var currentUser = null;
+        if (window.CNAuth && typeof window.CNAuth.getUser === "function") {
+          currentUser = window.CNAuth.getUser();
+          if (currentUser && currentUser.email && !effectiveEmail) effectiveEmail = currentUser.email;
+        }
+        if (!currentUser) {
+          try {
+            currentUser = JSON.parse(localStorage.getItem("cn_user") || "null");
+            if (currentUser && currentUser.email && !effectiveEmail) effectiveEmail = currentUser.email;
+          } catch (e) {}
+        }
+
+        const payload = {
+          subject: subject || "General Feedback",
+          message: message,
+          rating: selectedRating || null,
+          page_url: window.location.href,
+          user_id: currentUser?.id || null
+        };
+
         var entry = {
           type: type,
-          subject: document.getElementById("fb-subject").value.trim(),
-          message: message,
-          email: document.getElementById("fb-email").value.trim(),
-          screenshot: fileData,
+          subject: payload.subject,
+          message: payload.message,
+          email: effectiveEmail,
+          rating: payload.rating,
+          page_url: payload.page_url,
+          image_url: uploadedImageUrl,
           at: new Date().toISOString()
         };
+
+        var headers = window.CNAuth && typeof window.CNAuth.isLoggedIn === "function" && window.CNAuth.isLoggedIn()
+          ? { "Content-Type": "application/json", "Authorization": "Bearer " + window.CNAuth.getAuthToken() }
+          : { "Content-Type": "application/json" };
+
+        if (!headers["Authorization"]) {
+          var token = (window.CNAuth && typeof window.CNAuth.getAuthToken === "function" && window.CNAuth.getAuthToken()) ||
+            localStorage.getItem("cn_token") || sessionStorage.getItem("cn_token");
+          if (token) {
+            headers["Authorization"] = "Bearer " + token;
+          }
+        }
+
+        try {
+          var res = await fetch("/api/feedback", {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify({
+              subject: payload.subject,
+              message: payload.message,
+              rating: payload.rating,
+              page_url: payload.page_url,
+              user_id: payload.user_id,
+              email: effectiveEmail,
+              type: entry.type,
+              image_url: uploadedImageUrl,
+              image_data: uploadedImageData
+            })
+          });
+
+          if (!res.ok) {
+            var errData = await res.json().catch(function () { return {}; });
+            throw new Error(errData.error || "Submission failed");
+          }
+
+          var resData = await res.json().catch(function () { return {}; });
+          if (resData && resData.feedback && resData.feedback.subject) {
+            entry.subject = resData.feedback.subject;
+          }
+        } catch (postErr) {
+          console.warn("Backend feedback sync warning:", postErr);
+        }
+
         try {
           var list = JSON.parse(localStorage.getItem("cl-feedback") || "[]");
           list.push(entry);
           localStorage.setItem("cl-feedback", JSON.stringify(list));
         } catch (err) {}
+
         document.getElementById("fb-fields").style.display = "none";
         document.getElementById("fb-success").classList.add("show");
       });

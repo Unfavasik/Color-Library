@@ -34,6 +34,17 @@
     '<div class="me-backdrop" id="me-feedback-backdrop" aria-hidden="true">' +
       '<div class="me-sheet" role="dialog" aria-modal="true" aria-label="Give feedback">' +
         '<div class="me-head"><span class="me-title">Give Feedback</span><button class="me-close" type="button" data-me-close="me-feedback-backdrop" aria-label="Close feedback">' + ICONS.x + '</button></div>' +
+        '<p class="me-section-label">Rate your experience</p>' +
+        '<div class="me-rating-wrap">' +
+          '<div class="me-stars-row" role="radiogroup" aria-label="Rate your experience">' +
+            [1, 2, 3, 4, 5].map(function (val) {
+              return '<button type="button" class="me-star-btn" data-value="' + val + '" role="radio" aria-checked="false" aria-label="' + val + ' of 5 stars">' +
+                '<svg class="me-star-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>' +
+              '</button>';
+            }).join('') +
+          '</div>' +
+          '<span class="me-rating-caption" id="me-rating-caption">Tap a star to rate</span>' +
+        '</div>' +
         '<p class="me-section-label">Tell us what you think</p>' +
         '<textarea class="me-textarea" id="me-feedback-text" placeholder="Share ideas, report a bug, or request a feature..." maxlength="1000"></textarea>' +
         '<button class="me-send" type="button" id="me-feedback-send">Send Feedback</button>' +
@@ -320,7 +331,13 @@
     var nav = document.querySelector(".drawer-nav");
     if (nav) {
       var user = null;
-      try { user = JSON.parse(localStorage.getItem("cn_user") || "null"); } catch (e) {}
+      if (window.cnSupabase && window.cnSupabase.currentUser) {
+        user = window.cnSupabase.currentUser;
+      } else if (window.CNAuth && typeof window.CNAuth.getUser === "function") {
+        user = window.CNAuth.getUser();
+      } else {
+        try { user = JSON.parse(localStorage.getItem("cn_user") || "null"); } catch (e) {}
+      }
 
       var items = [
         { id: "me-nav-settings", label: "Settings", icon: ICONS.settings },
@@ -335,8 +352,9 @@
 
       // Compact profile row pinned under Share App
       html += '<div class="me-profile" id="me-profile">';
-      if (user && user.name) {
-        var initial = (user.name || "U").trim().charAt(0).toUpperCase();
+      var uDisplayName = user ? (user.displayName || user.name || (user.email ? user.email.split("@")[0] : "")) : "";
+      if (user && uDisplayName) {
+        var initial = uDisplayName.trim().charAt(0).toUpperCase();
         html +=
           '<span class="me-avatar" aria-hidden="true">' + initial + "</span>" +
           '<span class="me-profile-meta"><b></b><small></small></span>' +
@@ -353,18 +371,197 @@
       html += "</div>";
       nav.insertAdjacentHTML("beforeend", html);
 
+      function isUserAdmin(u) {
+        if (!u) return false;
+        if (u.role === "admin" || u.is_admin === true || u.isAdmin === true) return true;
+        if (sessionStorage.getItem("cn-admin-auth") === "1") return true;
+        if (localStorage.getItem("cn_is_admin") === "true") return true;
+        return false;
+      }
+
+      function renderAdminBanner() {
+        if (document.getElementById("me-admin-banner")) return;
+        var prof = document.getElementById("me-profile");
+        if (!prof) return;
+
+        var bannerHtml =
+          '<div class="me-admin-banner" id="me-admin-banner" role="button" tabindex="0" title="Go to Admin Panel">' +
+            '<div class="me-admin-badge-wrap">' +
+              '<span class="me-admin-icon" aria-hidden="true">' +
+                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' +
+                  '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>' +
+                  '<path d="m9 12 2 2 4-4"/>' +
+                '</svg>' +
+              '</span>' +
+              '<div class="me-admin-meta">' +
+                '<b>Admin Panel</b>' +
+                '<small>Overview &amp; Controls</small>' +
+              '</div>' +
+            '</div>' +
+            '<a href="/admin/dashboard" class="me-admin-go" id="me-admin-go" aria-label="Go to Admin Panel">' +
+              '<span>Go</span>' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">' +
+                '<path d="M5 12h14M12 5l7 7-7 7"/>' +
+              '</svg>' +
+            '</a>' +
+          '</div>';
+
+        prof.insertAdjacentHTML("afterend", bannerHtml);
+
+        var banner = document.getElementById("me-admin-banner");
+        function goToAdmin(e) {
+          if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+          try {
+            sessionStorage.setItem("cn-admin-auth", "1");
+            var curUser = null;
+            try { curUser = JSON.parse(localStorage.getItem("cn_user") || "null"); } catch (e2) {}
+            if (curUser && curUser.email) sessionStorage.setItem("cn-admin-email", curUser.email);
+            var tok = localStorage.getItem("cn_token") || sessionStorage.getItem("cn_token");
+            if (tok) sessionStorage.setItem("cn_token", tok);
+          } catch (err) {}
+          window.location.href = "/admin/dashboard";
+        }
+
+        if (banner) {
+          banner.addEventListener("click", goToAdmin);
+          banner.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") {
+              goToAdmin(e);
+            }
+          });
+        }
+      }
+
+      if (isUserAdmin(user)) {
+        renderAdminBanner();
+      }
+
+      // Background session sync for admin detection
+      if (window.cnSupabase && window.cnSupabase.supabase) {
+        window.cnSupabase.supabase.auth.getSession().then(function (res) {
+          var sSession = res && res.data && res.data.session;
+          var sUser = sSession && sSession.user;
+          var tok = sSession && sSession.access_token;
+          if (tok) {
+            try {
+              sessionStorage.setItem("cn_token", tok);
+              localStorage.setItem("cn_token", tok);
+            } catch (e) {}
+          }
+          if (sUser && isUserAdmin(sUser)) {
+            renderAdminBanner();
+          }
+        }).catch(function () {});
+      } else {
+        var waitSupabase = 0;
+        var checkSbIv = setInterval(function () {
+          waitSupabase += 100;
+          if (window.cnSupabase && window.cnSupabase.supabase) {
+            clearInterval(checkSbIv);
+            window.cnSupabase.supabase.auth.getSession().then(function (res) {
+              var sSession = res && res.data && res.data.session;
+              var sUser = sSession && sSession.user;
+              var tok = sSession && sSession.access_token;
+              if (tok) {
+                try {
+                  sessionStorage.setItem("cn_token", tok);
+                  localStorage.setItem("cn_token", tok);
+                } catch (e) {}
+              }
+              if (sUser && isUserAdmin(sUser)) {
+                renderAdminBanner();
+              }
+            }).catch(function () {});
+          } else if (waitSupabase >= 3000) {
+            clearInterval(checkSbIv);
+          }
+        }, 100);
+      }
+
+      if (user && user.email && !document.getElementById("me-admin-banner")) {
+        fetch("/api/admin/verify")
+          .then(function (r) { if (r.ok) return r.json(); return null; })
+          .then(function (d) {
+            if (d && d.admin) renderAdminBanner();
+          })
+          .catch(function () {});
+      }
+
       var profile = document.getElementById("me-profile");
       if (user && user.name) {
-        profile.querySelector("b").textContent = user.name;
-        profile.querySelector("small").textContent = user.email || "";
-        profile.querySelector(".me-logout").addEventListener("click", function () {
-          confirmLogout(function (ok) {
-            if (!ok) return;
-            try { localStorage.removeItem("cn_user"); } catch (e2) {}
-            window.location.href = "/";
+        var bEl = profile.querySelector("b");
+        if (bEl) {
+          bEl.setAttribute("data-user-name", "");
+          bEl.textContent = user.name;
+        }
+        var smallEl = profile.querySelector("small");
+        if (smallEl) smallEl.textContent = user.email || "";
+
+        var logoutBtn = profile.querySelector(".me-logout");
+        if (logoutBtn) {
+          logoutBtn.addEventListener("click", function () {
+            confirmLogout(function (ok) {
+              if (!ok) return;
+              if (window.CNAuth && typeof window.CNAuth.logout === "function") {
+                window.CNAuth.logout();
+              } else {
+                try {
+                  localStorage.removeItem("cn_user");
+                  localStorage.removeItem("cn_is_admin");
+                  sessionStorage.removeItem("cn-admin-auth");
+                  sessionStorage.removeItem("cn-admin-email");
+                  sessionStorage.removeItem("cn_token");
+                  var ab = document.getElementById("me-admin-banner");
+                  if (ab) ab.remove();
+                  for (var i = localStorage.length - 1; i >= 0; i--) {
+                    var k = localStorage.key(i);
+                    if (k === "cn-supabase-auth" || (k && k.indexOf("sb-") === 0 && k.indexOf("-auth-token") !== -1)) {
+                      localStorage.removeItem(k);
+                    }
+                  }
+                } catch (e2) {}
+                if (window.cnSupabase && window.cnSupabase.signOut) {
+                  window.cnSupabase.signOut().then(function () { window.location.href = "/"; }).catch(function () { window.location.href = "/"; });
+                } else {
+                  window.location.href = "/";
+                }
+              }
+            });
           });
-        });
+        }
       }
+
+      window.addEventListener("cn:user-updated", function (e) {
+        var updated = e && e.detail;
+        var profEl = document.getElementById("me-profile");
+        if (!profEl) return;
+
+        if (updated && (updated.displayName || updated.name)) {
+          var uName = updated.displayName || updated.name;
+          var uEmail = updated.email || "";
+          var initialChar = (uName || "U").trim().charAt(0).toUpperCase();
+
+          var avatar = profEl.querySelector(".me-avatar");
+          if (avatar) {
+            avatar.textContent = initialChar;
+            avatar.classList.remove("me-avatar-guest");
+          }
+          var nameB = profEl.querySelector("b");
+          if (nameB) {
+            nameB.textContent = uName;
+          }
+          var emailSmall = profEl.querySelector("small");
+          if (emailSmall) {
+            emailSmall.textContent = uEmail;
+          }
+          if (isUserAdmin(updated)) {
+            renderAdminBanner();
+          }
+        }
+      });
 
       document.getElementById("me-nav-settings").addEventListener("click", function (e) { e.preventDefault(); openModal("me-settings-backdrop"); });
       document.getElementById("me-nav-feedback").addEventListener("click", function (e) { e.preventDefault(); openModal("me-feedback-backdrop"); });
@@ -405,16 +602,96 @@
       toast(removed.length ? "Cleared " + removed.length + " saved item type(s)" : "Nothing saved yet");
     });
 
+    // Star Rating Radio Group logic in Drawer Feedback Modal
+    var currentRating = 0;
+    var ratingCaptions = {
+      1: "1 of 5 stars (Poor)",
+      2: "2 of 5 stars (Fair)",
+      3: "3 of 5 stars (Good)",
+      4: "4 of 5 stars (Very Good)",
+      5: "5 of 5 stars (Excellent)"
+    };
+    var starBtns = document.querySelectorAll("#me-feedback-backdrop .me-star-btn");
+    var captionEl = document.getElementById("me-rating-caption");
+
+    function updateStarVisuals(activeVal) {
+      starBtns.forEach(function (btn) {
+        var v = parseInt(btn.getAttribute("data-value"), 10);
+        if (activeVal > 0 && v <= activeVal) {
+          btn.classList.add("is-active");
+          btn.setAttribute("aria-checked", v === activeVal ? "true" : "false");
+        } else {
+          btn.classList.remove("is-active");
+          btn.setAttribute("aria-checked", "false");
+        }
+      });
+      if (captionEl) {
+        captionEl.textContent = activeVal > 0 && ratingCaptions[activeVal] ? ratingCaptions[activeVal] : "Tap a star to rate";
+      }
+    }
+
+    starBtns.forEach(function (btn) {
+      var val = parseInt(btn.getAttribute("data-value"), 10);
+      btn.addEventListener("mouseenter", function () {
+        updateStarVisuals(val);
+      });
+      btn.addEventListener("mouseleave", function () {
+        updateStarVisuals(currentRating);
+      });
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        currentRating = val;
+        updateStarVisuals(currentRating);
+      });
+    });
+
     // Feedback
-    document.getElementById("me-feedback-send").addEventListener("click", function () {
+    document.getElementById("me-feedback-send").addEventListener("click", async function () {
       var ta = document.getElementById("me-feedback-text");
       var msg = ta.value.trim();
       if (msg.length < 3) { toast("Please write a little more first"); ta.focus(); return; }
+
+      var selectedRating = currentRating > 0 ? currentRating : 5;
+
+      var fbHeaders = (window.CNAuth && typeof window.CNAuth.isLoggedIn === "function" && window.CNAuth.isLoggedIn())
+        ? { "Content-Type": "application/json", "Authorization": "Bearer " + window.CNAuth.getAuthToken() }
+        : { "Content-Type": "application/json" };
+
+      var fbEmail = "";
+      if (window.CNAuth && typeof window.CNAuth.getUser === "function") {
+        var u = window.CNAuth.getUser();
+        if (u && u.email) fbEmail = u.email;
+      }
+      if (!fbEmail) {
+        try {
+          var stored = JSON.parse(localStorage.getItem("cn_user") || "null");
+          if (stored && stored.email) fbEmail = stored.email;
+        } catch (e) {}
+      }
+
+      try {
+        await fetch("/api/feedback", {
+          method: "POST",
+          headers: fbHeaders,
+          body: JSON.stringify({
+            message: msg,
+            email: fbEmail || null,
+            page_url: location.pathname,
+            type: "Drawer Feedback",
+            rating: selectedRating
+          })
+        });
+      } catch (err) {
+        console.warn("Backend feedback sync fallback:", err);
+      }
+
       var list = [];
       try { list = JSON.parse(localStorage.getItem("cl-feedback")) || []; } catch (e) {}
-      list.unshift({ msg: msg, page: location.pathname, ts: Date.now() });
+      list.unshift({ msg: msg, rating: selectedRating, page: location.pathname, ts: Date.now() });
       try { localStorage.setItem("cl-feedback", JSON.stringify(list.slice(0, 50))); } catch (e) {}
       ta.value = "";
+      currentRating = 0;
+      updateStarVisuals(0);
       closeModal("me-feedback-backdrop");
       toast("Thanks for your feedback!");
     });

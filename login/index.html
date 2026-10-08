@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=1000, viewport-fit=cover" />
   <title>Sign In — ColorNest</title>
   <meta name="description" content="Sign in to your ColorNest account for unlimited copies, saved colors and palettes." />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -88,6 +88,10 @@
     }
     .err.show { display: block; }
   </style>
+  <link rel="stylesheet" href="/menu-extras.css?v=7" />
+  <link rel="stylesheet" href="/desktop.css?v=4" />
+  <script src="/desktop-shell.js?v=2" defer></script>
+  <link rel="stylesheet" href="/brand.css?v=1" />
 </head>
 <body>
   <main class="wrap">
@@ -155,46 +159,179 @@
     </section>
   </main>
 
+  <script type="module" src="/js/supabase-init.js"></script>
   <script>
     var form = document.getElementById("login-form");
     var err = document.getElementById("err");
+
+    function waitForBackend(timeout) {
+      if (window.cnSupabase) return Promise.resolve(window.cnSupabase);
+      return new Promise(function (resolve) {
+        var settled = false;
+        function done() { if (!settled) { settled = true; resolve(window.cnSupabase || null); } }
+        window.addEventListener("cn:supabase-ready", done, { once: true });
+        setTimeout(done, timeout || 2500);
+      });
+    }
+
+    async function finishSession(user) {
+      var token = null;
+      try { token = await user.getIdToken(); } catch (t) {}
+      try {
+        if (token) {
+          sessionStorage.setItem("cn_token", token);
+          localStorage.setItem("cn_token", token);
+        }
+      } catch (t2) {}
+      try {
+        localStorage.setItem("cn_user", JSON.stringify({
+          name: user.displayName || (user.email || "").split("@")[0],
+          email: user.email,
+          id: user.uid
+        }));
+        localStorage.removeItem("cn_copies");
+      } catch (u) {}
+      try { window.cnSupabase.ensureUser(user).catch(function () {}); } catch (e) {}
+      try {
+        fetch("/api/users/sync", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ uid: user.uid, email: user.email, name: user.displayName || (user.email || "").split("@")[0] })
+        });
+      } catch (e) {}
+
+      var ADMIN_EMAILS = ["asik.devhub@gmail.com", "ayatulsekh3037@gmail.com", "asikikbal@gmail.com"];
+      if (ADMIN_EMAILS.indexOf((user.email || "").toLowerCase()) !== -1) {
+        try {
+          sessionStorage.setItem("cn-admin-auth", "1");
+          sessionStorage.setItem("cn-admin-email", user.email);
+        } catch (a) {}
+        window.location.href = "/admin/dashboard";
+        return;
+      }
+
+      var next = new URLSearchParams(window.location.search).get("next");
+      window.location.href = next && next.charAt(0) === "/" ? next : "/";
+    }
+
     document.getElementById("toggle-pass").addEventListener("click", function () {
       var p = document.getElementById("password");
       p.type = p.type === "password" ? "text" : "password";
     });
     document.querySelectorAll(".soc").forEach(function (b) {
-      b.addEventListener("click", function () {
-        err.textContent = b.dataset.soc + " sign-in is coming soon. Use email for now.";
-        err.classList.add("show");
+      b.addEventListener("click", async function () {
+        var provider = (b.dataset.soc || "").toLowerCase();
+        err.classList.remove("show");
+        b.style.opacity = "0.7";
+        try {
+          var fb = await waitForBackend();
+          if (fb) {
+            var cred = await fb.socialSignIn(b.dataset.soc);
+            await finishSession(cred.user);
+            return;
+          }
+        } catch (fErr) {
+          b.style.opacity = "1";
+          if (fErr && fErr.code && fErr.code.indexOf("auth/") === 0) {
+            err.textContent = window.cnSupabase.friendlyError(fErr);
+            err.classList.add("show");
+            return;
+          }
+        }
+        // Supabase OAuth unavailable — legacy server flow
+        try {
+          var next = new URLSearchParams(window.location.search).get("next") || "/";
+          localStorage.setItem("cn_oauth_next", next);
+          var res = await fetch("/api/auth/oauth/url?provider=" + encodeURIComponent(provider) + "&redirectTo=" + encodeURIComponent(window.location.origin + "/auth/callback"));
+          var data = await res.json();
+          if (data && data.url) {
+            window.location.href = data.url;
+            return;
+          }
+        } catch (oErr) {}
+        window.location.href = "https://arehjyrgvbzlxiivwuix.supabase.co/auth/v1/authorize?provider=" + encodeURIComponent(provider) + "&redirect_to=" + encodeURIComponent(window.location.origin + "/auth/callback");
       });
     });
-    form.addEventListener("submit", function (e) {
+    form.addEventListener("submit", async function (e) {
       e.preventDefault();
       err.classList.remove("show");
       var email = document.getElementById("email").value.trim().toLowerCase();
       var pass = document.getElementById("password").value;
       if (!email || !pass) { err.textContent = "Please enter your email and password."; err.classList.add("show"); return; }
 
-      // Admin sign-in: the admin Gmail ID + password opens the admin panel.
-      var ADMIN_EMAIL = "asikikbal@gmail.com";
-      var ADMIN_PASS = "admin123";
-      if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
-        try {
-          sessionStorage.setItem("cn-admin-auth", "1");
-          sessionStorage.setItem("cn-admin-email", email);
-        } catch (a) {}
-        window.location.href = "/admin/dashboard";
-        return;
+      var submitBtn = form.querySelector('button[type="submit"]');
+      var originalBtnText = submitBtn ? submitBtn.textContent : "";
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Signing In...";
       }
 
-      var users = {};
-      try { users = JSON.parse(localStorage.getItem("cn_users") || "{}"); } catch (u) {}
-      var user = users[email];
-      if (!user || user.pass !== pass) { err.textContent = "Wrong email or password. Try again."; err.classList.add("show"); return; }
-      try { localStorage.setItem("cn_user", JSON.stringify({ name: user.name, email: email })); } catch (u) {}
-      var next = new URLSearchParams(window.location.search).get("next");
-      window.location.href = next && next.charAt(0) === "/" ? next : "/";
+      try {
+        // Supabase Auth (primary backend)
+        var fb = await waitForBackend();
+        if (fb) {
+          try {
+            var cred = await fb.signIn(fb.auth, email, pass);
+            await finishSession(cred.user);
+            return;
+          } catch (fErr) {
+            err.textContent = fb.friendlyError(fErr);
+            err.classList.add("show");
+            return;
+          }
+        }
+
+        // Supabase unavailable — legacy server flow
+        var response = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: email, password: pass })
+        });
+        var result = await response.json();
+
+        if (!response.ok || !result.success) {
+          throw new Error(result.error || "Wrong email or password. Try again.");
+        }
+
+        // Store session tokens and user data
+        if (result.session && result.session.access_token) {
+          try {
+            sessionStorage.setItem("cn_token", result.session.access_token);
+            localStorage.setItem("cn_token", result.session.access_token);
+          } catch (t) {}
+        }
+
+        // Admin session handling
+        if (result.isAdmin || result.role === "admin") {
+          try {
+            sessionStorage.setItem("cn-admin-auth", "1");
+            sessionStorage.setItem("cn-admin-email", email);
+          } catch (a) {}
+          window.location.href = "/admin/dashboard";
+          return;
+        }
+
+        try {
+          localStorage.setItem("cn_user", JSON.stringify({
+            name: result.user?.name || email.split("@")[0],
+            email: email,
+            id: result.user?.id
+          }));
+        } catch (u) {}
+
+        var next = new URLSearchParams(window.location.search).get("next");
+        window.location.href = next && next.charAt(0) === "/" ? next : "/";
+      } catch (errObj) {
+        err.textContent = errObj.message || "Wrong email or password. Try again.";
+        err.classList.add("show");
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalBtnText;
+        }
+      }
     });
   </script>
+  <script src="/menu-extras.js?v=4"></script>
 </body>
 </html>
